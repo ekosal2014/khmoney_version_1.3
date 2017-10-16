@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<div class="header"  th:fragment="header">
+		<div class="f_left cboth">
+			<h1 class="logo"><a th:href="@{/}"><img th:src="@{../img/logo/piggy-bank.png}" alt="LAON"></a></h1>
+		</div>
+		<div class="f_right" style="padding: 10px 25px 0 0 !important;font-family:'Khmer OS Battambang','Khmer OS Bokor', 'Khmer OS Content', 'hmer OS Siemreap', 'Khmer OS System' !important;font-size: 12px !important;">
+			<h4 class="logo"><a th:href="@{/logout}">ចាក់ចេញ</a></h4>
+		</div>
+	</div>
+	<div class="header"  th:fragment="header_main">
+		<div class="f_left cboth">
+			<h1 class="logo"><a th:href="@{/}"><img th:src="@{img/logo/piggy-bank.png}" alt="LAON"></a></h1>
+		</div>
+		<div class="f_right" style="padding:10px 25px 0 0 !important;font-family:'Khmer OS Battambang','Khmer OS Bokor', 'Khmer OS Content', 'hmer OS Siemreap', 'Khmer OS System' !important;font-size: 12px !important;">
+			<h4 class="logo"><a th:href="@{/logout}">ចាក់ចេញ</a></h4>
+		</div>
+	</div>
+</html>
