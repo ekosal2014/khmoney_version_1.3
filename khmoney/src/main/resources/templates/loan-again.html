@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
 <head lang="en" th:replace="fragments/head :: head">
 	<meta charset="utf-8">
 </head>
@@ -12,7 +14,7 @@
 	<!-- header -->
 	<div lang="en" th:replace="/header :: header"></div>
 	<!-- //header -->
-
+	<th:block layout:fragment="content">
 	<!-- Container -->
 	<div class="container">
 
@@ -231,31 +233,21 @@
 		<!-- //content wrap -->
 	</div>
 	<!-- //Container -->
-	<input type="hidden" id="rate_db">
-	<input type="hidden" id="type_payment_db">
-	<input type="hidden" id="end_date_db">
-	<input type="hidden" id="day_db">
-	
-	<div lang="en" th:replace="fragments/footer :: footer"> </div>
-	
-   <input type="hidden" th:value="${loaner_id}" id="loaner_id"/>
-	
-</div>
-	<script th:src="@{../js/lib/jquery-1.8.3.min.js}"></script>
-	<script th:src="@{../js/lib/autoNumeric.min.js}"></script>
-	<script th:src="@{../js/lib/jquery.bpopup.min.js}"></script>
-	<script th:src="@{../js/lib/jquery-ui.min.js}"></script>
-	<script th:src="@{../js/lib/moment.min.js}"></script>
-	<script th:src="@{../js/common/Common.js}"></script>
-	<script th:src="@{../js/loanagain.js}"></script>
-	
-	
-<!-- popup form -->
- <div lang="en" th:replace="fragments/popup_loan :: popup_loan"></div>
-<!-- //popup form -->
-<!-- loading.... -->
-<div style="display:none;" id="loading">
-    <img th:src="@{../img/loading.gif}" alt="LAON" height="50" width="50">
-</div>
+	</th:block>
+	<!-- footer -->
+	<div lang="en" th:replace="fragments/footer :: footer"> </div> 
+	<!-- //footer -->  
+	</div>	
+	<th:block layout:fragment="asset">
+		<script th:src="@{/js/loanagain.js}"></script>
+		<input type="hidden" id="rate_db">
+		<input type="hidden" id="type_payment_db">
+		<input type="hidden" id="end_date_db">
+		<input type="hidden" id="day_db">
+		<input type="hidden" th:value="${loaner_id}" id="loaner_id"/>
+		<!-- popup form -->
+		 <div lang="en" th:replace="fragments/popup_loan :: popup_loan"></div>
+		<!-- //popup form -->		
+	</th:block>
 </body>
 </html>

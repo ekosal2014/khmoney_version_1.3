@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head lang="en" th:replace="fragments/head :: head"></head>
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/layout">
+<head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
 
 <body class="lnb_bg">
 
 <div class="wrap">
 
 	<!-- header -->
-	<div lang="en" th:replace="/header :: header"></div>
+	<div lang="en" th:replace="/header :: header"></div> 
 	<!-- //header -->
-
+	<th:block layout:fragment="content">
 	<!-- Container -->
 	<div class="container">
-
 		<!-- content wrap -->
 		<div class="content">
 			<div class="cnt_wrap">
@@ -226,32 +227,24 @@
 				<!-- //table_list -->				
 			</div>
 		</div>
-		<!-- //content wrap -->
+		<!-- //content wrap -->		
 	</div>
 	<!-- //Container -->
-	<input type="hidden" id="rate_db">
-	<input type="hidden" id="type_payment_db">
-	<input type="hidden" id="end_date_db">
-	<input type="hidden" id="day_db">
+	</th:block>
 	<!-- footer -->
 	<div lang="en" th:replace="fragments/footer :: footer"> </div>
-	<!-- //footer -->
-
+	<!-- //footer -->	
+	</div>
+	<th:block layout:fragment="asset">
+		<script th:src="@{/js/loanNew.js}"></script>
+		<input type="hidden" id="rate_db">
+		<input type="hidden" id="type_payment_db">
+		<input type="hidden" id="end_date_db">
+		<input type="hidden" id="day_db">
+		<!-- popup form -->
+	    <div lang="en" th:replace="fragments/popup_loan :: popup_loan"></div>
+	</th:block>
 	
-</div>
-	<script th:src="@{../js/lib/jquery-1.8.3.min.js}"></script>
-	<script th:src="@{../js/lib/autoNumeric.min.js}"></script>
-	<script th:src="@{../js/lib/jquery.bpopup.min.js}"></script>
-	<script th:src="@{../js/lib/jquery-ui.min.js}"></script>
-	<script th:src="@{../js/lib/moment.min.js}"></script>
-	<script th:src="@{../js/common/Common.js}"></script>
-	<script th:src="@{../js/loanNew.js}"></script>
-	<!-- popup form -->
-    <div lang="en" th:replace="fragments/popup_loan :: popup_loan"></div>
-<!-- loading.... -->
-<div style="display:none;" id="loading">
-    <img th:src="@{../img/loading.gif}" alt="LAON" height="50" width="50">
-</div>
 </body>
 </html>
 

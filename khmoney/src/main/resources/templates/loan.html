@@ -3,18 +3,18 @@
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:th="https://www.thymeleaf.org"
 	 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head lang="en" th:replace="fragments/head :: head"></head>
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	 layout:decorator="layouts/layout">
+<head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
 <body class="lnb_bg">
 <div class="wrap">
 
 	<!-- header -->
 	<div class="header" lang="en" th:replace="/header :: header_main"></div>
 	<!-- //header -->
-
+	<th:block layout:fragment="content">
 	<!-- Container -->
 	<div class="container">
-
 		<!-- content wrap -->
 		<div class="content">
 			<div class="cnt_wrap">
@@ -225,25 +225,13 @@
 		<!-- //content wrap -->
 	</div>
 	<!-- //Container -->
-	
+	</th:block>
 	<!-- footer -->
-	<div lang="en" th:replace="fragments/footer :: footer"> </div>
-	<!-- //footer -->
-
-	
-</div>
-
-    <script th:src="@{js/lib/jquery-1.8.3.min.js}"></script>
-	<script th:src="@{js/lib/autoNumeric.min.js}"></script>
-	<script th:src="@{js/lib/jquery.bpopup.min.js}"></script>
-	<script th:src="@{js/lib/jquery-ui.min.js}"></script>
-	<script th:src="@{/js/lib/moment.min.js}"></script>
-	<script th:src="@{js/common/Common.js}"></script>
-	<script th:src="@{js/lib/jquery-ui.min.js}"></script>
-	<script th:src="@{js/common/pagination.js}"></script>
-	<script th:src="@{js/loan.js}"></script>
-<div style="display:none;" id="loading">
-    <img th:src="@{img/loading.gif}" alt="LAON" height="50" width="50">
-</div>
+	<div lang="en" th:replace="fragments/footer :: footer"> </div> 
+	<!-- //footer -->	
+	</div>
+	<th:block layout:fragment="asset">
+		<script th:src="@{js/loan.js}"></script>
+	</th:block>	
 </body>
 </html>

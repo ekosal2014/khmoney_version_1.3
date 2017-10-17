@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
+  <html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"/></head>
 
-</head>
 
 <body class="lnb_bg">
 
 <div class="wrap">
 
 	<!-- header -->
-	<div class="header"  th:fragment="header">
+	<div class="header">
 		<div class="f_left cboth">
-			<h1 class="logo"><a th:href="@{/}"><img th:src="@{../img/logo/piggy-bank.png}" alt="LAON"></a></h1>
+			<h1 class="logo"><a th:href="@{/}"><img th:src="@{../img/logo/piggy-bank.png}" alt="LAON"/></a></h1>
 		</div>
 	</div>
 	<!-- //header -->
@@ -28,11 +29,11 @@
 					<ul>
 						<li>
 							<label>ឈ្មោះអ្នកប្រើប្រាស់</label>
-							<input type="text" name="username" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់" required="required">
+							<input type="text" name="username" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់" required="required"/>
 						</li>
 						<li>
 							<label>លេខសម្ងាត់អ្នកប្រើប្រាស់</label>
-							<input type="password" name="password" placeholder="បញ្ចូលលេខសម្ងាត់" required="required">
+							<input type="password" name="password" placeholder="បញ្ចូលលេខសម្ងាត់" required="required"/>
 						</li>
 						<!-- <li class="t_right"><a href="#none" class="btn_forget">ភ្លេចលេខសម្ងាត់?</a></li> -->
 						<li class="">
