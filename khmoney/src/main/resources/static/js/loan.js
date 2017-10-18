@@ -108,7 +108,9 @@ function pagConstand(page){
 								+'<td><div class="t_right">'+amount+' ៛</div></td>'
 								+'<td><div>'+end_date+'</div></td>'
 								+'<td><div class="t_center">'+(value.txt=='9'?'បានបញ្ចប់':'រង់ចាំ')+'</div></td>'
-								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a><a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
 							+'</tr>';
 					i++;
 				});
@@ -201,7 +203,9 @@ function pagDown(page){
 								+'<td><div class="t_right">'+amount+' ៛</div></td>'
 								+'<td><div>'+end_date+'</div></td>'
 								+'<td><div class="t_center">'+(value.txt=='9'?'បានបញ្ចប់':'រង់ចាំ')+'</div></td>'
-								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a><a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
 							+'</tr>';
 					i++;
 				});

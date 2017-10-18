@@ -41,14 +41,24 @@
 					<div class="t_center">
 						<div class="tit_h3"><h3>បញ្ចីសរុបទឹកប្រាក់</h3></div>
 					</div>
-					<div class="f_right">
-						<div class="srch_wrap">
-							
-							<div class="srch_box">
+					<!-- <div class="f_right">
+						<div class="srch_wrap" style="background-image:none !important;">							
+							<div class="srch_box" style="background-image:none !important;padding-right:0px !important;">
 								<input type="text" value="" placeholder="បញ្ចូល លេខកូដ ឬ ឈ្មោះអ្នកខ្ចី" id="search" style="width:193px;">
-								<a href="javascript:" class="btn_srch" id="tbl_search"></a>
+								<a href="javascript:" class="btn_addnew" id="btn_addMore"><span class="blind">add new</span></a>
 							</div>
 						</div>
+					</div> -->
+				</div>
+				<!-- //title_wrap -->
+				<!-- title_wrap -->
+				<div class="tit_wrap cboth mgt10">
+					<div class="t_left" >
+						<div class="tit_h4" style="padding-bottom:10px !important;"><h4>សរុបទឹកប្រាក់</h4> 
+						<h1 style="margin-left:80px;"><b>1,000,000 រៀល</b></h1></div>
+					</div>
+					<div class="right_box" style="bottom: 10px !important;top:auto !important;">
+						<a href="javascript:" class="btn_addnew" id="btn_addMore"><span class="blind">add new</span></a>
 					</div>
 				</div>
 				<!-- //title_wrap -->
@@ -60,13 +70,13 @@
 						<colgroup>
 						<col style="width:60px;">
 						<col style="width:60px;">
-						<col style="width:200px;">
-						<col>
-						<col>
-						<col>
+						<col style="width:120px;">
+						<col style="width:120px;">
 						<col style="width:120px;">
 						<col style="width:100px;">
+						<col style="width:120px;">
 						<col style="width:100px;">
+						<col >
 						</colgroup>
 						<thead>
 							<tr>
@@ -149,7 +159,7 @@
 	 <script th:src="@{js/common/Common.js}"></script>
 	 <script th:src="@{js/common/pagination.js}"></script> -->
 	 <th:block layout:fragment="asset">
-	 <script th:src="@{js/loaner.js}"></script>
+	 <script th:src="@{js/mywallet.js}"></script>
 	 </th:block>
 </body>
 </html>
