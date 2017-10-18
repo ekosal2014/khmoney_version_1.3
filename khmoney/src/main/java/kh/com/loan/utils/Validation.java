@@ -1,5 +1,6 @@
 package kh.com.loan.utils;
 
+
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,7 +20,7 @@ public class Validation {
 	}
 	public static <E extends Enum<E>> void isEnum(Class<E> clzz,String str, String message) throws KHException{
 		if (!EnumUtils.isValidEnum(clzz, str)){
-			throw new KHException("9999",message);
+			throw new KHException("9999", message);
 		}
 	}
 	

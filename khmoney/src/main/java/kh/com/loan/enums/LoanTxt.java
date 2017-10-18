@@ -1,20 +1,19 @@
 package kh.com.loan.enums;
 
-public enum Gender {
-	Male("1"),
-	Female("2")
+public enum LoanTxt {
+	DELETED("9"),
+	ACTIVE("1")
 	;
-	
 	private String value;
-	private Gender(String value){
+	private LoanTxt(String value){
 		this.value = value;
 	}
 	public String getValue(){
 		return this.value;
 	}
 	
-	public static Gender fromValue(String value){
-		for(Gender my: Gender.values()){
+	public static LoanTxt fromValue(String value){
+		for(LoanTxt my: LoanTxt.values()){
 			if (my.value == value){
 				return my;
 			}
@@ -23,7 +22,7 @@ public enum Gender {
 	}
 	
 	public static boolean contains(String value) {
-	    for (Gender g : Gender.values()) {
+	    for (LoanTxt g : LoanTxt.values()) {
 	        if (g.value.equals(value)) {
 	            return true;
 	        }

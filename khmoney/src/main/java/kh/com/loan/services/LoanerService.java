@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ import kh.com.loan.domains.Loaner;
 import kh.com.loan.domains.Message;
 import kh.com.loan.domains.Setting;
 import kh.com.loan.domains.User;
+import kh.com.loan.domains.Wallet;
+import kh.com.loan.enums.Gender;
+import kh.com.loan.enums.LoanSts;
+import kh.com.loan.enums.LoanTxt;
 import kh.com.loan.mappers.LoanMapper;
 import kh.com.loan.mappers.LoanerMapper;
 import kh.com.loan.mappers.SettingMapper;
+import kh.com.loan.mappers.WalletMapper;
 import kh.com.loan.utils.Common;
 import kh.com.loan.utils.KHException;
 import kh.com.loan.utils.PaginationUtils;
@@ -38,10 +44,11 @@ public class LoanerService {
 	@Autowired
 	private LoanerMapper loanerMapper;
 	@Autowired
-	private LoanMapper loanMapper;
-	
+	private LoanMapper loanMapper;	
 	@Autowired
 	private SettingMapper settingMapper;
+	@Autowired
+	private WalletMapper walletMapper;
 	
 	public Message loanerGetMaxId() throws KHException {
 		HashMap<String, String> result = new HashMap<>();
@@ -100,28 +107,30 @@ public class LoanerService {
 		}
 	}
 	
-	@Transactional(value="transactionManager")
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
 	public Message loanSaveNewItem(Map map) throws KHException {
 		/*Loaner information */
 		Validation.isBlank((String)map.get("loaner_name"), "សូមធ្វើការបញ្ជូលលេខឈ្មោះរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)map.get("id_card"), "សូមធ្វើការបញ្ជូលលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)map.get("phone"), "សូមធ្វើការបញ្ជូលលេខទូរស័ព្ទរបស់អ្នកខ្ចី");
 		Validation.isBlank((String)map.get("address"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
-		
-		/*Validation.isEnum(Gender.class, (String)map.get("gender"), "gender");*/
-/*		if (EnumUtils.isValidEnum(Gender.class, (String)map.get("gender")) != true) {
-			throw new KHException("9999", "gender");
-		}*/
-		/*loan information*/
+		//Validation.isEnum(Gender.class, Gender.fromValue((String)map.get("gender")).name(), "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
+		if (!Gender.contains((String)map.get("gender"))){
+			throw new KHException("9999", "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
+		}
+		/*Loan information */
 		Validation.isNumber((String)map.get("total_money"), "សូមធ្វើការបញ្ជូលចំនួនទឹកលុយដែលត្រូវខ្ចី");
 		Validation.isNumber((String)map.get("decrement"), "សូមធ្វើការបញ្ជូលចំនួនទឹកលុយដែលត្រូវបង់ថយមួយលើក");
 		Validation.isNumber((String)map.get("time"), "សូមធ្វើការបញ្ជូលចំនួនដងដែលត្រូវបង់ប្រាក់");		
 		Validation.isRate((String)map.get("rate"), "សូមធ្វើការបញ្ជូលអត្រាការប្រាក់នៃចំនួនទឹកប្រាក់ដែលខ្ចី");
-		User user = new User();
+		
+		User user     = new User();
 		Loaner loaner = new Loaner();
-		Loan loan = new Loan();
+		Loan loan     = new Loan();
+		Wallet wallet = new Wallet();
+		
 		try {
-			
+			/*set loan information */
 			Long total_money= Long.valueOf((String)map.get("total_money"));
 			int  decrement  = Integer.valueOf((String)map.get("decrement"));
 			Double rate     = Double.valueOf((String)map.get("rate"));
@@ -129,7 +138,7 @@ public class LoanerService {
 			int  day        = Integer.valueOf((String)map.get("day"));
 			Double prak_derm  = (double) (total_money / time);
 			
-			
+			/*check user login information */
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (!auth.getPrincipal().equals("anonymousUser")) {
 				user = (User) auth.getPrincipal();
@@ -138,23 +147,23 @@ public class LoanerService {
 				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
 			}
 			
+			/*insert loaner information */
 			loaner.setUser_id(user.getUser_id());
 			loaner.setLoaner_name((String)map.get("loaner_name"));
 			loaner.setGender((String)map.get("gender"));
 			loaner.setPhone((String)map.get("phone"));
 			loaner.setId_card((String)map.get("id_card"));
 			loaner.setAddress((String)map.get("address"));
-			loaner.setSts("1");
-			loaner.setTxt("1");
+			loaner.setSts(LoanSts.ACTIVE.getValue());
+			loaner.setTxt(LoanTxt.ACTIVE.getValue());
 			loaner.setModify_by(user.getUser_id());
 			loaner.setAction("insert Loaner");
-			loaner.setModify_date(Common.getCurrentDate());
+			loaner.setModify_date(Common.getCurrentDate());				
 			
-			
-			
-			loanerMapper.insertLoanerItem(loaner);
-
-			
+			if (loanerMapper.insertLoanerItem(loaner) <= 0){
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
+			/*insert loan information */
 			loan.setLoaner_id(loaner.getLoaner_id());
 			loan.setTotal_money(total_money);
 			loan.setUser_id(user.getUser_id());
@@ -165,17 +174,39 @@ public class LoanerService {
 			loan.setType_money("1");
 			loan.setTime(time);
 			loan.setDecrement(decrement);
-			loan.setSts("1");
-			loan.setTxt("1");
+			loan.setSts(LoanSts.ACTIVE.getValue());
+			loan.setTxt(LoanTxt.ACTIVE.getValue());
 			loan.setModify_by(user.getUser_id());
 			loan.setModify_date(Common.getCurrentDate());
-			loan.setAction("inser Loan");
-					
+			loan.setAction("inser Loan");					
 			
-			loanMapper.insertLoanItem(loan);
+			if (loanMapper.insertLoanItem(loan) <= 0){
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}		
 			
-			Date dt = formatter.parse((String)map.get("start_date"));
-			
+			/*insert wallet information */			
+			wallet = walletMapper.loadingMywalletByIMaxId();
+			 if (wallet.getTotal_amount() < loan.getTotal_money()){
+		    	throw new KHException("9999", "មិនអាចធ្វើការខ្ចីបានទេ ព្រោះចំនួនទឹកប្រាក់ច្រើនហួសកំនត់ សូមទំនាក់ទំនងទៅកាន់ថ្នាក់លើរបស់អ្នក!");
+		    }	
+			 
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(loan.getTotal_money());
+			wallet.setTotal_amount(wallet.getTotal_amount() - loan.getTotal_money());
+			wallet.setType_amount("9");
+			wallet.setRequest_by(user.getUser_id());
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(loan.getLoan_id());
+		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+user.getFull_name()
+		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
+		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
+		    
+		    if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
+		  
+		    /*insert loan payment information */
+			Date dt = formatter.parse((String)map.get("start_date"));			
 			int d = 0;
 			for(int i=1; i<= Integer.valueOf((String)map.get("time")) ; i++) {
 				LoanPayment loanPayment = new LoanPayment();
@@ -188,19 +219,20 @@ public class LoanerService {
 					total_rate = (Double) ((total_money * rate) / 100) - d; 
 				}
 
-				Double total_left = total_money - (prak_derm * i) ;
-				
+				Double total_left = total_money - (prak_derm * i) ;				
 				
 				loanPayment.setLoan_id(loan.getLoan_id());
 				loanPayment.setPayment_date(formatter.format(dt).toString());
 				loanPayment.setPrak_derm(prak_derm);
 				loanPayment.setTotal_rate(total_rate);
 				loanPayment.setTotal_left(total_left);
-				loanPayment.setTxt("1");
+				loanPayment.setTxt(LoanTxt.ACTIVE.getValue());
 				loanPayment.setModify_by(user.getUser_id());
 				loanPayment.setModify_date(Common.getCurrentDate());
 				loanPayment.setAction("Insert Loaner payment");
-				loanMapper.insertLoanPayment(loanPayment) ;
+				if (loanMapper.insertLoanPayment(loanPayment) <= 0){
+					throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+				}
 				
 				d += decrement;
 			}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kh.com.loan.mappers.WalletMapper">
+	<select id="loadingMywalletByIMaxId" resultType="kh.com.loan.domains.Wallet">
+		SELECT
+			  id
+			, old_amount
+			, amount
+			, total_amount
+			, type_amount
+			, request_by
+			, request_id
+			, request_date
+			, approve_by
+			, approve_date
+			, decription
+		FROM tblwallet
+		WHERE id = (SELECT MAX(ID) AS maxId FROM tblwallet)
+	</select>
+	<insert id="insertMywallet" parameterType="kh.com.loan.domains.Wallet">
+		INSERT INTO tblwallet(
+            	  old_amount
+            	, amount
+            	, total_amount
+            	, type_amount
+            	, request_by
+            	, request_id
+            	, request_date
+            	, approve_by
+            	, approve_date
+            	, decription
+            	)
+    	VALUES (
+    			  #{old_amount}
+    			, #{amount}
+    			, #{total_amount}
+    			, #{type_amount}
+    			, #{request_by}
+    			, #{request_id}
+    			, #{request_date}
+    			, #{approve_by}
+    			, #{approve_date}
+    			, #{decription}
+    			);
+	</insert>
+
+</mapper>

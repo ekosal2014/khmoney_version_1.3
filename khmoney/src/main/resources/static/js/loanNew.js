@@ -67,7 +67,7 @@ function loanerGetMaxId(){
 		url :'/khmoney/loanerGetMaxId',
 		success:function(json){
 			//console.log(json);
-			if (json.code == 'undefined'){
+			if (json.code == 'undefined' || json.code == '9999'){
 				alert(json.message);
 				return;
 			}
@@ -97,7 +97,7 @@ function loadingSettingData(id){
 		url :'/khmoney/loadingSettingData',
 		data:'payTxt='+id,
 		success:function(json){
-			if (json.code == 'undefined'){
+			if (json.code == 'undefined' || json.code == '9999'){
 				alert(json.message);
 				return;
 			}
@@ -128,7 +128,7 @@ function loadingSettingValue(val,payTxt){
 		url :'/khmoney/loadingSettingValue',
 		data: 'payTxt='+payTxt,
 		success:function(json){
-			if (json.code == 'undefined'){
+			if (json.code == 'undefined' || json.code == '9999'){
 				alert(json.message);
 				return;
 			}
@@ -322,7 +322,7 @@ function loanSaveNewItem(){
 		url :'/khmoney/loanSaveNewItem',
 		data:data,
 		success:function(json){
-			if (json.code == 'undefined'){
+			if (json.code == 'undefined' || json.code == '9999'){
 				alert(json.message);
 				return;
 			}
