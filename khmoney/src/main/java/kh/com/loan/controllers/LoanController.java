@@ -78,8 +78,8 @@ public class LoanController {
 		return loanerService.decrementTypeValue();
 	}
 	
-	@RequestMapping(value = "/loanSaveNewItem", method = RequestMethod.GET)
-	public @ResponseBody Message loanSaveNewItem(@RequestParam Map params) throws KHException {
+	@RequestMapping(value = "/loanSaveNewItem", method = RequestMethod.POST)
+	public @ResponseBody Message loanSaveNewItem(@RequestBody Map<String,String> params) throws KHException {
 		//System.out.println(" Map === "+ params);
 		return loanerService.loanSaveNewItem(params);
 	}

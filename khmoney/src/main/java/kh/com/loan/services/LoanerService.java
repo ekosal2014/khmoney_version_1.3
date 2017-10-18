@@ -148,7 +148,7 @@ public class LoanerService {
 			}
 			
 			/*insert loaner information */
-			loaner.setUser_id(user.getUser_id());
+			loaner.setUser_id(Integer.valueOf((String) map.get("agent")));
 			loaner.setLoaner_name((String)map.get("loaner_name"));
 			loaner.setGender((String)map.get("gender"));
 			loaner.setPhone((String)map.get("phone"));
@@ -166,7 +166,7 @@ public class LoanerService {
 			/*insert loan information */
 			loan.setLoaner_id(loaner.getLoaner_id());
 			loan.setTotal_money(total_money);
-			loan.setUser_id(user.getUser_id());
+			loan.setUser_id(Integer.valueOf((String) map.get("agent")));
 			loan.setStart_date((String)map.get("start_date"));
 			loan.setCount_date(day);
 			loan.setRate(rate);
@@ -197,7 +197,7 @@ public class LoanerService {
 			wallet.setRequest_by(user.getUser_id());
 			wallet.setRequest_date(Common.getCurrentDate());
 			wallet.setRequest_id(loan.getLoan_id());
-		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+user.getFull_name()
+		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ (String)map.get("agentname")
 		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
 		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
 		    

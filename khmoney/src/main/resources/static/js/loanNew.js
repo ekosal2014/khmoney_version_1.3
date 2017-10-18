@@ -245,6 +245,7 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
+	$('#agent').val('1');
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
@@ -300,7 +301,6 @@ function loanSaveNewItem(){
     	return;
     }	
     $('#loading').bPopup();
-
 	var data = {
 			'loaner_name' :$('#loaner_name').val(),
 			'gender'      :$('input[name=gender]:checked').val(),
@@ -313,14 +313,23 @@ function loanSaveNewItem(){
 			'type_payment':$('#type_payment_db').val(),
 			'time'        :$('#time_txt').val().replace(/[​\u202f\ដង\,]/g,'').trim(),
 			'decrement'   :$('#decrement_txt').val().replace(/[​\u202f\៛\,]/g,'').trim(),
-			'day'         :$('#day_db').val()
+			'day'         :$('#day_db').val(),
+			'agent'       :$('#agent').val(),
+			'agentName'   :$('#agent_txt').val()
 			//'paymentList' :obj
 	};
-	//console.log(data);
+	var token = $('#_csrf').attr('content');
+	var header = $('#_csrf_header').attr('content');
+	console.log(data);
 	$.ajax({
-		type:'GET',
+		type:'POST',
+ 		contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
 		url :'/khmoney/loanSaveNewItem',
-		data:data,
+		data: JSON.stringify(data),
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token)
+         },
 		success:function(json){
 			if (json.code == 'undefined' || json.code == '9999'){
 				alert(json.message);
