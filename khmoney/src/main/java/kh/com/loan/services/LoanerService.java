@@ -194,10 +194,12 @@ public class LoanerService {
 			wallet.setAmount(loan.getTotal_money());
 			wallet.setTotal_amount(wallet.getTotal_amount() - loan.getTotal_money());
 			wallet.setType_amount("9");
-			wallet.setRequest_by(user.getUser_id());
+			wallet.setRequest_by(Integer.valueOf((String) map.get("agent")));
 			wallet.setRequest_date(Common.getCurrentDate());
 			wallet.setRequest_id(loan.getLoan_id());
-		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ (String)map.get("agentname")
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
+		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ (String)map.get("agentName")
 		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
 		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
 		    
