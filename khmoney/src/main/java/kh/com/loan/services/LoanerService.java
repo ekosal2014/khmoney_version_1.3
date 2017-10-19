@@ -7,14 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.com.loan.domains.Loan;
@@ -293,7 +291,7 @@ public class LoanerService {
 		}
 	}
 	
-	@Transactional(value="transactionManager")
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
 	public Message loanSaveLoanAgain(HashMap<String, String> params) throws KHException {
 
 		/*loan information*/
@@ -302,9 +300,10 @@ public class LoanerService {
 		Validation.isNumber((String)params.get("time"), "សូមធ្វើការបញ្ជូលចំនួនដងដែលត្រូវបង់ប្រាក់");		
 		Validation.isRate((String)params.get("rate"), "សូមធ្វើការបញ្ជូលអត្រាការប្រាក់នៃចំនួនទឹកប្រាក់ដែលខ្ចី");
 		HashMap<String, String> param = new HashMap<>();
-		User user = new User();
+		User user     = new User();
 		Loaner loaner = new Loaner();
-		Loan loan = new Loan();
+		Loan loan     = new Loan();
+		Wallet wallet = new Wallet();
 		try {
 			
 			Long total_money= Long.valueOf((String)params.get("total_money"));
@@ -330,11 +329,13 @@ public class LoanerService {
 			System.out.println(loaner.toString());
 			loaner.setTxt("1");
 			loaner.setAction("Update Loaner Information (txt)");
-			loanerMapper.loanerUpdateById(loaner);
+			if (loanerMapper.loanerUpdateById(loaner) <= 0 ){
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
 			
 			loan.setLoaner_id(loaner_id);
 			loan.setTotal_money(total_money);
-			loan.setUser_id(user.getUser_id());
+			loan.setUser_id(Integer.valueOf((String) params.get("agent")));
 			loan.setStart_date((String)params.get("start_date"));
 			loan.setCount_date(day);
 			loan.setRate(rate);
@@ -342,14 +343,39 @@ public class LoanerService {
 			loan.setType_money("1");
 			loan.setTime(time);
 			loan.setDecrement(decrement);
-			loan.setSts("1");
-			loan.setTxt("1");
+			loan.setSts(LoanSts.ACTIVE.getValue());
+			loan.setTxt(LoanTxt.ACTIVE.getValue());
 			loan.setModify_by(user.getUser_id());
 			loan.setModify_date(Common.getCurrentDate());
 			loan.setAction("inser Loan");
 					
 			
-			loanMapper.insertLoanItem(loan);
+			if (loanMapper.insertLoanItem(loan) <= 0 ) {
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
+			
+			/*insert wallet information */			
+			wallet = walletMapper.loadingMywalletByIMaxId();
+			 if (wallet.getTotal_amount() < loan.getTotal_money()){
+		    	throw new KHException("9999", "មិនអាចធ្វើការខ្ចីបានទេ ព្រោះចំនួនទឹកប្រាក់ច្រើនហួសកំនត់ សូមទំនាក់ទំនងទៅកាន់ថ្នាក់លើរបស់អ្នក!");
+		    }	
+			 
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(loan.getTotal_money());
+			wallet.setTotal_amount(wallet.getTotal_amount() - loan.getTotal_money());
+			wallet.setType_amount("9");
+			wallet.setRequest_by(Integer.valueOf((String) params.get("agent")));
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(loan.getLoan_id());
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
+		    wallet.setDecription( " ស្នើសុំខ្ចីម្ដងទៀតដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ (String)params.get("agentName")
+		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
+		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
+		    
+		    if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
 			
 			Date dt = formatter.parse((String)params.get("start_date"));
 			
@@ -373,11 +399,13 @@ public class LoanerService {
 				loanPayment.setPrak_derm(prak_derm);
 				loanPayment.setTotal_rate(total_rate);
 				loanPayment.setTotal_left(total_left);
-				loanPayment.setTxt("1");
+				loanPayment.setTxt(LoanTxt.ACTIVE.getValue());
 				loanPayment.setModify_by(user.getUser_id());
 				loanPayment.setModify_date(Common.getCurrentDate());
 				loanPayment.setAction("Insert Loaner payment");
-				loanMapper.insertLoanPayment(loanPayment);
+				if (loanMapper.insertLoanPayment(loanPayment) <= 0 ){
+					throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+				}
 				
 				d += decrement;
 			}
@@ -461,7 +489,7 @@ public class LoanerService {
 		}
 	}
 	
-	@Transactional(value="transactionManager")
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
 	public Message loanSaveUdateItem(HashMap<String, String> params) throws KHException {
 		HashMap<String, String> param = new HashMap<>();
 		/*Loaner information */
@@ -469,14 +497,18 @@ public class LoanerService {
 		Validation.isNumber((String)params.get("id_card"), "សូមធ្វើការបញ្ជូលលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)params.get("phone"), "សូមធ្វើការបញ្ជូលលេខទូរស័ព្ទរបស់អ្នកខ្ចី");
 		Validation.isBlank((String)params.get("address"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
+		if (!Gender.contains((String)params.get("gender"))){
+			throw new KHException("9999", "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
+		}
 		
 		Validation.isNumber((String)params.get("total_money"), "សូមធ្វើការបញ្ជូលចំនួនទឹកលុយដែលត្រូវខ្ចី");
 		Validation.isNumber((String)params.get("decrement"), "សូមធ្វើការបញ្ជូលចំនួនទឹកលុយដែលត្រូវបង់ថយមួយលើក");
 		Validation.isNumber((String)params.get("time"), "សូមធ្វើការបញ្ជូលចំនួនដងដែលត្រូវបង់ប្រាក់");		
 		Validation.isRate((String)params.get("rate"), "សូមធ្វើការបញ្ជូលអត្រាការប្រាក់នៃចំនួនទឹកប្រាក់ដែលខ្ចី");
-		User user = new User();
+		User user     = new User();
 		Loaner loaner = new Loaner();
-		Loan loan = new Loan();
+		Loan loan     = new Loan();
+		Wallet wallet = new Wallet();
 		try {
 			Long total_money= Long.valueOf((String)params.get("total_money"));
 			int  decrement  = Integer.valueOf((String)params.get("decrement"));
@@ -484,6 +516,8 @@ public class LoanerService {
 			int time        = Integer.valueOf((String)params.get("time"));
 			int  day        = Integer.valueOf((String)params.get("day"));
 			Double prak_derm  = (double) (total_money / time);
+			Long b_tt         = 0L;
+			Long a_tt         = 0L;
 			
 			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -496,8 +530,7 @@ public class LoanerService {
 			
 			int loaner_id = Integer.valueOf((String)params.get("loaner_id"));
 			param.put("loaner_id", String.valueOf(loaner_id));
-			loaner = (Loaner)loanerMapper.loadingLoanerInformationById(param);
-		
+			loaner = (Loaner)loanerMapper.loadingLoanerInformationById(param);		
 			
 			loaner.setLoaner_name((String)params.get("loaner_name"));
 			loaner.setGender((String)params.get("gender"));
@@ -507,11 +540,13 @@ public class LoanerService {
 			loaner.setModify_by(user.getUser_id());
 			loaner.setModify_date(Common.getCurrentDate());
 			loaner.setAction("Update Loaner Information (txt)");
-			loanerMapper.loanerUpdateById(loaner);
+			if (loanerMapper.loanerUpdateById(loaner) <= 0 ) {
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
 			
 			int loan_id = Integer.valueOf(params.get("loan_id"));
 			loan        = loanMapper.loadingLoanViewCheck(loan_id);
-			
+			b_tt        = loan.getTotal_money();
 			loan.setLoaner_id(loaner.getLoaner_id());
 			loan.setTotal_money(total_money);
 			loan.setUser_id(user.getUser_id());
@@ -525,10 +560,45 @@ public class LoanerService {
 			loan.setModify_date(Common.getCurrentDate());
 			loan.setAction("update Loan");
 			
-			loanMapper.updateLoanById(loan);
+			if (loanMapper.updateLoanById(loan) <= 0 ){
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
+		
+			/*insert wallet information */			
+			wallet = walletMapper.loadingMywalletByIMaxId();
+		    String typeAmount = "";
+		    Long    addAmount = 0L;
+			if (b_tt < total_money){
+				a_tt = wallet.getTotal_amount() - (total_money - b_tt);
+				addAmount = total_money - b_tt;
+				typeAmount = "9";
+			}else{
+				a_tt = wallet.getTotal_amount() + (b_tt - total_money);
+				addAmount = b_tt - total_money;
+				typeAmount = "1";
+			}
+			 if (a_tt < 0){
+		    	throw new KHException("9999", "មិនអាចធ្វើការខ្ចីបានទេ ព្រោះចំនួនទឹកប្រាក់ច្រើនហួសកំនត់ សូមទំនាក់ទំនងទៅកាន់ថ្នាក់លើរបស់អ្នក!");
+		    }	
+
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(addAmount);
+			wallet.setTotal_amount(a_tt);
+			wallet.setType_amount(typeAmount);
+			wallet.setRequest_by(Integer.valueOf((String) params.get("agent")));
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(loan.getLoan_id());
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
+		    wallet.setDecription( " ស្នើសុំកែប្រែដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ user.getFull_name()
+		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
+		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
+		    
+		    if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
 			
-            Date dt = formatter.parse((String)params.get("start_date"));
-			
+            Date dt = formatter.parse((String)params.get("start_date"));			
             
            loanMapper.deleteLoanPaymentByLoanId(loan_id);
            
@@ -555,7 +625,9 @@ public class LoanerService {
 				loanPayment.setModify_by(user.getUser_id());
 				loanPayment.setModify_date(Common.getCurrentDate());
 				loanPayment.setAction("Insert Loaner payment");
-				loanMapper.insertLoanPayment(loanPayment);
+				if (loanMapper.insertLoanPayment(loanPayment) <= 0 ){
+					throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+				}
 				
 				d += decrement;
 			}
@@ -574,20 +646,22 @@ public class LoanerService {
 		}
 	}
 	
-	@Transactional(value="transactionManager")
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
+	@SuppressWarnings("unchecked")
 	public Message loanPaymentSaveUpdate(HashMap<String,Object> params) throws KHException {
 		try {
-			User user = new User();
+			User    user  = new User();
 			Loaner loaner = new Loaner();
 			Loan   loan   = new Loan();
+			Wallet wallet = new Wallet();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (!auth.getPrincipal().equals("anonymousUser")) {
 				user = (User) auth.getPrincipal();
 				
 			}else {
-				throw new KHException("9999", "ការកែប្រែរបស់លោកអ្នកទទួលបរាជ័យ");
-			}
+				throw new KHException("9999", "ការកែប្រែរបស់លោកអ្នកទទួលបរាជ័យ");			}
 
+			
 			List<HashMap<String, String>> payMent = (List)params.get("loanPayment");
 			
 			for (int i=0;i<payMent.size();i++) {
@@ -597,7 +671,7 @@ public class LoanerService {
 				param.put("modify_by", String.valueOf(user.getUser_id()));
 				param.put("modify_date", Common.getCurrentDate());
 				param.put("note", (String)param.get("note"));
-				param.put("txt", "9");
+				param.put("txt", LoanTxt.DELETED.getValue());
 				param.put("action", "update Information");
 				loanMapper.loanPaymentSaveUpdate(param);
 			}
@@ -621,18 +695,16 @@ public class LoanerService {
 			HashMap<String, String> param = new HashMap<>();
 			param.put("loaner_id", (String)params.get("loaner_id"));
 			param.put("loan_id", (String)params.get("loan_id"));
-			if (loanMapper.loanPaymentCountNotPay(param) <= 0) {
-				
-				loaner = (Loaner)loanerMapper.loadingLoanerInformationById(param);			
+			loaner = (Loaner)loanerMapper.loadingLoanerInformationById(param);
+			loan   = (Loan)loanMapper.loadingLoanViewCheck(Integer.valueOf(param.get("loan_id")));
+			if (loanMapper.loanPaymentCountNotPay(param) <= 0) {							
 
 				loaner.setTxt("9");
 				loaner.setModify_by(user.getUser_id());
 				loaner.setModify_date(Common.getCurrentDate());
 				loaner.setAction("update Loan");
 				System.out.println( " loaner  id"+ loaner.getLoaner_id());
-				loanerMapper.loanerUpdateById(loaner);
-				
-				loan   = (Loan)loanMapper.loadingLoanViewCheck(Integer.valueOf(param.get("loan_id")));
+				loanerMapper.loanerUpdateById(loaner);				
 
 				loan.setTxt("9");
 				loan.setModify_by(user.getUser_id());
@@ -641,7 +713,26 @@ public class LoanerService {
 				System.out.println( " loan  id"+ loan.getLoan_id());
 				loanMapper.updateLoanById(loan);
 			}
-
+			
+			Long totalAmount = Long.valueOf((String)params.get("totalAmount"));
+			wallet = walletMapper.loadingMywalletByIMaxId();			 
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(totalAmount);
+			wallet.setTotal_amount(wallet.getTotal_amount() + totalAmount);
+			wallet.setType_amount("1");
+			wallet.setRequest_by(user.getUser_id());
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(loan.getLoan_id());
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
+		    wallet.setDecription( " ស្នើសុំដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ user.getFull_name()
+		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
+		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
+			
+		    if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
+			
 			return new Message("0000","ការកែប្រែរបស់លោកអ្នកទទួលបានជោគជ័យ");
 		}catch(Exception e) {
 			throw new KHException("9999", e.getMessage());

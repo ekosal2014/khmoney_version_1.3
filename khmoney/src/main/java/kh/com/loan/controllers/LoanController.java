@@ -146,6 +146,7 @@ public class LoanController {
 		return loanerService.loadingDeleteLoan(loan_id,loaner_id);
 	}
 	
+	
 }
 
 

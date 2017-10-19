@@ -200,7 +200,7 @@
 		<if test="decrementTxt != '' and decrementTxt != null">
 			AND decrement > 0
 		</if>
-		order by start_date desc
+		order by loan_id desc
 		limit cast(#{perPage} as int) offset cast(#{start} as int)
 	</select>
 	<select id="loadingLoanListViewCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
@@ -247,6 +247,7 @@
 		     , B.count_day
 		     , B.loan_id
 		     , U.full_name
+		     , U.user_id
 		     , (select C.columns from tblrate_type C where C.type = cast(B.type_payment as int) group by C.columns)  as type_payment_num
 		from tblloaner A,tblloan B,tbluser u
 		where A.sts != '9'

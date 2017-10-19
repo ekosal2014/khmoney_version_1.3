@@ -162,7 +162,7 @@
 								<th><div>ប្រាក់ថយចុះ</div></th>
 								<td ><div><input type="text" value="0 ៛" name="decrement_txt" id="decrement_txt" placeholder="" readonly="readonly"></div></td>
 								 <th><div>ភ្នាក់ងារ</div></th>
-								<td​​ colspan="3"><div><input type="text" value="អេ  កុសល" name="agent_txt" id="decrement_txt" placeholder="" readonly="readonly"></div></td>
+								<td​​ colspan="3"><div><input type="text" value="អេ  កុសល" name="agent_txt" id="agent_txt" placeholder="" readonly="readonly"></div></td>
 								<!--<th><div></div></th>
 								<td><div></div></td> -->
 							</tr>
@@ -244,6 +244,7 @@
 		<input type="hidden" id="day_db">
 		<input type="hidden" th:value="${loaner_id}" id="loaner_id"/>
 	    <input type="hidden" th:value="${loan_id}" id="loan_id"/>
+	    <input type="hidden" id="agent"/>
 		<!-- popup form -->
 	   <div lang="en" th:replace="fragments/popup_loan :: popup_loan"></div>
 	</th:block>

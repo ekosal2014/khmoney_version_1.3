@@ -77,6 +77,7 @@ function loanerGetMaxId(){
 		    $('#address').val(json.object.loanerObject.address);
 			$('#loan_code').val(Common.numberWithComma(json.object.maxLoanId,"-"));
 			$('#agent_txt').val(json.object.userName);
+			$('#agent').val(json.object.loanerObject.user_id);
 		},error:function(json){
 			console.log(json);
 		}
@@ -106,7 +107,16 @@ function loadingSettingData(id){
 			console.log(json);
 			var ListColumns = json.object.ListColumns;
 			var settingList = json.object.settingList			
+			var userList    = json.object.ListUser;
 			var opt ='';
+			
+			$('#popup_agent').empty();
+			$.each(userList,function(index, value){
+				opt += '<option value="'+value.user_id+'">'+value.full_name+'</option>';
+			});
+			$('#popup_agent').append(opt);	
+			
+			opt = '';			
 			$("#type_payment").empty();
 			$.each(ListColumns,function(index, value){
 				opt += '<option value="'+value.type+'" data='+value.day+'>'+value.columns+'</option>';
@@ -243,6 +253,8 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
+	$('#agent_txt').val($('#popup_agent').text());
+	$('#agent').val($('#popup_agent').val());
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
@@ -309,7 +321,9 @@ function loanSaveLoanAgain(){
 			'type_payment':$('#type_payment_db').val(),
 			'time'        :$('#time_txt').val().replace(/[​\u202f\ដង\,]/g,'').trim(),
 			'decrement'   :$('#decrement_txt').val().replace(/[​\u202f\៛\,]/g,'').trim(),
-			'day'         :$('#day_db').val()
+			'day'         :$('#day_db').val(),
+			'agent'       :$('#agent').val(),
+			'agentName'   :$('#agent_txt').val()
 	};
 	console.log(data);
 	$.ajax({

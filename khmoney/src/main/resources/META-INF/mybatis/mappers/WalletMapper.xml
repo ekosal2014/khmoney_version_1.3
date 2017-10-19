@@ -43,5 +43,27 @@
     			, #{decription}
     			);
 	</insert>
+	<select id="loadingListWallet" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			  id
+			, old_amount
+			, amount
+			, total_amount
+			, type_amount
+			, (select u.full_name from tbluser u where u.user_id=w.request_by ) as request_by
+			, request_id
+			, request_date
+			, (select u.full_name from tbluser u where u.user_id=w.approve_by ) as approve_by
+			, approve_date
+			, decription
+		FROM tblwallet w		
+		ORDER BY id desc
+		limit cast(#{perPage} as int) offset cast(#{start} as int)
+	</select>
+	<select id="loadingTotalCountRows" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*) AS countTT
+		FROM tblwallet
+	</select>
 
 </mapper>

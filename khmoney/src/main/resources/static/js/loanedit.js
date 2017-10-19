@@ -67,7 +67,7 @@ function loanerGetMaxId(){
 		url :'/khmoney/loadingLoanEdit',
 		data:data,
 		success:function(json){
-			//console.log(json);
+			console.log(json);
 			if (json.code == 'undefined'){
 				alert(json.message);
 				return;
@@ -105,7 +105,8 @@ function loanerGetMaxId(){
 		   $('#first_date_txt').val(moment(start_date).format('DD/MM/YYYY'));
 		   $('#rate_money_txt').val(Common.numberWithComma(total_rate) + ' ៛');
 		   $('#decrement_txt').val(Common.numberWithComma(json.object.loanObject.decrement) + ' ៛');
-		   $('#agent').val(json.object.loanObject.full_name);
+		   $('#agent_txt').val(json.object.loanObject.full_name);
+		   $('#agent').val(json.object.loanObject.user_id);
 		   
 		   var tbl = '', d = 0;
 		   $('#tbl_lst1 tbody').empty();
@@ -168,9 +169,17 @@ function loadingSettingData(id){
 			//console.log(json);
 			var ListColumns = json.object.ListColumns;
 			var settingList = json.object.settingList			
+			var userList    = json.object.ListUser;
 			var opt ='';
-			$("#type_payment").empty();
 			
+			$('#popup_agent').empty();
+			$.each(userList,function(index, value){
+				opt += '<option value="'+value.user_id+'">'+value.full_name+'</option>';
+			});
+			$('#popup_agent').append(opt);	
+			
+			var opt ='';
+			$("#type_payment").empty();			
 			$.each(ListColumns,function(index, value){
 				opt += '<option value="'+value.type+'" data='+value.day+'>'+value.columns+'</option>';
 			});
@@ -307,6 +316,8 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
+	$('#agent_txt').val($('#popup_agent').text());
+	$('#agent').val($('#popup_agent').val());
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
@@ -378,7 +389,9 @@ function loanSaveEdittem(){
 			'type_payment':$('#type_payment_db').val(),
 			'time'        :$('#time_txt').val().replace(/[​\u202f\ដង\,]/g,'').trim(),
 			'decrement'   :$('#decrement_txt').val().replace(/[​\u202f\៛\,]/g,'').trim(),
-			'day'         :$('#day_db').val()
+			'day'         :$('#day_db').val(),
+			'agent'       :$('#agent').val(),
+			'agentName'   :$('#agent_txt').val()
 	};
 	console.log(data);
 	$.ajax({

@@ -230,12 +230,14 @@ function loanPaymentSaveUpdate(){
 	data['loanPayment']=obj;
 	data['loan_id']=$('#loan_id').val();
 	data['loaner_id']=$('#loaner_id').val();
+	data['totalAmount'] = $('#popup_total').text().replace(/[​\u202f\៛\,]/g,'').trim();
 	data['paymentAll'] = 'false';
 	if ($('#payment_all').is(':checked')){
 		data['paymentAll'] = 'true';
 	}
 	var token = $('#_csrf').attr('content');
 	var header = $('#_csrf_header').attr('content');
+	console.log(data);
 	$.ajax({
 		type:'POST',
 		contentType : 'application/json; charset=utf-8',

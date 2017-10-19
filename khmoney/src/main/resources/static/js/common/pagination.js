@@ -51,26 +51,12 @@ pagination.showPage = function(option){
 	var end  = (Math.ceil(this.currentPage / this.maxVisible) * this.maxVisible);
 	if (end > this.numPage){ end = this.numPage; }
 	var page =  '';
-	if (this.currentPage > 1){
+	if (start > this.maxVisible){
 		page += '<a href="javascript:" data-lp="1" onClick="'+this.eventLink+'(1)"'+' class="btn_pag_cntr first on"><span class="blind">first</span></a>';
-	     //'<li data-lp="1"><a onClick="'+this.eventLink+'(1)">'+this.first+'</a></li>';
+		page += '<a href="javascript:" data-lp="'+(start-1)+'" onClick="'+this.eventLink+'('+(start-1)+')"'+' class="btn_pag_cntr prev on"><span class="blind">previous</span></a>'
 	}else{
-		page += '<a href="javascript:" data-lp="1" onClick="'+this.eventLink+'(1)"'+' class="btn_pag_cntr first"><span class="blind">first</span></a>';
-	     //'<li data-lp="1"><a onClick="'+this.eventLink+'(1)">'+this.first+'</a></li>';
-	}
-		         
-	if (this.currentPage < 3){
-		if (this.currentPage > 1){
-			page += '<a href="javascript:" data-lp="1" onClick="'+this.eventLink+'(1)"'+' class="btn_pag_cntr prev on"><span class="blind">previous</span></a>'
-			//'<li data-lp="1"><a onClick="'+this.eventLink+'(1)">'+this.prev+'</a></li>';
-		}else{
-			page += '<a href="javascript:" data-lp="1" onClick="'+this.eventLink+'(1)"'+' class="btn_pag_cntr prev"><span class="blind">previous</span></a>'
-			//'<li data-lp="1"><a onClick="'+this.eventLink+'(1)">'+this.prev+'</a></li>';
-		}
-		
-	}else{
-		page += '<a href="javascript:" data-lp="'+(this.currentPage - 1)+'" onClick="'+this.eventLink+'('+(this.currentPage - 1)+')"'+'class="btn_pag_cntr prev on"><span class="blind">previous</span></a>'
-			//<li data-lp="'+(this.currentPage - 1)+'"><a onClick="'+this.eventLink+'('+(this.currentPage - 1)+')">«</a></li>';
+		page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr first"><span class="blind">first</span></a>';
+		page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr prev"><span class="blind">previous</span></a>'
 	}
 	page += '<span class="pag_num">';	
 	for(var i = start; i <= end; i++){		
@@ -84,22 +70,26 @@ pagination.showPage = function(option){
 		
 	}
 	page += '</span>';
-	if ((end+1) > this.numPage) {
-		page += '<a href="javascript:" data-lp="'+end+'" onClick="'+this.eventLink+'('+end+')" class="btn_pag_cntr next"><span class="blind">next</span></a>';
-			//'<li data-lp="'+end+'"><a onClick="'+this.eventLink+'('+end+')">'+this.next+'</a></li>';
-		
-     }else{
-		page += '<a href="javascript:" data-lp="'+(end+1)+'" onClick="'+this.eventLink+'('+(end+1)+')" class="btn_pag_cntr next on"><span class="blind">next</span></a>';
-			//'<li data-lp="'+(end+1)+'"><a onClick="'+this.eventLink+'('+(end+1)+')">'+this.next+'</a></li>';
-		
-	}	
-	if (this.numPage <= (this.currentPage + 1) ){
-		page += '<a href="javascript:" data-lp="'+this.numPage+'" onClick="'+this.eventLink+'('+(this.numPage)+')" class="btn_pag_cntr last"><span class="blind">last</span></a>';
-		//'<li data-lp="'+this.numPage+'"><a onClick="'+this.eventLink+'('+(this.numPage)+')">'+this.last+'</a></li>';
+	if (this.numPage <= this.maxVisible){
+		page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr next"><span class="blind">next</span></a>';
+		page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr last"><span class="blind">last</span></a>';
 	}else{
-		page += '<a href="javascript:" data-lp="'+this.numPage+'" onClick="'+this.eventLink+'('+(this.numPage)+')" class="btn_pag_cntr last on"><span class="blind">last</span></a>';
-		//'<li data-lp="'+this.numPage+'"><a onClick="'+this.eventLink+'('+(this.numPage)+')">'+this.last+'</a></li>';
+		if (end > this.maxVisible){
+			if (end == this.numPage){
+				page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr next"><span class="blind">next</span></a>';
+				page += '<a href="javascript:" data-lp="" onClick="" class="btn_pag_cntr last"><span class="blind">last</span></a>';
+			}else{
+				page += '<a href="javascript:" data-lp="'+(end+1)+'" onClick="'+this.eventLink+'('+(end+1)+')" class="btn_pag_cntr next on"><span class="blind">next</span></a>';
+				page += '<a href="javascript:" data-lp="'+this.numPage+'" onClick="'+this.eventLink+'('+(this.numPage)+')" class="btn_pag_cntr last on"><span class="blind">last</span></a>';
+			}
+			
+		}else{
+			page += '<a href="javascript:" data-lp="'+(end+1)+'" onClick="'+this.eventLink+'('+(end+1)+')" class="btn_pag_cntr next on"><span class="blind">next</span></a>';
+			page += '<a href="javascript:" data-lp="'+this.numPage+'" onClick="'+this.eventLink+'('+(this.numPage)+')" class="btn_pag_cntr last on"><span class="blind">last</span></a>';
+		}
 	}
+	
+	
 	$('.'+this.wrapClass).empty();
 	$('.'+this.wrapClass).append(page);
 }

@@ -73,7 +73,7 @@ function loanerGetMaxId(){
 			}
 			$('#loaner_code').val(Common.numberWithComma(json.object.maxLoanerId,"-"));
 			$('#loan_code').val(Common.numberWithComma(json.object.maxLoanId,"-"));
-			$('#agent_txt').val(json.object.userName);
+			//$('#agent_txt').val(json.object.userName);
 		},error:function(json){
 			console.log(json);
 		}
@@ -253,7 +253,8 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
-	$('#agent').val('1');
+	$('#agent_txt').val($('#popup_agent').text());
+	$('#agent').val($('#popup_agent').val());
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
