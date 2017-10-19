@@ -229,3 +229,11 @@ Common.ConvertDayToKhmer = function(str){
 	return ch;
 }
 
+Common.Popup.Success = function(title,content,callBack){
+	
+}
+Common.Popup.Close   = function(){
+	$('.alert_wrap').bPopup().close();
+}
+
+
