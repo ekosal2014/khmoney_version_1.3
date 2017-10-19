@@ -141,6 +141,11 @@ public class LoanController {
 		return loanerService.loanPaymentCountPay(loan_id);
 	}
 	
+	@RequestMapping(value = "/loadingDeleteLoan", method = RequestMethod.GET)
+	public @ResponseBody Message loadingDeleteLoan(@RequestParam int loan_id,@RequestParam int loaner_id) throws KHException {
+		return loanerService.loadingDeleteLoan(loan_id,loaner_id);
+	}
+	
 }
 
 

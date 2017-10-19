@@ -101,12 +101,20 @@ function loadingSettingData(id){
 				alert(json.message);
 				return;
 			}
-			//console.log(json);
+			console.log(json);
 			var ListColumns = json.object.ListColumns;
-			var settingList = json.object.settingList			
+			var settingList = json.object.settingList
+			var userList    = json.object.ListUser;
 			var opt ='';
 			
-			$("#type_payment").empty();
+			$('#popup_agent').empty();
+			$.each(userList,function(index, value){
+				opt += '<option value="'+value.user_id+'">'+value.full_name+'</option>';
+			});
+			$('#popup_agent').append(opt);	
+			
+			opt = '';
+			$("#type_payment").empty();			
 			$.each(ListColumns,function(index, value){
 				opt += '<option value="'+value.type+'" data='+value.day+'>'+value.columns+'</option>';
 			});

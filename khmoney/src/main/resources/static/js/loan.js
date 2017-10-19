@@ -108,9 +108,9 @@ function pagConstand(page){
 								+'<td><div class="t_right">'+amount+' ៛</div></td>'
 								+'<td><div>'+end_date+'</div></td>'
 								+'<td><div class="t_center">'+(value.txt=='9'?'បានបញ្ចប់':'រង់ចាំ')+'</div></td>'
-								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a>'
-								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
-								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:30%;margin:0px;">លំអិត</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:30%;margin:0px;">កែប្រែ</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingDeleteLoan(this)" txt="'+value.txt+'" style="width:30%;margin:0px;">លុប</a></div></td>'
 							+'</tr>';
 					i++;
 				});
@@ -203,9 +203,9 @@ function pagDown(page){
 								+'<td><div class="t_right">'+amount+' ៛</div></td>'
 								+'<td><div>'+end_date+'</div></td>'
 								+'<td><div class="t_center">'+(value.txt=='9'?'បានបញ្ចប់':'រង់ចាំ')+'</div></td>'
-								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:50px;">លំអិត</a>'
-								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
-								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:50px;">កែប្រែ</a></div></td>'
+								+'<td><div><a href="/khmoney/loan/loan-view-detail?loaner_id='+value.loaner_id+'&loan_id='+value.loan_id+'&id=loan" style="width:30%;margin:0px;">លំអិត</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingEditLoan(this)" txt="'+value.txt+'" style="width:30%;margin:0px;">កែប្រែ</a>'
+								+'         <a loan_id="'+value.loan_id+'" loaner_id="'+value.loaner_id+'" href="javascript:" onClick="loadingDeleteLoan(this)" txt="'+value.txt+'" style="width:30%;margin:0px;">លុប</a></div></td>'
 							+'</tr>';
 					i++;
 				});
@@ -256,4 +256,30 @@ function loadingEditLoan(obj){
 		
 	});
 	
+}
+function loadingDeleteLoan(obj){
+	if ($(obj).attr('txt') == '9'){
+		alert("អ្នកមិនអាចធ្វើការលុបបានទេ ពីព្រោះអ្នកខ្ចីបានបង់ប្រាក់អស់ហើយ!");
+		return;
+	}
+	var comfirm = window.confirm("តើអ្នកពិតជាចង់លុបការខ្ចីប្រាក់នេះពិតមែន?");
+	if (comfirm == false){
+		return;
+	}
+	$.ajax({
+		type:'GET',
+		url :'/khmoney/loadingDeleteLoan',
+		data:'loan_id='+$(obj).attr('loan_id')+'&loaner_id='+$(obj).attr('loaner_id'),
+		success:function(json){
+			if (typeof json.code == 'undefined' || json.code == '9999'){
+				alert(json.message);
+				return;
+			}else{
+				pagConstand(1);
+			}
+		},error:function(){
+			
+		}
+		
+	});
 }

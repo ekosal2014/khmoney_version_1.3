@@ -30,6 +30,7 @@ import kh.com.loan.enums.LoanTxt;
 import kh.com.loan.mappers.LoanMapper;
 import kh.com.loan.mappers.LoanerMapper;
 import kh.com.loan.mappers.SettingMapper;
+import kh.com.loan.mappers.UserMapper;
 import kh.com.loan.mappers.WalletMapper;
 import kh.com.loan.utils.Common;
 import kh.com.loan.utils.KHException;
@@ -49,6 +50,8 @@ public class LoanerService {
 	private SettingMapper settingMapper;
 	@Autowired
 	private WalletMapper walletMapper;
+	@Autowired
+	private UserMapper userMapper;
 	
 	public Message loanerGetMaxId() throws KHException {
 		HashMap<String, String> result = new HashMap<>();
@@ -75,11 +78,13 @@ public class LoanerService {
 	public Message loadingSettingData(String payTxt) throws KHException{
 		HashMap<String, Object> objSetting = new HashMap<>();
 		try {
-			List<Setting> columnList  = (List) settingMapper.loadingListColumns(payTxt);
-			List<Setting> settingList = (List) settingMapper.loadingListSetting(payTxt);	
+			List<Setting> columnList  =  settingMapper.loadingListColumns(payTxt);
+			List<Setting> settingList =  settingMapper.loadingListSetting(payTxt);	
+			List<User>    userList    =  userMapper.loadingAllUser();
 			objSetting.put("ListColumns", columnList);
 			objSetting.put("settingList", settingList);
-			return new Message("0000",objSetting);
+			objSetting.put("ListUser",    userList);
+			return new Message("0000",    objSetting);
 		}catch(Exception e) {
 			throw new KHException("9999", e.getMessage());
 		}
@@ -648,6 +653,63 @@ public class LoanerService {
 			HashMap<String, String> result = new HashMap<>();
 			result.put("count", String.valueOf(loanMapper.loanPaymentCountPay(loan_id)));
 			return new Message("0000",result);
+		}catch(Exception e) {
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	@Transactional(value="transactionManager",rollbackFor= {KHException.class,Exception.class})
+	public Message loadingDeleteLoan(int loan_id,int loaner_id) throws KHException {
+		try {
+			HashMap<String, String> params = new HashMap<>();
+			User   user   = new User();
+			Loaner loaner = new Loaner();
+			Loan   loan   = new Loan();
+			Wallet wallet = new Wallet();
+			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (!auth.getPrincipal().equals("anonymousUser")) {
+				user = (User) auth.getPrincipal();
+				
+			}else {
+				throw new KHException("9999", "ការកែប្រែរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
+			
+			params.put("loaner_id", String.valueOf(loaner_id));
+			if (loanMapper.loanPaymentCountPay(loan_id) > 0) {
+				return new Message("0000","មិនអ្នកមិនអាចលុបបានទេ ពីព្រោះអ្នកខ្ចីកំពុងធ្វើការសង់ប្រាក់!");
+			}
+			if (loanMapper.loadingLoanCountByLoanerId(loaner_id) == 1) {
+				loaner = loanerMapper.loadingLoanerInformationById(params);
+				loaner.setSts(LoanSts.DELETED.getValue());
+				loanerMapper.loanerUpdateById(loaner);
+			}
+
+			loan = loanMapper.loadingLoanViewCheck(loan_id);
+			loan.setSts(LoanSts.DELETED.getValue());
+			loanMapper.updateLoanById(loan);
+			loanMapper.deleteLoanPaymentByLoanId(loan_id);
+			
+			/*insert wallet information */			
+			wallet = walletMapper.loadingMywalletByIMaxId();			 
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(loan.getTotal_money());
+			wallet.setTotal_amount(wallet.getTotal_amount() + loan.getTotal_money());
+			wallet.setType_amount("1");
+			wallet.setRequest_by(user.getUser_id());
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(loan.getLoan_id());
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
+		    wallet.setDecription( " ស្នើសុំលុបដោយអ្នកប្រើប្រាស់ឈ្មោះ  "+ user.getFull_name()
+		    					 +" សំរាប់ការកំម្ចីលេខកូដ  "+Common.padLeft(String.valueOf(loan.getLoan_id()), 9)
+		    					 +" ខ្ចីដោយឈ្មោះ "+loaner.getLoaner_name());
+			
+		    if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
+		    
+			return new Message("0000","ការលុបរបស់លោកអ្នកទទួលបានជោគជ័យ!");
 		}catch(Exception e) {
 			throw new KHException("9999", e.getMessage());
 		}

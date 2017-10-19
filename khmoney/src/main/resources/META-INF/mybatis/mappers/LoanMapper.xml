@@ -357,4 +357,11 @@
 		       , note       = #{note}
 		 WHERE txt='1' and loan_id = cast(#{loan_id} as int)
 	</update>
+	<select id="loadingLoanCountByLoanerId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT 
+			COUNT(*) AS TT
+		FROM tblloan
+		WHERE loaner_id = #{loaner_id}
+	</select>
+	
 </mapper>

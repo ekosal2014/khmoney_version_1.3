@@ -21,4 +21,19 @@
 		  FROM tbluser
 		  WHERE 1=1	AND username = #{username}
 	  </select>
+	  <select id="loadingAllUser" resultType="kh.com.loan.domains.User">
+	  	SELECT 
+    		  user_id
+    		, user_code
+    		, full_name
+    		, gender
+    		, phone
+    		, email
+    		, address
+    		, photo
+    		, sts
+    		, txt
+		  FROM tbluser
+		  WHERE 1=1
+	  </select>
 </mapper>

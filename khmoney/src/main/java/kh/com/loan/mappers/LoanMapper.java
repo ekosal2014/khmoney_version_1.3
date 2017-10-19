@@ -30,5 +30,6 @@ public interface LoanMapper {
 	public int loanPaymentCountNotPay(HashMap<String, String> param);
 	public int loanPaymentSaveUpdateAll(HashMap<String, String> param);
 	public int loanPaymentCountPay(@Param("loan_id") int loan_id);
+	public int loadingLoanCountByLoanerId(@Param("loaner_id") int loaner_id);
 	
 }
