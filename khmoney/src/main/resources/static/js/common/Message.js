@@ -1,23 +1,6 @@
 /**
  * 
  */
-(function ($,window){
-	this.$btnClose = $('#');
-	var option = {
-			title : '',
-			content:'',
-			onClose: function(){
-				
-			}
-	}
-	$.alert({
-		
-	});
-	this.$btnClose.click(function(e){
-		alert(1234'');
-	});
-});
-
 
 var Message = {};
 if (!Message) Message = {};
