@@ -1,21 +1,9 @@
 <!DOCTYPE html>
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    <head>
-		<title>Loan Money</title>
-		<meta charset="utf-8">
-		<meta http-equiv="Cache-Control" content="No-Cache">
-		<meta http-equiv="Pragma" content="No-Cache">
-		<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-		<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-		<link rel="icon" th:href="@{../img/icon/loan.ico}">
-		<link rel="icon" th:href="@{img/icon/loan.ico}">
-		<link rel="stylesheet" th:href="@{/css/reset.css}">
-		<link rel="stylesheet" th:href="@{/css/content.css}">
-		<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
-   </head>
-   <body class="lnb_bg">
 
+   <head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
+   <body class="lnb_bg">
 <div class="wrap">
 
 	<!-- header -->
@@ -97,7 +85,7 @@
 <div layout:fragment="asset"></div>
 <!-- loading.... -->
 <div style="display:none;" id="loading">
-    <img th:src="@{../img/loading.gif}" alt="LAON" height="50" width="50">
+    <img th:src="@{/img/loading.gif}" alt="LAON" height="50" width="50">
 </div>
 </body>
 </html>

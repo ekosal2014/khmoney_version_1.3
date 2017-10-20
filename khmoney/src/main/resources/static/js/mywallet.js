@@ -19,6 +19,7 @@ function goPageList(page){
 		url :'/khmoney/loadingWalletListInformation',
 		data: data,
 		success:function(json){
+			Message.infor(null,json.message,null);
 			if (json.code == '9999' || typeof json.code == 'undefined'){
 				alert(json.message);
 				return;

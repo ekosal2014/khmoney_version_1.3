@@ -1,0 +1,10 @@
+.jconfirm .jconfirm-box .jconfirm-buttons button{
+	display:inline-block;margin-left:10px;padding:0 20px;font-family:"Khmer OS Battambang","Khmer OS Bokor", "Khmer OS Content", "Khmer OS Siemreap", "Khmer OS System";font-size:14px;color:#fff;line-height:30px;background-color:#4284F9;border-radius:3px;
+}
+.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons{
+	text-align:center;
+	float:none;
+}
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box{
+	border-radius:0px;
+}
