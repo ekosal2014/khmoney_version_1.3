@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.com.loan.domains.Message;
+import kh.com.loan.domains.Wallet;
 import kh.com.loan.mappers.WalletMapper;
 import kh.com.loan.utils.KHException;
 import kh.com.loan.utils.PaginationUtils;
@@ -27,6 +28,31 @@ public class WalletService {
 			result.put("loadingTotalCountRows", walletMapper.loadingTotalCountRows());
 			result.put("TotalAmount",           walletMapper.loadingMywalletByIMaxId());
 			return new Message("0000", result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	public Message walletTransaction(HashMap<String, Object> params) throws KHException{
+		
+		try{
+			Wallet wallet = new Wallet();
+			wallet = walletMapper.loadingMywalletByIMaxId();
+			System.out.println("Hello === 1"+params.get("totalAmount"));
+			wallet.setOld_amount(wallet.getTotal_amount());
+			wallet.setAmount(Long.valueOf((String)params.get("totalAmount")));
+			wallet.setType_amount((String)params.get("typeAmonut"));
+			wallet.setDecription((String)params.get("decription"));
+			System.out.println("Hello === 2");
+			if (wallet.getType_amount().equals("1")){
+				wallet.setTotal_amount(wallet.getTotal_amount() + wallet.getAmount());
+			}else{
+				wallet.setTotal_amount(wallet.getTotal_amount() - wallet.getAmount());
+			}
+			if (walletMapper.insertMywallet(wallet) <= 0){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
+			return new Message("0000", "ការកែប្រែរបស់លោកអ្នកទទួលបានជោគជ័យ");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());
 		}

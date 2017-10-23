@@ -3,7 +3,12 @@ $(document).ready(function(){
 	$('#num_rows').change(function(){
 		goPageList(1);
 	});
-
+	$('#btn_addMore').click(function(){
+		$('#popup_wallet').bPopup();
+	});
+	$('#btn_wallet').click(function(){
+		walletTransaction();
+	});
 });
 
 function goPageList(page){
@@ -19,7 +24,6 @@ function goPageList(page){
 		url :'/khmoney/loadingWalletListInformation',
 		data: data,
 		success:function(json){
-			Message.infor(null,json.message,null);
 			if (json.code == '9999' || typeof json.code == 'undefined'){
 				alert(json.message);
 				return;
@@ -72,4 +76,45 @@ function goPageList(page){
 	});
 	
 }
-
+function walletTransaction(){
+	if ($('#wallet_total_money').val() == ''){
+		alert('ldskfja');
+		return;
+	}
+	if ($('#wallet_type_money').val() == ''){
+		alert('ldskfja');
+		return;
+		}
+	if ($('#wallet_decription').val() == ''){
+		alert('ldskfja');
+		return;
+	}
+	var data = {
+			'totalAmount':$('#wallet_total_money').val(),
+			'typeAmonut' :$('#wallet_type_money').val(),
+			'decription' :$('#wallet_decription').val()
+	}
+	var token = $('#_csrf').attr('content');
+	var header = $('#_csrf_header').attr('content');
+	console.log(data);
+	$.ajax({
+		type:'POST',
+		url :'/khmoney/walletTransaction',
+		data:JSON.stringify(data),
+		contentType : 'application/json; charset=utf-8',
+        dataType : 'json',  
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token)
+         },success:function(json){
+        	 if (json.code == '9999' || typeof json.code == 'undefined'){
+ 				alert(json.message);
+ 				return;
+ 			}
+        	goPageList(1);
+        	$('#popup_wallet').bPopup().close();
+         },error:function(error){
+        	 console.log(error);
+         }
+		
+	});
+}

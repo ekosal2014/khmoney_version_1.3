@@ -133,20 +133,56 @@
 </div>
 <!-- //popup form -->
 <!-- alert comfirm -->
-<div class="alert_wrap" style="display:none;">
+<!-- popup form -->
+<div class="alert_wrap frm" id="popup_wallet" style="display:none;" th:fragment="popup_wallet">
 	<div class="alert_inner">
 		<div class="alert_tit">
-			<h1>ពត័មាន</h1>
-			<a href="#none" class="btn_close"><span class="blind">close</span></a>
+			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
 		</div>
-		<div class="aler_cnt">
-			<p>ប្រតិបត្តិការរក្សាទុកទទួលបានជោគជ័យ</p>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>ទឹកប្រាក់សរុប</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="wallet_total_money" placeholder=""></div></td>
+						</tr>					
+						<tr>
+							<th><div>ប្រភេទប្រាក់</div></th>
+							<td colspan="3">
+								<div>
+									<select style="width:;" name="type_payment" id="wallet_type_money">
+										<option value="1">ឥណពន្ធ</option>
+										<option value="9">ឥណទាន</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>ពិពណ៍៏នា</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="wallet_decription"></div></td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+			
 		</div>
 		<div class="t_line">
-			<a href="#none" class="btn_confirm">យល់ព្រម</a>
+			<a href="javascript:" class="btn_confirm" id="btn_wallet">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
 		</div>
 	</div>	
 </div>
-<!-- //alert comfirm -->
+<!-- //popup form -->
 </body>
 </html>
