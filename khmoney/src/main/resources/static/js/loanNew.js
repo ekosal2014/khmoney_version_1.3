@@ -68,7 +68,7 @@ function loanerGetMaxId(){
 		success:function(json){
 			//console.log(json);
 			if (json.code == 'undefined' || json.code == '9999'){
-				alert(json.message);
+				Message.infor(null,json.message,null);
 				return;
 			}
 			$('#loaner_code').val(Common.numberWithComma(json.object.maxLoanerId,"-"));
@@ -82,7 +82,7 @@ function loanerGetMaxId(){
 /*ប្រភេទបង់ប្រាក់*/
 function loadingSettingData(id){
 	if ($('#loaner_name').val() == '' || $('#phone').val() == '' || $('#id_card').val() == '' || $('#address').val() == ''){
-    	alert('សូមបំពេញពត៍មានរបស់អ្នកខ្ចីមុន ទើបអាចបំពេញទឹកប្រាក់ដែលត្រូវខ្ចីបាន!!');
+    	Message.infor(null,'សូមបំពេញពត៍មានរបស់អ្នកខ្ចីមុន ទើបអាចបំពេញទឹកប្រាក់ដែលត្រូវខ្ចីបាន!!',null);
     	return;
     }
 	if (id == '0'){
@@ -98,10 +98,10 @@ function loadingSettingData(id){
 		data:'payTxt='+id,
 		success:function(json){
 			if (json.code == 'undefined' || json.code == '9999'){
-				alert(json.message);
+				Message.infor(null,json.message,null);
 				return;
 			}
-			console.log(json);
+			//console.log(json);
 			var ListColumns = json.object.ListColumns;
 			var settingList = json.object.settingList
 			var userList    = json.object.ListUser;
@@ -137,7 +137,7 @@ function loadingSettingValue(val,payTxt){
 		data: 'payTxt='+payTxt,
 		success:function(json){
 			if (json.code == 'undefined' || json.code == '9999'){
-				alert(json.message);
+				Message.infor(null,json.message,null);
 				return;
 			}
 			var label='';
@@ -172,40 +172,40 @@ function confrimCheck(){
 	var time,decrement=0,rate,total_money,total_rate,day;
 	if ($('#popup_total_money').val() == '')
 	{
-		alert("សូមបញ្ចូលចំនួនទឹកប្រាក់សរុបដែលត្រូវខ្ចី!");
+		Message.infor(null,"សូមបញ្ចូលចំនួនទឹកប្រាក់សរុបដែលត្រូវខ្ចី!",null);
 		$('#popup_total_money').focus();
 		return;
 	}
 	
 	if ($('input[name=rd_decrement]:checked').val() == 'decrement'){
 		if ($('#popup_decrement').val() == ''){
-			alert("សូមបញ្ចូលចំនួនទឹកប្រាក់ថយពីចំនួនទឹកប្រាក់សន្សំក្នុងពេលបង់មួយលើកៗ");
+			Message.infor(null,"សូមបញ្ចូលចំនួនទឹកប្រាក់ថយពីចំនួនទឹកប្រាក់សន្សំក្នុងពេលបង់មួយលើកៗ",null);
 			$('#popup_decrement').focus();
 			return;
 		}		
 	}
 	
 	if ($('#type_payment').val() == ''){
-		alert("សូមជ្រើសរើសប្រភេទនៃការបង់ប្រាក់!");
+		Message.infor(null,"សូមជ្រើសរើសប្រភេទនៃការបង់ប្រាក់!",null);
 		return;
 	}
 	if (!$('input[name=time]').is(':checked')){
-		alert("សូមជ្រើសរើសចំនួនដងដែលត្រូវបង់ប្រាក់!")
+		Message.infor(null,"សូមជ្រើសរើសចំនួនដងដែលត្រូវបង់ប្រាក់!",null);
 		return;
 	}
 	if ($('input[name=time]').is(':checked')){
 		if ($('input[name=time]:checked').val() == ''){
 			if ($('#popup_time').val() == ''){
-				alert("សូមជ្រើសរើសចំនួនដងដែលត្រូវបង់ប្រាក់!");
+				Message.infor(null,"សូមជ្រើសរើសចំនួនដងដែលត្រូវបង់ប្រាក់!",null);
 				return;
 			}
 			if ($('#popup_rate').val() == ''){
-				alert("សូមបញ្ចូលអត្រាការប្រាក់ ដើម្បីទូរទាត់ការប្រាក់!");
+				Message.infor(null,"សូមបញ្ចូលអត្រាការប្រាក់ ដើម្បីទូរទាត់ការប្រាក់!",null);
 				return;
 			}
 			if ($('input[name=rd_decrement]:checked').val() == 'decrement'){
 				if (parseInt($('#popup_time').val()) > 15 ){					
-					alert('បើជ្រើសរើសការបង់ប្រាក់ថយចុះ អ្នកមិនអាចបង់ប្រាក់លើស ១៥ ដង ទេ!');
+					Message.infor(null,'បើជ្រើសរើសការបង់ប្រាក់ថយចុះ អ្នកមិនអាចបង់ប្រាក់លើស ១៥ ដង ទេ!',null);
 					return;
 				}	
 			}
@@ -294,19 +294,19 @@ function confrimCheck(){
 
 function loanSaveNewItem(){
 	if ($('#loaner_name').val() == ''){
-    	alert('សូមបញ្ចូលឈ្មោះអ្នកដែលខ្ចីប្រាក់!');
+		Message.infor(null,'សូមបញ្ចូលឈ្មោះអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }
     if ($('#phone').val() == ''){
-    	alert('សូមបញ្ចូលលេខទូរស័ព្ទអ្នកដែលខ្ចីប្រាក់!');
+    	Message.infor(null,'សូមបញ្ចូលលេខទូរស័ព្ទអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }
     if ($('#id_card').val() == ''){
-    	alert('សូមបញ្ចូលអត្ដសញ្ញាណប័ណ្ណអ្នកដែលខ្ចីប្រាក់!');
+    	Message.infor(null,'សូមបញ្ចូលអត្ដសញ្ញាណប័ណ្ណអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }
     if ($('#address').val() == ''){
-    	alert('សូមបញ្ចូលអាស័យដ្ឋានអ្នកដែលខ្ចីប្រាក់!');
+    	Message.infor(null,'សូមបញ្ចូលអាស័យដ្ឋានអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }	
     $('#loading').bPopup();
@@ -341,21 +341,22 @@ function loanSaveNewItem(){
          },
 		success:function(json){
 			if (json.code == 'undefined' || json.code == '9999'){
-				alert(json.message);
+				Message.infor(null,json.message,null);
 				return;
 			}
-			 alert(json.message);
-			 window.location.href = '/khmoney/loan/loanNew';
+			Message.success(null,json.message,loanNew);
 		},error:function(json){
 			console.log(json)
 		}
 	});
 	$('#loading').bPopup().close();
 }
-
+function loanNew(){
+	window.location.href = '/khmoney/loan/loanNew';
+}
 function errorCheck(json){
 	if (json.code == 'undefined'){
-		alert(json.message);
+		Message.infor(null,json.message,null);
 		return;
 	}
 }
