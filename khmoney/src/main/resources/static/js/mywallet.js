@@ -12,6 +12,7 @@ $(document).ready(function(){
 });
 
 function goPageList(page){
+	$('#wallet_total_money').autoNumeric('init',{ aSign: '​​ ៛',aSep:',',sGropu:'3',pSign: 's',aPad: false,vMax: '999999999',vMin: '0'});
 	$('#loading').bPopup();
 	var data = {
 			'currentPage' : page,
@@ -90,7 +91,7 @@ function walletTransaction(){
 		return;
 	}
 	var data = {
-			'totalAmount':$('#wallet_total_money').val(),
+			'totalAmount':$('#wallet_total_money').val().replace(/[​\u202f\៛\,]/g,'').trim(),
 			'typeAmonut' :$('#wallet_type_money').val(),
 			'decription' :$('#wallet_decription').val()
 	}

@@ -14,5 +14,6 @@ public interface UserMapper {
 	 * */
 	public User loadUserByUsername(@Param("username") String username);
 	public List<User> loadingAllUser();
+	public int loadingCountAllUser();
 
 }

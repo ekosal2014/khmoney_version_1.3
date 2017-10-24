@@ -36,4 +36,10 @@
 		  FROM tbluser
 		  WHERE 1=1
 	  </select>
+	    <select id="loadingCountAllUser" resultType="java.lang.Integer">
+	  	SELECT 
+    		 COUNT(*) as count
+		  FROM tbluser
+		  WHERE 1=1
+	  </select>
 </mapper>

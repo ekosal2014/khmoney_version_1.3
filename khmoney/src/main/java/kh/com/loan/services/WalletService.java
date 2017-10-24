@@ -3,11 +3,15 @@ package kh.com.loan.services;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kh.com.loan.domains.Message;
+import kh.com.loan.domains.User;
 import kh.com.loan.domains.Wallet;
 import kh.com.loan.mappers.WalletMapper;
+import kh.com.loan.utils.Common;
 import kh.com.loan.utils.KHException;
 import kh.com.loan.utils.PaginationUtils;
 
@@ -37,12 +41,25 @@ public class WalletService {
 		
 		try{
 			Wallet wallet = new Wallet();
+			User   user   = new User();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (!auth.getPrincipal().equals("anonymousUser")) {
+				user = (User) auth.getPrincipal();
+				
+			}else {
+				throw new KHException("9999", "ការកែប្រែរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
 			wallet = walletMapper.loadingMywalletByIMaxId();
 			System.out.println("Hello === 1"+params.get("totalAmount"));
 			wallet.setOld_amount(wallet.getTotal_amount());
 			wallet.setAmount(Long.valueOf((String)params.get("totalAmount")));
 			wallet.setType_amount((String)params.get("typeAmonut"));
 			wallet.setDecription((String)params.get("decription"));
+			wallet.setRequest_by(user.getUser_id());
+			wallet.setRequest_date(Common.getCurrentDate());
+			wallet.setRequest_id(0);
+			wallet.setApprove_by(user.getUser_id());
+			wallet.setApprove_date(Common.getCurrentDate());
 			System.out.println("Hello === 2");
 			if (wallet.getType_amount().equals("1")){
 				wallet.setTotal_amount(wallet.getTotal_amount() + wallet.getAmount());
