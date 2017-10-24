@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Insert title here</title>
+<meta charset="utf-8">
+</head>
+<body>
+<!-- popup form -->
+<div class="alert_wrap frm" id="popup_employee" style="display:none;" th:fragment="popup_employee">
+	<div class="alert_inner">
+		<div class="alert_tit">
+			<h1>បញ្ចូលពត័មានអ្នកប្រើប្រាស់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>ឈ្មោះបុគ្គលិក</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="emp_name" placeholder=""></div></td>
+						</tr>					
+						<tr>
+							<th><div>ភេទ</div></th>
+							<td>
+								<div>
+									<label><input type="radio" name="gender" value="1" checked> ប្រុស</label> &nbsp;&nbsp;&nbsp;
+									<label><input type="radio" name="gender" value="2"> ស្រី</label>
+								</div>
+							</td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>លេខទូរស័ព្ទ</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="emp_phone"></div></td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>អ៊ីមែល</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="emp_email"></div></td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>អាស័យដ្ឋាន</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="emp_address"></div></td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>រូបថត</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="emp_photo">
+								<img alt="photo" th:src="@{/img/images/employee.png}">
+							</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- table input dot -->
+				<div class="tbl_input_pop">
+					<table summary="">
+						<caption></caption>
+						<colgroup>
+						<col style="width:100px;">
+						<col>
+						<col style="width:100px;">
+						<col>
+					</colgroup>
+						<tbody>
+							<tr>
+								<th><div>ឈ្មោះសំរាប់ចូលប្រើប្រព័ន្ធ</div></th>
+								<td colspan="3"><div><input type="text" value="" name="loan_code" id="loan_code" placeholder="" ></div></td>
+								
+							</tr>
+							<tr>
+								<th><div>ពាក្យសំងាត់</div></th>
+								<td colspan="3"><div><input type="text" value="" name="time" id="time_txt" placeholder="" ></div></td>
+								
+							</tr>
+							<tr>
+								<th><div>បញ្ជាក់ពាក្យសម្ងាត់</div></th>
+								<td colspan="3"><div>
+									<input type="text" value="" name="time" id="time_txt" placeholder="" >
+								</div></td>
+							</tr>
+		
+						</tbody>
+					</table>
+				</div>
+				<!-- //table input dot -->
+				<!-- table input dot -->
+				<div class="tbl_input_pop">
+					<table summary="">
+						<caption></caption>
+						<colgroup>
+						<col style="width:100px;">
+						<col>
+						<col style="width:100px;">
+						<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th><div>ឈ្មោះសំរាប់ចូលប្រើប្រព័ន្ធ</div></th>
+								<td colspan="3">
+									<div>
+										<select style="width:;" name="permission" id="permission">
+											<option value="0">CO</option>
+											<option value="1">អ្នកប្រើប្រាស់</option>
+											<option value="2">ប្រធាន</option>
+										</select>
+									</div>
+								</td>
+								
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<!-- //table input dot -->
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm" id="btn_wallet">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
+		</div>
+	</div>	
+</div>
+<!-- //popup form -->
+</body>
+</html>

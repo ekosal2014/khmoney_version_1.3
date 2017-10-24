@@ -42,4 +42,59 @@
 		  FROM tbluser
 		  WHERE 1=1
 	  </select>
+	  <insert id="">
+	  		INSERT INTO public.tbluser(
+		              user_code
+		            , full_name
+		            , gender
+		            , phone
+		            , email
+		            , address
+		            , username
+		            , password
+		            , sts
+		            , txt
+		            , photo
+		            , modify_by
+		            , modify_date
+		            , action
+		            )
+		    VALUES (
+		    		  ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		, ?
+		    		);
+	  		
+	  </insert>
+	  
+	  <update id="">
+	  		UPDATE tbluser
+			   SET 
+			   	   , user_code=?
+			   	   , full_name=?
+			   	   , gender=?
+			   	   , phone=?
+			   	   , email=?
+			   	   , address=?
+			   	   , username=?
+			   	   , password=?
+			   	   , sts=?
+			   	   , txt=?
+			   	   , photo=?
+			   	   , modify_by=?
+			   	   , modify_date=?
+			   	   , action=?
+			 WHERE user_id = #{user_id};
+	  </update>
 </mapper>

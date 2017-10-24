@@ -3,6 +3,9 @@
  */
 $(document).ready(function(){
 	loadingUserList(1);
+	$('#btn_addMore').click(function(){
+		$('#popup_employee').bPopup();
+	});
 });
 function loadingUserList(page){
 	$('#loading').bPopup();
