@@ -42,7 +42,7 @@
 		  FROM tbluser
 		  WHERE 1=1
 	  </select>
-	  <insert id="">
+	  <insert id="insertNewUser" parameterType="kh.com.loan.domains.User">
 	  		INSERT INTO public.tbluser(
 		              user_code
 		            , full_name
@@ -78,7 +78,7 @@
 	  		
 	  </insert>
 	  
-	  <update id="">
+	  <update id="editUseById" parameterType="kh.com.loan.domains.User">
 	  		UPDATE tbluser
 			   SET 
 			   	   , user_code=?

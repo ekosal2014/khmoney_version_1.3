@@ -6,6 +6,9 @@ $(document).ready(function(){
 	$('#btn_addMore').click(function(){
 		$('#popup_employee').bPopup();
 	});
+	$('#btn_save').click(function(e){
+		employeeAddNew(e);
+	});
 });
 function loadingUserList(page){
 	$('#loading').bPopup();
@@ -60,4 +63,79 @@ function loadingUserList(page){
 		}
 		
 	});
+}
+
+function employeeAddNew(e){
+	e.preventDefault();
+	/*if ($('#emp_name').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលឈ្មោះបុគ្គលិក!',null);
+		return;
+	}
+	if ($('#emp_phone').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលលេខទូរស័ព្ទបុគ្គលិក!',null);
+		return;
+	}
+	if ($('#emp_email').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលអ៊ីមែលបុគ្គលិក!',null);
+		return;
+	}
+	if ($('#emp_address').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលអាស័យដ្ឋានបុគ្គលិក!',null);
+		return;
+	}
+	if ($('#user_name').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលឈ្មោះបុគ្គលិកសំរាប់ប្រើក្នុងប្រព័ន្ធ!',null);
+		return;
+	}
+	if ($('#password').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលពាក្យសំងាត់បុគ្គលិក!',null);
+		return;	
+	}
+	
+	if ($('#confirm_password').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	if ($('#confirm_password').val() != $('#password').val()){
+		Message.infor(null,'សូមបញ្ចូលពាក្យសំងាត់ និងបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	*/
+	
+	var data = new FormData();
+	var file = document.getElementById('file');
+	if (file.files.length > 0){
+		console.log(file.files[0]);
+		data.append('file',file.files[0]);
+	}
+	//console.log($('#file').prop('files')[0])
+	data.append('file',file.files[0]);
+	data.append('full_name'         ,$('#emp_name').val());
+	data.append('gender'            ,$('input[name=gender]:checked').val());
+	data.append('phone'             ,$('#emp_phone').val());
+	data.append('email'             ,$('#emp_email').val());
+	data.append('address'           ,$('#emp_address').val());
+	data.append('username'          ,$('#user_name').val());
+	data.append('password'          ,$('#password').val());
+	data.append('confirmPassword'   ,$('#confirm_password').val());
+	console.log(data);
+	var token = $('#_csrf').attr('content');
+	var header = $('#_csrf_header').attr('content');
+	$.ajax({
+		url:window.location.pathname+'Add',
+		type:'POST',
+		//dataType: 'text',
+	    processData: false,
+	    contentType: false,
+	    data:data,
+	    beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token)
+         },
+         success:function(json){
+        	 console.log(json);
+         },error:function(json){
+        	 console.log(json); 
+         }
+	});
+
 }
