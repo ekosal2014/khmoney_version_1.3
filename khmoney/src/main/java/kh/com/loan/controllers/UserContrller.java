@@ -28,7 +28,7 @@ public class UserContrller {
 	public @ResponseBody Message loadingUserList() throws KHException {
 		return userService.loadingUserList();
 	}
-	@RequestMapping(value = "/employeeAdd", method = RequestMethod.POST, headers = "content-type=multipart/form-data")
+	@RequestMapping(value = "/employeeAdd", method = RequestMethod.POST)
 	public @ResponseBody Message employee(@RequestParam HashMap<String, Object> param,MultipartHttpServletRequest request) throws KHException {
 		System.out.println(" Hello ===="+param+"  "+request.getParameter("gender")+"  "+request.getParameter("file"));
 		return new Message();
