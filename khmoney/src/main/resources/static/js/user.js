@@ -10,7 +10,11 @@ $(document).ready(function(){
 		employeeAddNew(e);
 	});
 	
-	$('3')
+	$('#file').change(function(event){
+		console.log('23412');
+		var tmppath = URL.createObjectURL(event.target.files[0]);
+	    $("#photo").fadeIn("fast").attr('src',tmppath);    
+	});
 });
 function loadingUserList(page){
 	$('#loading').bPopup();
@@ -42,6 +46,7 @@ function loadingUserList(page){
 						+'<td><div>'+value.sts+'</div></td>'
 						+'<td><div></div></td>'
 						+'</tr>';
+					i++;
 				});
 				$('#tbl_user tbody').append(tbl);
 				
@@ -115,10 +120,10 @@ function employeeAddNew(e){
 		console.log(file.files[0]);
 		data.append('file',file.files[0]);
 	}else{
-		data.append('file','');
+		data.append('file',null);
 	}
 	//console.log($('#file').prop('files')[0])
-	
+	$('#loading').bPopup();
 	data.append('full_name'         ,$('#emp_name').val());
 	data.append('gender'            ,$('input[name=gender]:checked').val());
 	data.append('phone'             ,$('#emp_phone').val());
@@ -141,12 +146,17 @@ function employeeAddNew(e){
             xhr.setRequestHeader(header, token)
          },
          success:function(json){
-        	 console.log(json);
+        	 if (json.code == 'undefined' || json.code == '9999'){
+ 				Message.infor(null,json.message,null);
+ 				return;
+ 			}
+        	 Message.infor(null,json.message,loadingUserList(1));
+        	 $('#popup_employee').bPopup().close();
          },error:function(json){
         	 console.log(json); 
          }
 	});
-
+	$('#loading').bPopup().close();
 }
 
 function isValidEmailAddress(emailAddress) {

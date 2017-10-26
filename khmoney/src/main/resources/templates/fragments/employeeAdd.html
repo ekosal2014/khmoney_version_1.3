@@ -34,8 +34,8 @@
 							<th><div>ភេទ</div></th>
 							<td>
 								<div>
-									<label><input type="radio" name="gender" value="1" checked> ប្រុស</label> &nbsp;&nbsp;&nbsp;
-									<label><input type="radio" name="gender" value="2"> ស្រី</label>
+									<label><input type="radio" name="gender" value="0" checked> ប្រុស</label> &nbsp;&nbsp;&nbsp;
+									<label><input type="radio" name="gender" value="1"> ស្រី</label>
 								</div>
 							</td>
 						</tr>
@@ -54,7 +54,7 @@
 						<tr style="display:;" id="">
 							<th><div>រូបថត</div></th>
 							<td colspan="3"><div>
-								 <img alt="photo" th:src="@{/img/images/employee.png}"> 
+								 <img alt="photo" id="photo" th:src="@{/img/images/employee.png}" width="64" height="64"> 
 								<input type="file" name="file" placeholder=""​​ id="file">
 							</div></td>
 						</tr>
@@ -79,13 +79,13 @@
 							</tr>
 							<tr>
 								<th><div>ពាក្យសំងាត់</div></th>
-								<td colspan="3"><div><input type="text" value="" name="password" id="password" placeholder="" required="required"></div></td>
+								<td colspan="3"><div><input type="password" value="" name="password" id="password" placeholder="" required="required"></div></td>
 								
 							</tr>
 							<tr>
 								<th><div>បញ្ជាក់ពាក្យសម្ងាត់</div></th>
 								<td colspan="3"><div>
-									<input type="text" value="" name="confirm_password" id="confirm_password" placeholder="" required="required">
+									<input type="password" value="" name="confirm_password" id="confirm_password" placeholder="" required="required">
 								</div></td>
 							</tr>
 		
