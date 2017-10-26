@@ -9,6 +9,8 @@ $(document).ready(function(){
 	$('#btn_save').click(function(e){
 		employeeAddNew(e);
 	});
+	
+	$('3')
 });
 function loadingUserList(page){
 	$('#loading').bPopup();
@@ -67,7 +69,7 @@ function loadingUserList(page){
 
 function employeeAddNew(e){
 	e.preventDefault();
-	/*if ($('#emp_name').val() == ''){
+	if ($('#emp_name').val() == ''){
 		Message.infor(null,'សូមបញ្ចូលឈ្មោះបុគ្គលិក!',null);
 		return;
 	}
@@ -100,16 +102,23 @@ function employeeAddNew(e){
 		Message.infor(null,'សូមបញ្ចូលពាក្យសំងាត់ និងបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
 		return;
 	}
-	*/
+
+	
+	if (!isValidEmailAddress($('#emp_email').val())){
+		Message.infor(null,'អ៊ីមែលបុគ្គលិកមិនត្រូវទេ!!',null);
+		return ;
+	}
 	
 	var data = new FormData();
 	var file = document.getElementById('file');
 	if (file.files.length > 0){
 		console.log(file.files[0]);
 		data.append('file',file.files[0]);
+	}else{
+		data.append('file','');
 	}
 	//console.log($('#file').prop('files')[0])
-	data.append('file',file.files[0]);
+	
 	data.append('full_name'         ,$('#emp_name').val());
 	data.append('gender'            ,$('input[name=gender]:checked').val());
 	data.append('phone'             ,$('#emp_phone').val());
@@ -139,3 +148,8 @@ function employeeAddNew(e){
 	});
 
 }
+
+function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/);
+    return pattern.test(emailAddress);
+};

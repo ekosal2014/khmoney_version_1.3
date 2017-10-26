@@ -42,7 +42,7 @@
 		  FROM tbluser
 		  WHERE 1=1
 	  </select>
-	  <insert id="insertNewUser" parameterType="kh.com.loan.domains.User">
+	  <insert id="insertNewUser" parameterType="java.util.HashMap">
 	  		INSERT INTO public.tbluser(
 		              user_code
 		            , full_name
@@ -60,20 +60,21 @@
 		            , action
 		            )
 		    VALUES (
-		    		  ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
-		    		, ?
+		    		  #{user_code}
+		    		, #{full_name}
+		    		, #{gender}
+		    		, #{phone}
+		    		, #{email}
+		    		, #{address}
+		    		, #{username}
+		    		, #{password}
+		    		, #{sts}
+		    		, #{txt}
+		    		, #{photo}
+		    		, cast(#{modify_by} as int)
+		    		, #{modify_date}
+		    		, #{action}
+		    		
 		    		);
 	  		
 	  </insert>
@@ -97,4 +98,9 @@
 			   	   , action=?
 			 WHERE user_id = #{user_id};
 	  </update>
+	  <select id="loadingUserIdMax" resultType="java.lang.Integer">
+	  		SELECT 
+	  			COUNT(*) AS tt
+	  		FROM tbluser
+	  </select>
 </mapper>
