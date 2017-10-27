@@ -2,20 +2,45 @@
 <html   xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<div class="header"  th:fragment="header">
-		<div class="f_left cboth">
-			<h1 class="logo"><a th:href="@{/}"><img th:src="@{../img/logo/piggy-bank.png}" alt="LAON"></a></h1>
-		</div>
-		<div class="f_right" style="padding: 10px 25px 0 0 !important;font-family:'Khmer OS Battambang','Khmer OS Bokor', 'Khmer OS Content', 'hmer OS Siemreap', 'Khmer OS System' !important;font-size: 12px !important;">
-			<h4 class="logo"><a th:href="@{/logout}">ចាក់ចេញ</a></h4>
-		</div>
-	</div>
-	<div class="header"  th:fragment="header_main">
+	<div class="header"  th:fragment="header" style="padding:0px !important;height: 45px;">
 		<div class="f_left cboth">
 			<h1 class="logo"><a th:href="@{/}"><img th:src="@{img/logo/piggy-bank.png}" alt="LAON"></a></h1>
 		</div>
-		<div class="f_right" style="padding:10px 25px 0 0 !important;font-family:'Khmer OS Battambang','Khmer OS Bokor', 'Khmer OS Content', 'hmer OS Siemreap', 'Khmer OS System' !important;font-size: 12px !important;">
-			<h4 class="logo"><a th:href="@{/logout}">ចាក់ចេញ</a></h4>
+		<div class="f_right" style="padding: 0px 25px 0 0 !important;font-family:'Khmer OS Battambang','Khmer OS Bokor', 'Khmer OS Content', 'hmer OS Siemreap', 'Khmer OS System' !important;font-size: 12px !important; box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;">
+		<ul class="navbar-right">
+			<li>
+				<a href="javascript:" id="user_infor" style="padding: 10px 15px 10px !important;height: 25px;">
+					<img width="30" height="30" class="profile"  alt="image"/>
+					<span id="full_name"></span>
+					<span class=" fa fa-angle-down"></span>
+				</a>
+				<ul class="dropdown-menu dropdown-profile" style="display:none;">
+					<li>
+						<a id="change_profile" data-id="">
+							Profile 
+						</a>
+					</li>
+					<li>
+						<a id="change_passowrd" data-id="">
+							change password
+						</a>
+					</li>
+					<li>
+						<a>
+							Help
+						</a>
+					</li>
+					<li>						
+						<a th:href="@{/logout}">
+							ចាក់ចេញ
+							<i class="fa fa-sign-out pull-right"></i>
+						</a>
+					</li>
+				</ul>
+			</li>		
+			
+		</ul>			
+			
 		</div>
 	</div>
 </html>

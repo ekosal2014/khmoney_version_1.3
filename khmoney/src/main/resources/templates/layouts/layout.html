@@ -3,16 +3,81 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
    <head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
+   <style>
+   			.navbar-right{
+				margin:0px;
+				padding:0;
+				float:right;
+				width:100%;
+				height: 100%;
+				list-style:none;
+			}
+			.navbar-right>li{
+				display: inline-block;
+			    position: relative;
+			    float: right;
+			    margin: 0px;
+			    padding: 0px;
+			    height: 100%;
+			}
+			.navbar-right li a{
+				padding: 18px 15px 15px;
+			    display: block;
+			    color: #515356!important;
+			    height: 100%;
+			}
+			.navbar-right li a img.profile{
+				border-radius: 50%;
+				vertical-align: middle;
+			}
+			.navbar-right>li>a:hover{
+			    background: #D9DEE4;
+			}
+			.dropdown-menu{
+				position:absolute;
+				border:1px solid #D9DEE4;
+				background-color:#fff;
+				width:300px;
+				min-width:160px;
+				right:0px;
+				left:auto;
+				z-index:9998;
+				top:100%;
+				border-radius:4px;
+				border-top-left-radius:0;
+				border-top-right-radius:0;
+				display:block;
+				margin:0px;
+				padding:0px;
+				list-style:none;
+			}
+			.dropdown-menu li{
+				position:relative;		  
+				
+			}
+			.dropdown-profile{
+				width:200px;
+			}
+			.dropdown-profile>li>a:hover{
+				background-color: #F7F7F7 !important;
+			}
+			.dropdown-profile li a {
+			    padding: 9px 15px 9px;
+			}
+			.pull-right {
+			   margin-top:5px;
+			}
+   </style>
    <body class="lnb_bg">
 <div class="wrap">
 
 	<!-- header -->
-	<div lang="en" th:replace="/header :: header_main"></div>
+	<div lang="en" th:replace="/header :: header"></div>
 	<!-- //header -->
 
 	<!-- Container -->
 	<div class="container" layout:fragment="content">
-
+		
 		<!-- content wrap -->
 		<div class="content">
 			<div class="cnt_wrap" >
@@ -82,7 +147,10 @@
 </div>
 
 <div lang="en" th:replace="fragments/assets :: assets"></div>
+<script th:src="@{/js/layout.js}"></script>
 <div layout:fragment="asset"></div>
+<div lang="en" th:replace="fragments/employeeAdd :: popup_employee_edit"></div>
+<div lang="en" th:replace="fragments/employeeAdd :: popup_employee_change_password"></div>
 <!-- loading.... -->
 <div style="display:none;" id="loading">
     <img th:src="@{/img/loading.gif}" alt="LAON" height="50" width="50">

@@ -103,4 +103,31 @@
 	  			COUNT(*) AS tt
 	  		FROM tbluser
 	  </select>
+	  <select id="loadUserByCondition" resultType="kh.com.loan.domains.User" parameterType="java.util.HashMap">
+    	SELECT 
+    		  user_id
+    		, user_code
+    		, full_name
+    		, gender
+    		, phone
+    		, email
+    		, address
+    		, username
+    		, modify_by
+    		, modify_date
+    		, photo
+    		, sts
+    		, txt
+		  FROM tbluser
+		  WHERE 1=1	
+		  <if test="userId != null and userId !=''">
+		  	  AND user_id = cast(#{userId} as int)
+		  </if>
+		   <if test="userName != null and userName !=''">
+		  	  AND username = #{userName}
+		  </if>
+		   <if test="password != null and password !=''">
+		  	  AND password = #{password}
+		  </if>
+	  </select>
 </mapper>

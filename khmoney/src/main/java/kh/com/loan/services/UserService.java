@@ -71,6 +71,18 @@ public class UserService {
 			throw new KHException("9999", e.getMessage());
 		}
 	}
+	public Message employeeGetById(int user_id) throws KHException{
+		HashMap<String,String> params = new HashMap<>();
+		HashMap<String,Object> result = new HashMap<>();
+		try{
+			params.put("userId", String.valueOf(user_id));
+			result.put("userEntry", userMapper.loadUserByCondition(params));
+			return new Message("0000",result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
 	
 
 }

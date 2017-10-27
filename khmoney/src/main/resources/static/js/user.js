@@ -6,15 +6,14 @@ $(document).ready(function(){
 	$('#btn_addMore').click(function(){
 		$('#popup_employee').bPopup();
 	});
-	$('#btn_save').click(function(e){
+	$('#btn_save').click(function(e){		
 		employeeAddNew(e);
 	});
 	$(document).on('click','.btn_cancel,.btn_close',function(){
-		$('#popup_employee').bPopup().close();
+		$('.alert_wrap').bPopup().close();
 	});
 	
 	$('#file').change(function(event){
-		console.log('23412');
 		var tmppath = URL.createObjectURL(event.target.files[0]);
 	    $("#photo").fadeIn("fast").attr('src',tmppath);    
 	});
@@ -49,7 +48,7 @@ function loadingUserList(page){
 						+'<td><div>'+value.email+'</div></td>'
 						+'<td><div>'+value.address+'</div></td>'
 						+'<td><div>'+value.sts+'</div></td>'
-						+'<td><div><a href="javascript:" onClick="loadingUserEdit(this);" data-id="'+value.user_id+'" style="width:30%;margin:0px;">កែប្រែ</a>|'  					
+						+'<td><div>' 					
 						+'         <a href="javascript:" style="width:30%;margin:0px;">លុប</a>|'
 						+'         <a href="javascript:" style="width:30%;margin:0px;">សិទ្ធិ</a></div></td>'
 						+'</tr>';
@@ -166,20 +165,6 @@ function employeeAddNew(e){
          }
 	});
 	$('#loading').bPopup().close();
-}
-function loadingUserEdit(obj){
-	 $('#popup_employee').bPopup();
-	 $.ajax({
-		 url:window.location.pathname+'GetById',
-		 type:'GET',
-		 data:'user_id='+$(obj).attr('data-id'),
-		 success:function(json){
-			 console.log(json);
-		 },error:function(json){
-			 console.log(json);
-		 }
-	 });
-	 
 }
 
 function clearTextBox(){

@@ -18,5 +18,6 @@ public interface UserMapper {
 	public int loadingCountAllUser();
 	public int insertNewUser(HashMap<String, Object> params);
 	public int loadingUserIdMax();
+	public User loadUserByCondition(HashMap<String,String> params);
 
 }

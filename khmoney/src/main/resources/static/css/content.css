@@ -12,7 +12,7 @@
 
 /* header */
 .header{display:block;margin:0;padding:7px 0;height:30px;border-bottom:2px solid #0C51F4;/*background-color:#0C51F4;*/}
-.header .logo{float:left;display:inline-block;vertical-align:top;padding:0 0 0 15px;}
+.header .logo{float:left;display:inline-block;vertical-align:top;padding:5px 0 0 15px;}
 .header .logo img{display:block;height:32px;margin-left:30px;}
 
 /* container */

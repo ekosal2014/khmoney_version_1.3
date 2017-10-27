@@ -28,7 +28,6 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 			return;
 		}
 		response.sendRedirect(targetUrl);*/
-		
 		response.getWriter().print(targetUrl);
 		response.getWriter().flush();
 		

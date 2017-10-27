@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.com.loan.domains.Message;
 import kh.com.loan.domains.User;
@@ -34,7 +35,16 @@ public class KHController {
 		}
 		return "login";
 	}
-	
+
+	@RequestMapping(value = "/checkUserInformation", method = RequestMethod.GET)
+	public @ResponseBody Message indexCheckPage(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = new User();
+		if(!auth.getPrincipal().equals("anonymousUser")){			
+			 user = (User) auth.getPrincipal();
+		}
+		return new Message("0000",user);
+	}
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
