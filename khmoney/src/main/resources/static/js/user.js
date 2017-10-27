@@ -133,7 +133,7 @@ function employeeAddNew(e){
 	$('#loading').bPopup();
 	data.append('full_name'         ,$('#emp_name').val());
 	data.append('gender'            ,$('input[name=gender]:checked').val());
-	data.append('phone'             ,$('#emp_phone').val());
+	data.append('phone'             ,$('#emp_phone').val().replace(/\-/g,'').trim());
 	data.append('email'             ,$('#emp_email').val());
 	data.append('address'           ,$('#emp_address').val());
 	data.append('username'          ,$('#user_name').val());
