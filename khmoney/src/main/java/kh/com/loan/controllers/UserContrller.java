@@ -15,16 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import kh.com.loan.domains.Message;
-import kh.com.loan.domains.User;
 import kh.com.loan.services.UserService;
 import kh.com.loan.utils.KHException;
 
@@ -39,22 +35,27 @@ public class UserContrller {
 		return userService.loadingUserList();
 	}
 	@RequestMapping(value = "/employeeAdd", method = RequestMethod.POST)
-	public @ResponseBody Message employee(@RequestParam HashMap<String, Object> params,@RequestParam("file") MultipartFile file,HttpServletRequest request) throws KHException {
+	public @ResponseBody Message employee(@RequestParam HashMap<String, Object> params,@RequestParam(name = "file", required = false) MultipartFile file,HttpServletRequest request) throws KHException {
 		System.out.println(" Hello ===="+params+"  "+file);
 		String storeFolderLocation = createStoredFolder(request);
 		String fileName            = createFileName();
 		try{
-			if (!isFileTypeImage(file.getOriginalFilename())){
-				throw new KHException("9999", "ប្រភេទរូបភាពដែលបានបញ្ចូលមិនត្រឹមត្រូវទេ!");
+			if (file != null) {
+				if (!isFileTypeImage(file.getOriginalFilename())){
+					throw new KHException("9999", "ប្រភេទរូបភាពដែលបានបញ្ចូលមិនត្រឹមត្រូវទេ!");
+				}
+				String storeFileLocation = storeFolderLocation+file.getOriginalFilename();
+				File fl    = new File(storeFileLocation);
+				File newFl = new  File(storeFolderLocation+fileName);
+				
+				FileCopyUtils.copy(file.getBytes(), fl);
+				FileUtils.moveFile(fl, newFl);
+				//System.out.println(storeFolderLocation+createFileName());
+				params.put("photo", fileName);
+			}else {
+				params.put("photo", "employee.png");
 			}
-			String storeFileLocation = storeFolderLocation+file.getOriginalFilename();
-			File fl    = new File(storeFileLocation);
-			File newFl = new  File(storeFolderLocation+fileName);
 			
-			FileCopyUtils.copy(file.getBytes(), fl);
-			FileUtils.moveFile(fl, newFl);
-			//System.out.println(storeFolderLocation+createFileName());
-			params.put("photo", fileName);
 			return userService.insertNewUser(params);
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());

@@ -9,11 +9,17 @@ $(document).ready(function(){
 	$('#btn_save').click(function(e){
 		employeeAddNew(e);
 	});
+	$(document).on('click','.btn_cancel,.btn_close',function(){
+		$('#popup_employee').bPopup().close();
+	});
 	
 	$('#file').change(function(event){
 		console.log('23412');
 		var tmppath = URL.createObjectURL(event.target.files[0]);
 	    $("#photo").fadeIn("fast").attr('src',tmppath);    
+	});
+	$('#emp_phone').keyup(function(){
+		$('#emp_phone').val(Common.phoneWithComma($('#emp_phone').val().replace(/\-/g, ''),"-"));
 	});
 });
 function loadingUserList(page){
@@ -41,10 +47,11 @@ function loadingUserList(page){
 						+'<td><div>'+(value.gender=='0'?'ប្រុស':'ស្រី')+'</div></td>'
 						+'<td><div>'+Common.phoneWithComma(value.phone.replace(/\-/g, ''),"-")+'</div></td>'
 						+'<td><div>'+value.email+'</div></td>'
-						+'<td><div>'+value.txt+'</div></td>'
 						+'<td><div>'+value.address+'</div></td>'
 						+'<td><div>'+value.sts+'</div></td>'
-						+'<td><div></div></td>'
+						+'<td><div><a href="javascript:" onClick="loadingUserEdit(this);" style="width:30%;margin:0px;">កែប្រែ</a>|'  					
+						+'         <a href="javascript:" style="width:30%;margin:0px;">លុប</a>|'
+						+'         <a href="javascript:" style="width:30%;margin:0px;">សិទ្ធិ</a></div></td>'
 						+'</tr>';
 					i++;
 				});
@@ -122,6 +129,7 @@ function employeeAddNew(e){
 	}else{
 		data.append('file',null);
 	}
+	
 	//console.log($('#file').prop('files')[0])
 	$('#loading').bPopup();
 	data.append('full_name'         ,$('#emp_name').val());
@@ -152,13 +160,29 @@ function employeeAddNew(e){
  			}
         	 Message.infor(null,json.message,loadingUserList(1));
         	 $('#popup_employee').bPopup().close();
+        	 clearTextBox();
          },error:function(json){
         	 console.log(json); 
          }
 	});
 	$('#loading').bPopup().close();
 }
+function loadingUserEdit(obj){
+	 $('#popup_employee').bPopup();
+}
 
+function clearTextBox(){
+	$('#emp_name').val('');
+	$('#emp_phone').val('') ;
+	$('#emp_email').val('');
+	$('#emp_address').val('') ;
+	$('#user_name').val('');
+	$('#password').val('') ;
+	$('#confirm_password').val('');
+	$('#male').prop('checked',true);
+	$('#file').attr({ value: '' }); 
+	$('#photo').attr('src','/khmoney/img/images/employee.png');
+}
 function isValidEmailAddress(emailAddress) {
     var pattern = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/);
     return pattern.test(emailAddress);
