@@ -62,6 +62,11 @@ public class UserContrller {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/employeeGetById" , method = RequestMethod.GET)
+	public @ResponseBody Message employeeGetById(@RequestParam int user_id) {
+		return new Message();
+	}
 	private String createStoredFolder(HttpServletRequest request) {
         String realPath = request.getSession().getServletContext().getRealPath("/");
         String relativePath = getRelativePath();
