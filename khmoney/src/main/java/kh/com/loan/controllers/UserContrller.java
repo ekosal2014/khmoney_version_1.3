@@ -68,6 +68,39 @@ public class UserContrller {
 		return userService.employeeGetById(user_id);
 	}
 	
+	@RequestMapping(value = "/employeeChangePassword" , method = RequestMethod.POST)
+	public @ResponseBody Message employeeChangePassword(@RequestParam HashMap<String, String> params) throws KHException{
+		return userService.employeeChangePassword(params);
+	}
+	
+	@RequestMapping(value = "/employeeChangeInformation" , method = RequestMethod.POST)
+	public @ResponseBody Message employeeChangeInformation(@RequestParam HashMap<String, String> params,@RequestParam(name = "file", required = false) MultipartFile file,HttpServletRequest request) throws KHException{
+		String storeFolderLocation = createStoredFolder(request);
+		String fileName            = createFileName();
+		try{
+			if (file != null) {
+				if (!isFileTypeImage(file.getOriginalFilename())){
+					throw new KHException("9999", "ប្រភេទរូបភាពដែលបានបញ្ចូលមិនត្រឹមត្រូវទេ!");
+				}
+				String storeFileLocation = storeFolderLocation+file.getOriginalFilename();
+				File fl    = new File(storeFileLocation);
+				File newFl = new  File(storeFolderLocation+fileName);
+				
+				FileCopyUtils.copy(file.getBytes(), fl);
+				FileUtils.moveFile(fl, newFl);
+				//System.out.println(storeFolderLocation+createFileName());
+				params.put("photo", fileName);
+			}else {
+				params.put("photo", "employee.png");
+			}
+			
+			return userService.employeeChangeInformation(params);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	
 	private String createStoredFolder(HttpServletRequest request) {
         String realPath = request.getSession().getServletContext().getRealPath("/");
         String relativePath = getRelativePath();

@@ -21,9 +21,10 @@ public class User implements UserDetails{
 	private String address;
 	private String username;
 	private String password;
-	private int createby;
-	private String createdt;
+	private int modify_by;
+	private String modify_date;
 	private String photo;
+	private String action;
 	
 	public User() {
 		super();
@@ -33,7 +34,7 @@ public class User implements UserDetails{
 	public String toString() {
 		return "User [user_id=" + user_id + ", user_code=" + user_code + ", full_name=" + full_name + ", gender="
 				+ gender + ", phone=" + phone + ", email=" + email + ", address=" + address + ", username=" + username
-				+ ", password=" + password + ", createby=" + createby + ", createdt=" + createdt + ", photo=" + photo
+				+ ", password=" + password + ", createby=" + modify_by + ", createdt=" + modify_date + ", photo=" + photo
 				+ ", sts=" + sts + ", txt=" + txt + ", roles=" + roles + "]";
 	}
 	public User(int user_id, String user_code, String full_name, String gender, String phone, String email,
@@ -49,8 +50,8 @@ public class User implements UserDetails{
 		this.address = address;
 		this.username = username;
 		this.password = password;
-		this.createby = createby;
-		this.createdt = createdt;
+		this.modify_by = createby;
+		this.modify_date = createdt;
 		this.photo = photo;
 		this.sts = sts;
 		this.txt = txt;
@@ -112,24 +113,34 @@ public class User implements UserDetails{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public int getCreateby() {
-		return createby;
-	}
-	public void setCreateby(int createby) {
-		this.createby = createby;
-	}
-	public String getCreatedt() {
-		return createdt;
-	}
-	public void setCreatedt(String createdt) {
-		this.createdt = createdt;
-	}
+	}	
 	public String getPhoto() {
 		return photo;
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	
+	public int getModify_by() {
+		return modify_by;
+	}
+	public void setModify_by(int modify_by) {
+		this.modify_by = modify_by;
+	}
+	public String getModify_date() {
+		return modify_date;
+	}
+	public void setModify_date(String modify_date) {
+		this.modify_date = modify_date;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public String getSts() {
 		return sts;

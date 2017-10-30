@@ -85,7 +85,7 @@ function userEditInformation(){
 		data.append('file',null);
 	}
 	$('#loading').bPopup();
-	data.append('full_name'         ,$('#emp_edit_name').val());
+	data.append('fullName'          ,$('#emp_edit_name').val());
 	data.append('gender'            ,$('input[name=gender]:checked').val());
 	data.append('phone'             ,$('#emp_edit_phone').val().replace(/\-/g,'').trim());
 	data.append('email'             ,$('#emp_edit_email').val());
@@ -94,7 +94,7 @@ function userEditInformation(){
 	var token = $('#_csrf').attr('content');
 	var header = $('#_csrf_header').attr('content');
 	$.ajax({
-		url:'/khmoney/employeeEditById',
+		url:'/khmoney/employeeChangeInformation',
 		type:'POST',
 		//dataType: 'text',
 	    processData: false,
@@ -119,6 +119,7 @@ function userEditInformation(){
 
 
 function setValueForEdit(json){
+	$('#emp_edit_id').val(json.object.userEntry.user_id);
 	$('#emp_edit_name').val(json.object.userEntry.full_name);
 	$('#emp_edit_id').val(json.object.userEntry.user_id)
 	$('#emp_edit_phone').val(json.object.userEntry.phone) ;
