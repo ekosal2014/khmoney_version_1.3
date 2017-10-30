@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import kh.com.loan.domains.Message;
 import kh.com.loan.domains.User;
+import kh.com.loan.mappers.UserMapper;
 import kh.com.loan.services.UserService;
 import kh.com.loan.utils.KHException;
 
@@ -72,7 +74,8 @@ public class UserContrller {
 	}
 	
 	@RequestMapping(value = "/employeeChangePassword" , method = RequestMethod.POST)
-	public @ResponseBody Message employeeChangePassword(@RequestParam HashMap<String, String> params) throws KHException{
+	public @ResponseBody Message employeeChangePassword(@RequestBody HashMap<String, String> params) throws KHException{
+		System.out.println(params);
 		return userService.employeeChangePassword(params);
 	}
 	
@@ -103,6 +106,10 @@ public class UserContrller {
 		}
 	}
 	
+	@RequestMapping(value = "/employeeDelete" , method = RequestMethod.GET)
+	public @ResponseBody Message employeeDelete(@RequestParam int userId) throws KHException{
+		return userService.employeeDelete(userId);
+	}
 	
 	private String createStoredFolder(HttpServletRequest request) {
         String realPath = request.getSession().getServletContext().getRealPath("/");

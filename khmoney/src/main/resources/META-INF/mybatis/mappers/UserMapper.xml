@@ -19,7 +19,7 @@
     		, sts
     		, txt
 		  FROM tbluser
-		  WHERE 1=1	AND username = #{username}
+		  WHERE 1=1	AND username = #{username} AND sts != '9'
 	  </select>
 	  <select id="loadingAllUser" resultType="kh.com.loan.domains.User">
 	  	SELECT 
@@ -34,7 +34,7 @@
     		, sts
     		, txt
 		  FROM tbluser
-		  WHERE 1=1
+		  WHERE 1=1 AND sts != '9'
 	  </select>
 	    <select id="loadingCountAllUser" resultType="java.lang.Integer">
 	  	SELECT 
@@ -120,7 +120,7 @@
     		, sts
     		, txt
 		  FROM tbluser
-		  WHERE 1=1	
+		  WHERE 1=1	AND sts != '9'
 		  <if test="userId != null and userId !=''">
 		  	  AND user_id = cast(#{userId} as int)
 		  </if>

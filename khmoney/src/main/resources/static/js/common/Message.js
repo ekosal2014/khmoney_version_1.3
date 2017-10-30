@@ -4,10 +4,13 @@
 
 var Message = {};
 if (!Message) Message = {};
-Message.infor = function (title,content,callBack){
+Message.infor = function (title,content,callBack,input){
 	var title   = (typeof title   == 'undefined' || title   == null) ? 'ពត័មាន' : title;
 	var content = (typeof content == 'undefined' || content == null) ? '' : content;
-	
+	var params  = null;
+	if (typeof input != 'undefined' && input != null){
+		params  = input;
+	}
 	$.alert({
 	    title: title,
 	    content: content,
@@ -16,7 +19,7 @@ Message.infor = function (title,content,callBack){
 	    useBootstrap: false,
 	    closeIcon: function(){
 	    	if ($.isFunction(callBack)){
-	    		callBack();
+	    		callBack(params);
 	    	}
 	    },
 	    buttons: {   
@@ -26,7 +29,7 @@ Message.infor = function (title,content,callBack){
 	            keys: ['enter'],
 	            action: function(){
 	            	if ($.isFunction(callBack)){
-	    	    		callBack();
+	    	    		callBack(params);
 	    	    	}
 	            }
 	        }

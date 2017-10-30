@@ -49,7 +49,7 @@ function loadingUserList(page){
 						+'<td><div>'+value.address+'</div></td>'
 						+'<td><div>'+value.sts+'</div></td>'
 						+'<td><div>' 					
-						+'         <a href="javascript:" style="width:30%;margin:0px;">លុប</a>|'
+						+'         <a href="javascript:" data-id="'+value.user_id+'" onClick="deleteUserInformation(this);" style="width:30%;margin:0px;">លុប</a>|'
 						+'         <a href="javascript:" style="width:30%;margin:0px;">សិទ្ធិ</a></div></td>'
 						+'</tr>';
 					i++;
@@ -160,6 +160,27 @@ function employeeAddNew(e){
         	 Message.infor(null,json.message,loadingUserList(1));
         	 $('#popup_employee').bPopup().close();
         	 clearTextBox();
+         },error:function(json){
+        	 console.log(json); 
+         }
+	});
+	$('#loading').bPopup().close();
+}
+
+function deleteUserInformation(obj){
+	if (!window.confirm("Do you really want to leave?")) { 
+		return; 
+	}	
+	$.ajax({
+		url:window.location.pathname+'Delete',
+		type:'GET',
+	    data:'userId='+$(obj).attr('data-id'),
+         success:function(json){
+        	 if (json.code == 'undefined' || json.code == '9999'){
+ 				Message.infor(null,json.message,null);
+ 				return;
+ 			}
+        	 Message.infor(null,json.message,loadingUserList,1);
          },error:function(json){
         	 console.log(json); 
          }

@@ -38,6 +38,7 @@ public class KHSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http
 			.authorizeRequests()
 /*				.antMatchers("/","/home","/about","/article","/user").permitAll()*/
+			    .antMatchers("/login").permitAll()
 				.antMatchers("/article/**").hasAnyRole("USER","ADMIN")
 				.antMatchers("/admin/**").hasAnyRole("ADMIN")
 			    .antMatchers("/**").hasAnyRole("ADMIN")

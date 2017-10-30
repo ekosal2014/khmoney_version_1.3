@@ -24,6 +24,10 @@ $(document).ready(function(){
 	$('#btn_edit').click(function(){
 		userEditInformation();
 	});
+	
+	$('#btn_save_password').click(function(){
+		employeeChangePassword();
+	});
 });
 
 function checkUserInformation(){
@@ -107,6 +111,7 @@ function userEditInformation(){
          success:function(json){
         	 if (json.code == 'undefined' || json.code == '9999'){
  				Message.infor(null,json.message,null);
+ 				$('#loading').bPopup().close();
  				return;
  			}
         	 Message.infor(null,json.message,loadingLoginAgain);
@@ -116,6 +121,57 @@ function userEditInformation(){
         	 console.log(json); 
          }
 	});
+	$('#loading').bPopup().close();
+}
+
+function employeeChangePassword(){
+	var data = {};	
+	if ($('#p_password').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	if ($('#p_new_password').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	if ($('#p_new_confirm_password').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	if ($('#p_new_password').val() != $('#p_new_confirm_password').val()){
+		Message.infor(null,'សូមបញ្ចូលពាក្យសំងាត់ និងបញ្ជាក់ពាក្យសំងាត់បុគ្គលិក!',null);
+		return;
+	}
+	$('#loading').bPopup();
+	data['oldPassword']      = $('#p_password').val();
+	data['newPassword']      = $('#p_new_password').val();
+	data['confirmPassword']  = $('#p_new_confirm_password').val();
+    console.log(data);
+	var token = $('#_csrf').attr('content');
+	var header = $('#_csrf_header').attr('content');
+	$.ajax({
+		url:'/khmoney/employeeChangePassword',
+		type:'POST',
+		contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
+	    data:JSON.stringify(data),
+	    beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token)
+         },
+         success:function(json){
+        	 if (json.code == 'undefined' || json.code == '9999'){
+ 				Message.infor(null,json.message,null);
+ 				$('#loading').bPopup().close();
+ 				return;
+ 			}
+        	 Message.infor(null,json.message,loadingLoginAgain);
+        	 $('#popup_employee').bPopup().close();
+        	 clearTextBox();
+         },error:function(json){
+        	 console.log(json); 
+         }
+	});
+	$('#loading').bPopup().close();
 }
 
 

@@ -93,18 +93,19 @@ public class UserService {
 			}else {
 				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
 			}
-			user = userMapper.loadUserByCondition(params);
-			if (user.getPassword().equals((String)params.get("oldPassword"))){
-				throw new KHException("9999", "ពាក្យសំងាត់ និងបញ្ជាក់ពាក្យមិនត្រូវគ្នាទ!");
+			System.out.println(" user password === "+ String.valueOf(params.get("oldPassword")));
+			if (!passwordEncoder.matches(String.valueOf(params.get("oldPassword")), user.getPassword())){
+				throw new KHException("9999", "ពាក្យសំងាត់ចាស់មិនត្រឹមត្រូវទេ!");
 			}
 			if (!String.valueOf(params.get("newPassword")).equals(String.valueOf(params.get("confirmPassword")))){
 				throw new KHException("9999", "ពាក្យសំងាត់ និងបញ្ជាក់ពាក្យមិនត្រូវគ្នាទ!");
 			}
-			user.setPassword(String.valueOf(params.get("newPassword")));
+			System.out.println(" user password2 === "+ passwordEncoder.encode(String.valueOf(params.get("newPassword"))));
+			user.setPassword(passwordEncoder.encode(String.valueOf(params.get("newPassword"))));
 			user.setModify_by(user.getUser_id());
 			user.setModify_date(Common.getCurrentDate());
 			user.setAction("ធ្វើការកែប្រែពាក្យសំងាត់ដោយ "+ user.getFull_name());
-			
+			System.out.println(" user password1 === "+ user.getPassword());
 			userMapper.editUseById(user);
 			return new Message("0000","ការកែប្រែពត័មានរបស់លោកអ្នកទទួលបានជោគជ័យហើយ!");
 		}catch(Exception e){
@@ -144,7 +145,35 @@ public class UserService {
 			throw new KHException("9999", e.getMessage());
 		}
 	}
-
+ 
+	
+	public Message employeeDelete(int userId) throws KHException{
+		try{
+			User user = new User();
+			User duser= new User();
+			HashMap<String,String> params = new HashMap<>();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (!auth.getPrincipal().equals("anonymousUser")) {
+				user = (User) auth.getPrincipal();
+				
+			}else {
+				throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+			}
+			params.put("userId", String.valueOf(userId));
+			duser = userMapper.loadUserByCondition(params);
+		    if (duser == null){
+		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		    }
+		    duser.setSts("9");
+		    duser.setModify_by(user.getUser_id());
+		    duser.setModify_date(Common.getCurrentDate());
+		    duser.setAction("ធ្វើការកែប្រែដោយ "+ user.getFull_name());
+		    userMapper.editUseById(duser);
+			return new Message("0000","ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលជោគជ័យ");	
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
 }
 
 	
