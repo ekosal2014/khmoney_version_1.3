@@ -125,7 +125,7 @@ public class UserService {
 			}
 		   user = userMapper.loadUserByCondition(params);
 		   if (String.valueOf(params.get("photo")).equals("")){
-			   params.put("photo","employee.png");
+			   params.put("photo",user.getPhoto());
 		   }
 		  		
            user.setFull_name(String.valueOf(params.get("fullName")));

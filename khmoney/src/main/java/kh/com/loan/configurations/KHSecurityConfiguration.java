@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -69,7 +70,8 @@ public class KHSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.withUser("admin").password("123").roles("ADMIN");	*/	
 	
 		
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(userDetailsService)
+			.passwordEncoder(passwordEncoder());
 		
 	}
 	
@@ -78,10 +80,9 @@ public class KHSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		web.ignoring().antMatchers("/resources/**");
 		web.ignoring().antMatchers("/static/**");
 	}
+	
 	@Bean
 	public PasswordEncoder passwordEncoder(){		
 		return new BCryptPasswordEncoder();
-	}
-	
-	
+	}	
 }

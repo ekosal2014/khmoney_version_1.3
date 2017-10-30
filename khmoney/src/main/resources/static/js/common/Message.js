@@ -47,7 +47,7 @@ Message.success = function (title,content,callBack){
 	    useBootstrap: false,
 	    closeIcon: function(){
 	    	if ($.isFunction(callBack)){
-	    		callBack();
+	    		callBack;
 	    	}
 	    },
 	    buttons: {   
@@ -57,7 +57,7 @@ Message.success = function (title,content,callBack){
 	            keys: ['enter'],
 	            action: function(){
 	            	if ($.isFunction(callBack)){
-	    	    		callBack();
+	    	    		callBack;
 	    	    	}
 	            }
 	        }

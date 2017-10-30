@@ -22,18 +22,18 @@ $(document).ready(function(){
 		loadingUserEdit(this);
 	});
 	$('#btn_edit').click(function(){
-		
+		userEditInformation();
 	});
 });
 
 function checkUserInformation(){
 	$.ajax({
-		url:'checkUserInformation',
+		url:'/khmoney/checkUserInformation',
 		type:'GET',
 		success:function(json){
 			$('.profile').attr('src','/khmoney/img/images/'+json.object.photo)
 			$('#full_name').text(json.object.full_name);
-			$('#change_password').attr('data-id',json.object.user_id);
+			$('#change_profile').attr('data-id',json.object.user_id);
 			$('#user_id').val(json.object.user_id);
 		},error:function(json){
 			
@@ -85,12 +85,13 @@ function userEditInformation(){
 		data.append('file',null);
 	}
 	$('#loading').bPopup();
+	data.append('userId'            ,$('#user_id').val());
 	data.append('fullName'          ,$('#emp_edit_name').val());
-	data.append('gender'            ,$('input[name=gender]:checked').val());
+	data.append('gender'            ,$('input[name=edit_gender]:checked').val());
 	data.append('phone'             ,$('#emp_edit_phone').val().replace(/\-/g,'').trim());
 	data.append('email'             ,$('#emp_edit_email').val());
 	data.append('address'           ,$('#emp_edit_address').val());
-	console.log(data);
+	console.log($('#user_id').val());
 	var token = $('#_csrf').attr('content');
 	var header = $('#_csrf_header').attr('content');
 	$.ajax({
@@ -108,7 +109,7 @@ function userEditInformation(){
  				Message.infor(null,json.message,null);
  				return;
  			}
-        	 Message.infor(null,json.message,loadingUserList(1));
+        	 Message.infor(null,json.message,loadingLoginAgain);
         	 $('#popup_employee').bPopup().close();
         	 clearTextBox();
          },error:function(json){
@@ -129,4 +130,6 @@ function setValueForEdit(json){
 	$('#edit_file').attr({ value: '' }); 
 	$('#edit_photo').attr('src','/khmoney/img/images/'+json.object.userEntry.photo);
 }
-
+function loadingLoginAgain(){
+	window.location.href = "/khmoney/logout";
+}

@@ -37,11 +37,13 @@ public class KHController {
 	}
 
 	@RequestMapping(value = "/checkUserInformation", method = RequestMethod.GET)
-	public @ResponseBody Message indexCheckPage(){
+	public @ResponseBody Message indexCheckPage() throws KHException{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = new User();
 		if(!auth.getPrincipal().equals("anonymousUser")){			
 			 user = (User) auth.getPrincipal();
+		}else {
+			throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
 		}
 		return new Message("0000",user);
 	}

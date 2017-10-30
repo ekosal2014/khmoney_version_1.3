@@ -82,20 +82,20 @@
 	  <update id="editUseById" parameterType="kh.com.loan.domains.User">
 	  		UPDATE tbluser
 			   SET 
-			   	   , user_code=?
-			   	   , full_name=?
-			   	   , gender=?
-			   	   , phone=?
-			   	   , email=?
-			   	   , address=?
-			   	   , username=?
-			   	   , password=?
-			   	   , sts=?
-			   	   , txt=?
-			   	   , photo=?
-			   	   , modify_by=?
-			   	   , modify_date=?
-			   	   , action=?
+			   	     user_code  = #{user_code}
+			   	   , full_name  = #{full_name}
+			   	   , gender     = #{gender}
+			   	   , phone      = #{phone}
+			   	   , email      = #{email}
+			   	   , address    = #{address}
+			   	   , username   = #{username}
+			   	   , password   = #{password}
+			   	   , sts        = #{sts}
+			   	   , txt        = #{txt}
+			   	   , photo      = #{photo}
+			   	   , modify_by  = #{modify_by}
+			   	   , modify_date= #{modify_date}
+			   	   , action     = #{action}
 			 WHERE user_id = #{user_id};
 	  </update>
 	  <select id="loadingUserIdMax" resultType="java.lang.Integer">
@@ -113,6 +113,7 @@
     		, email
     		, address
     		, username
+    		, password
     		, modify_by
     		, modify_date
     		, photo

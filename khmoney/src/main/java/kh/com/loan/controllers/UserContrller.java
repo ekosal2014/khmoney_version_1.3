@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.solr.common.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import kh.com.loan.domains.Message;
+import kh.com.loan.domains.User;
 import kh.com.loan.services.UserService;
 import kh.com.loan.utils.KHException;
 
@@ -91,7 +94,7 @@ public class UserContrller {
 				//System.out.println(storeFolderLocation+createFileName());
 				params.put("photo", fileName);
 			}else {
-				params.put("photo", "employee.png");
+				params.put("photo", "");
 			}
 			
 			return userService.employeeChangeInformation(params);
