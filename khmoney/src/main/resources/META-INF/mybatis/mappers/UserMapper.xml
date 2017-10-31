@@ -133,7 +133,7 @@
 	  </select>
 	  <select id="loadingAllPermission" resultType="java.util.HashMap">
 		  	SELECT 
-		  		p_id
+		  		  p_id
 		  		, title
 		  		, logo
 		  		, sts
@@ -141,7 +141,7 @@
 	  		FROM tblpermission
 	  		WHERE sts != '9'
 	  </select>
-	  <insert id="">
-		  	
+	  <insert id="insertOrUpdateUserInformation" parameterType="java.util.HashMap">
+	  		  	
 	  </insert>
 </mapper>
