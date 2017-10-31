@@ -113,7 +113,7 @@ public class UserContrller {
 	
 	@RequestMapping(value = "/employeeSetPermission" , method = RequestMethod.GET)
 	public @ResponseBody Message employeeSetPermission(@RequestParam int userId) throws KHException{
-		return new Message("9998");
+		return userService.employeeSetPermission(userId);
 	}
 	
 	private String createStoredFolder(HttpServletRequest request) {

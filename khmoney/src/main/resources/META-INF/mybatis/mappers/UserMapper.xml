@@ -131,17 +131,17 @@
 		  	  AND password = #{password}
 		  </if>
 	  </select>
-	  <select id="loadingAllPermission" resultType="java.util.HashMap">
-		  	SELECT 
-		  		  p_id
-		  		, title
-		  		, logo
-		  		, sts
-		  		, decription
-	  		FROM tblpermission
-	  		WHERE sts != '9'
+	  <select id="loadingAllPermission" resultType="java.util.HashMap" parameterType="java.lang.Integer">
+		  	select up.user_id,p.p_id,p.title,up.sts,p.url
+		  	from tblpermission p left join tbluser_permission up on p.p_id=up.p_id
+		  	where up.user_id = #{userId}
 	  </select>
 	  <insert id="insertOrUpdateUserInformation" parameterType="java.util.HashMap">
-	  		  	
+	  		  	INSERT INTO tbluser_permission(
+			            user_id, p_id, arrange, sts)
+			    VALUES (cast(#{user_id} as int), cast(#{p_id} as int), cast(#{arrange} as int), #{sts})
+			    ON DUPLICATE KEY UPDATE
+			    sts = #{sts},
+			    arange = cast(#{arrange} as int)
 	  </insert>
 </mapper>

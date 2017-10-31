@@ -1,12 +1,15 @@
 package kh.com.loan.services;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.codehaus.groovy.transform.trait.Traits.TraitBridge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.com.loan.domains.Message;
 import kh.com.loan.domains.User;
@@ -178,7 +181,20 @@ public class UserService {
 	public Message employeeSetPermission(int userId) throws KHException{
 		HashMap<String,Object> result = new HashMap<>();
 		try{
-			
+			result.put("listPermission", userMapper.loadingAllPermission(userId));
+			return new Message("0000",result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
+	public Message insertOrUpdateUserInformation(List<HashMap<String,String>> params) throws KHException{
+		HashMap<String,String> result = new HashMap<>();
+		try{
+			for(int i=0; i<params.size();i++){
+				userMapper.insertOrUpdateUserInformation(params.get(i));
+			}			
 			return new Message("0000","result");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());

@@ -189,6 +189,7 @@ function deleteUserInformation(obj){
 }
 
 function serPermissionUser(obj){
+	console.log($(obj).attr('data-id'));
 	$.ajax({
 		url:window.location.pathname+'SetPermission',
 		type:'GET',
