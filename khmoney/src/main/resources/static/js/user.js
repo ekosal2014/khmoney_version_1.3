@@ -50,7 +50,7 @@ function loadingUserList(page){
 						+'<td><div>'+value.sts+'</div></td>'
 						+'<td><div>' 					
 						+'         <a href="javascript:" data-id="'+value.user_id+'" onClick="deleteUserInformation(this);" style="width:30%;margin:0px;">លុប</a>|'
-						+'         <a href="javascript:" style="width:30%;margin:0px;">សិទ្ធិ</a></div></td>'
+						+'         <a href="javascript:" data-id="'+value.user_id+'" onClick="serPermissionUser(this)" style="width:30%;margin:0px;">សិទ្ធិ</a></div></td>'
 						+'</tr>';
 					i++;
 				});
@@ -186,6 +186,27 @@ function deleteUserInformation(obj){
          }
 	});
 	$('#loading').bPopup().close();
+}
+
+function serPermissionUser(obj){
+	$.ajax({
+		url:window.location.pathname+'SetPermission',
+		type:'GET',
+	    data:'userId='+$(obj).attr('data-id'),
+         success:function(json){
+        	 console.log(json);
+        	 if (json.code == 'undefined' || json.code == '9999'){
+ 				Message.infor(null,json.message,null);
+ 				return;
+ 			}
+        	 Message.infor(null,json.message,loadingUserList,1);
+         },error:function(json){
+        	 console.log(json); 
+         }
+	});
+	
+	$('#popup_employee_permission').bPopup();
+	
 }
 
 function clearTextBox(){

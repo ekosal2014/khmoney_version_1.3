@@ -111,6 +111,11 @@ public class UserContrller {
 		return userService.employeeDelete(userId);
 	}
 	
+	@RequestMapping(value = "/employeeSetPermission" , method = RequestMethod.GET)
+	public @ResponseBody Message employeeSetPermission(@RequestParam int userId) throws KHException{
+		return new Message("9998");
+	}
+	
 	private String createStoredFolder(HttpServletRequest request) {
         String realPath = request.getSession().getServletContext().getRealPath("/");
         String relativePath = getRelativePath();

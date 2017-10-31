@@ -28,6 +28,8 @@ $(document).ready(function(){
 	$('#btn_save_password').click(function(){
 		employeeChangePassword();
 	});
+	
+
 });
 
 function checkUserInformation(){

@@ -47,7 +47,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 			roles.add(authority.getAuthority());
 		}
 		if(roles.contains("ROLE_ADMIN")){
-			return "/khmoney/";
+			return "/khmoney/employee";
 		}else{
 			return "/error/403"; // Access Denied
 		}

@@ -20,5 +20,6 @@ public interface UserMapper {
 	public int loadingUserIdMax();
 	public User loadUserByCondition(HashMap<String,String> params);
 	public int editUseById(User user);
+	public List<HashMap<String,String>> loadingAllPermission();
 
 }

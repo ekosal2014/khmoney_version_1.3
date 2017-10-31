@@ -131,4 +131,24 @@
 		  	  AND password = #{password}
 		  </if>
 	  </select>
+	  <select id="loadingAllPermission" resultType="java.util.HashMap">
+		  	SELECT 
+		  		p_id
+		  		, title
+		  		, logo
+		  		, sts
+		  		, decription
+	  		FROM tblpermission
+	  		WHERE sts != '9'
+	  </select>
+	  <insert id="">
+		  	WITH upsert AS (
+			     UPDATE spider_count SET tally=tally+1 
+			     WHERE date='today' AND spider='Googlebot' 
+			     RETURNING *
+			)
+			INSERT INTO spider_count (spider, tally) 
+			SELECT 'Googlebot', 1 
+			WHERE NOT EXISTS (SELECT * FROM upsert)
+	  </insert>
 </mapper>
