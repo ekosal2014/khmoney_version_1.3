@@ -142,13 +142,6 @@
 	  		WHERE sts != '9'
 	  </select>
 	  <insert id="">
-		  	WITH upsert AS (
-			     UPDATE spider_count SET tally=tally+1 
-			     WHERE date='today' AND spider='Googlebot' 
-			     RETURNING *
-			)
-			INSERT INTO spider_count (spider, tally) 
-			SELECT 'Googlebot', 1 
-			WHERE NOT EXISTS (SELECT * FROM upsert)
+		  	
 	  </insert>
 </mapper>

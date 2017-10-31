@@ -178,6 +178,7 @@ public class UserService {
 	public Message employeeSetPermission(int userId) throws KHException{
 		HashMap<String,Object> result = new HashMap<>();
 		try{
+			
 			return new Message("0000","result");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());
