@@ -22,5 +22,5 @@ public interface UserMapper {
 	public int editUseById(User user);
 	public List<HashMap<String,String>> loadingAllPermission(@Param("userId") int userId);
 	public int insertOrUpdateUserInformation(HashMap<String,String> params);
-
+	public List<HashMap<String,String>> loadingAllPermissions();
 }

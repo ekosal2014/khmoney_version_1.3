@@ -47,6 +47,9 @@ public class KHController {
 		}
 		return new Message("0000",user);
 	}
+	
+	
+	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();

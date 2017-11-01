@@ -42,7 +42,7 @@
 		  FROM tbluser
 		  WHERE 1=1
 	  </select>
-	  <insert id="insertNewUser" parameterType="java.util.HashMap">
+	  <insert id="insertNewUser" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="user_id" keyProperty="user_id">
 	  		INSERT INTO public.tbluser(
 		              user_code
 		            , full_name
@@ -76,8 +76,16 @@
 		    		, #{action}
 		    		
 		    		);
-	  		
+	  	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="user_id">
+	         SELECT CAST(CURRVAL('tbluser_user_id_seq') as INTEGER) 
+	    </selectKey>
 	  </insert>
+	  
+	  <select id="loadingAllPermissions" resultType="java.util.HashMap">
+	  		SELECT p_id, title, logo, sts, decription, url
+ 			FROM tblpermission
+	  </select>
+
 	  
 	  <update id="editUseById" parameterType="kh.com.loan.domains.User">
 	  		UPDATE tbluser
@@ -132,16 +140,16 @@
 		  </if>
 	  </select>
 	  <select id="loadingAllPermission" resultType="java.util.HashMap" parameterType="java.lang.Integer">
-		  	select up.user_id,p.p_id,p.title,up.sts,p.url
+		  	select up.user_id,p.p_id,p.title,up.sts,p.url,p.logo
 		  	from tblpermission p left join tbluser_permission up on p.p_id=up.p_id
 		  	where up.user_id = #{userId}
 	  </select>
 	  <insert id="insertOrUpdateUserInformation" parameterType="java.util.HashMap">
 	  		  	INSERT INTO tbluser_permission(
 			            user_id, p_id, arrange, sts)
-			    VALUES (cast(#{user_id} as int), cast(#{p_id} as int), cast(#{arrange} as int), #{sts})
-			    ON DUPLICATE KEY UPDATE
-			    sts = #{sts},
-			    arange = cast(#{arrange} as int)
+			    VALUES (cast(#{userId} as int), cast(#{pId} as int), cast(#{order} as int), #{sts})
+			    ON CONFLICT (user_id,p_id) DO UPDATE SET
+													    sts = #{sts},
+													    arrange = cast(#{order} as int)
 	  </insert>
 </mapper>

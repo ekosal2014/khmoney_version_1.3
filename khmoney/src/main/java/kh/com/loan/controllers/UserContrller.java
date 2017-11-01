@@ -5,6 +5,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +115,24 @@ public class UserContrller {
 	@RequestMapping(value = "/employeeSetPermission" , method = RequestMethod.GET)
 	public @ResponseBody Message employeeSetPermission(@RequestParam int userId) throws KHException{
 		return userService.employeeSetPermission(userId);
+	}
+	
+	@RequestMapping(value = "/employeeUpdatePermission" , method = RequestMethod.POST)
+	public @ResponseBody Message employeeUpdatePermission(@RequestBody List<HashMap<String,String>> params) throws KHException{
+		//System.out.println(" Hello == "+params);
+		return userService.insertOrUpdateUserInformation(params);
+	}
+	
+	@RequestMapping(value = "/loadingMenuUser" , method = RequestMethod.GET)
+	public @ResponseBody Message loadingMenuUser() throws KHException{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = new User();
+		if(!auth.getPrincipal().equals("anonymousUser")){			
+			 user = (User) auth.getPrincipal();
+		}else {
+			throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
+		}
+		return userService.employeeSetPermission(user.getUser_id());
 	}
 	
 	private String createStoredFolder(HttpServletRequest request) {

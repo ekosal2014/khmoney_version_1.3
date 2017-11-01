@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			}
 			
 			
-			if (user.getTxt().equals("2")) {
+			if (user.getTxt().equals("2") || user.getTxt().equals("1")) {
 				Role role = new Role();
 				List<Role> roles = new ArrayList<>();
 				role.setRole("ROLE_ADMIN");

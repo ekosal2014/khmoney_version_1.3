@@ -43,7 +43,7 @@ public class UserService {
 			throw new KHException("9999", e.getMessage());
 		}
 	}
-	
+	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
 	public Message insertNewUser(HashMap<String, Object> params) throws KHException{
 		try{
 			User user = new User();
@@ -68,7 +68,21 @@ public class UserService {
 		   params.put("modify_date", Common.getCurrentDate());		
 		   params.put("action"     , "បញ្ចូលពត័មានអំពីអ្នកប្រើប្រាស់ថ្មី!");	
 		   params.put("user_code", "EMP-"+Common.padLeft(String.valueOf(userMapper.loadingUserIdMax()+1), 6));
-		   userMapper.insertNewUser(params);
+		   if (userMapper.insertNewUser(params) <= 0){
+			   throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលជោគជ័យ!");
+		   }
+		   //System.out.println("User Id === "+params.get("user_id"));
+		   List<HashMap<String,String>> listPermission = userMapper.loadingAllPermissions();
+		   int i = 1;
+		   for(HashMap<String,String> param : listPermission){
+			  param.put("sts"   , "9");
+			  param.put("order" , String.valueOf(i++));
+			  param.put("userId", String.valueOf(params.get("user_id")));
+			  param.put("pId"   , String.valueOf(param.get("p_id")));
+			  userMapper.insertOrUpdateUserInformation(param);
+		   }
+		   
+		   
 		   return new Message("0000","ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលជោគជ័យ");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());
@@ -190,12 +204,11 @@ public class UserService {
 	
 	@Transactional(value="transactionManager",rollbackFor={KHException.class,Exception.class})
 	public Message insertOrUpdateUserInformation(List<HashMap<String,String>> params) throws KHException{
-		HashMap<String,String> result = new HashMap<>();
 		try{
 			for(int i=0; i<params.size();i++){
 				userMapper.insertOrUpdateUserInformation(params.get(i));
 			}			
-			return new Message("0000","result");
+			return new Message("0000","ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលជោគជ័យ");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());
 		}

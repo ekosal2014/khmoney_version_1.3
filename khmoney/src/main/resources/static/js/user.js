@@ -20,6 +20,9 @@ $(document).ready(function(){
 	$('#emp_phone').keyup(function(){
 		$('#emp_phone').val(Common.phoneWithComma($('#emp_phone').val().replace(/\-/g, ''),"-"));
 	});
+	$('#btn_save_permission').click(function(){
+		userUpdatePermission();
+	});
 });
 function loadingUserList(page){
 	$('#loading').bPopup();
@@ -189,7 +192,6 @@ function deleteUserInformation(obj){
 }
 
 function serPermissionUser(obj){
-	console.log($(obj).attr('data-id'));
 	$.ajax({
 		url:window.location.pathname+'SetPermission',
 		type:'GET',
@@ -205,10 +207,16 @@ function serPermissionUser(obj){
         	 $('#user_permission table tbody').empty();
         	 if (list.length > 0 ){
         		 $.each(list,function(index,value){
-        			 console.log(value.title);
+        			 var permission = 'permission_off';
+        			 if (value.sts == '1'){
+        				 permission = 'permission_on' 
+        			 }
         			 tbl += '<tr>'
-							  +'<td  colspan="3"><div class="t_left">'+value.title.replace(/\<br>/g, '')+'</div></td>'
-							  +'<td><div class="t_center permission_on" onClick="changePermission(this)" style="height:20px;position:absolute;right: 0px;top: 0px;width: 40px;cursor:pointer;"></div></td>'
+							  +'<td  colspan="3">'
+							  +'<div class="t_left">'+value.title.replace(/\<br>/g, '')+'<input type="hidden" value="'+value.user_id+'" class="user_id"/>'
+							  +'<input type="hidden" value="'+value.p_id+'" class="p_id"/></div>'
+							  +'</td>'
+							  +'<td><div class="t_center '+permission+'" onClick="changePermission(this)" style="height:20px;position:absolute;right: 0px;top: 0px;width: 40px;cursor:pointer;"></div></td>'
 							+'</tr>';
         		 });
         		 $('#user_permission table tbody').append(tbl);
@@ -225,11 +233,56 @@ function serPermissionUser(obj){
 function changePermission(obj){
 	if ($(obj).hasClass('permission_on')){
 		$(obj).removeClass('permission_on');
-		$(obj).addClass('permission');
+		$(obj).addClass('permission_off');
 	}else{
-		$(obj).removeClass('permission');
+		$(obj).removeClass('permission_off');
 		$(obj).addClass('permission_on');
 	}
+}
+
+function userUpdatePermission(){
+	var obj  = [];
+	var order= 1 ;
+	$.each($('#user_permission table tbody tr'),function(index,value){
+		var sts='0',data = {};
+		if ($(value).find('td div').hasClass('permission_on')){
+			sts = '1';
+		}else{
+			sts = '9'
+		}
+	
+		data = {
+				'userId':$(value).find('.user_id').val(),
+				'pId'   :$(value).find('.p_id').val(),
+				'sts'   :sts,
+				'order' :order+''
+		}
+		order++;
+		obj.push(data);
+	});
+	console.log(obj);
+	var token = $('#_csrf').attr('content');
+	var header = $('#_csrf_header').attr('content');
+	$.ajax({
+		url:window.location.pathname+'UpdatePermission',
+		type:'POST',
+	    contentType: 'application/json; charset=utf-8',
+	    dataType:'json',
+	    data:JSON.stringify(obj),
+	    beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token)
+         },
+         success:function(json){
+        	 if (json.code == 'undefined' || json.code == '9999'){
+ 				Message.infor(null,json.message,null);
+ 				return;
+ 			}
+        	 Message.infor(null,json.message,null);
+         },error:function(json){
+        	 console.log(json); 
+         }
+	});
+	$('#loading').bPopup().close();
 }
 function clearTextBox(){
 	$('#emp_name').val('');

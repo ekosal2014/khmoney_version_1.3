@@ -26,12 +26,12 @@
 				<div class="tit_wrap cboth">
 					<div class="f_left">
 						<div class="tit_h3">
-							<ul>
-								<li><a th:href="@{/}">ទំព័រដើម</a></li>
+							<ul id="top_menu">
+								<!-- <li><a th:href="@{/}">ទំព័រដើម</a></li>
 								<li><a th:href="@{/loaner}">បញ្ចីអ្នកខ្ចី</a></li>
 								<li><a th:href="@{loan}">បញ្ចីកម្ចី</a></li>
 								<li><a th:href="@{/missing-payment}">បញ្ចីអ្នកខកខានបង់ប្រាក់</a></li>
-								<li><a th:href="@{/setting}">កំណត់គោលការណ៍</a></li>
+								<li><a th:href="@{/setting}">កំណត់គោលការណ៍</a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -48,8 +48,8 @@
 					<!-- //title_wrap -->
 					<!-- main_menu -->
 					<div class="main_menu">
-						<ul>
-						    <li style="border:none !important;"><a th:href="@{/mywallet}">
+						<ul id="main_menu">
+						    <!-- <li style="border:none !important;"><a th:href="@{/mywallet}">
 								<img alt="loaner" th:src="@{img/logo/Status-wallet-open-icon.png}">
 								<span>ទឹកប្រាក់សរុប</span>
 							</a></li>
@@ -73,7 +73,7 @@
 							<li><a th:href="@{/setting}">
 								<img alt="loaner" th:src="@{img/logo/settings-icon.png}">
 								<span>កំណត់<br>គោល<br>ការណ៍</span>
-							</a></li>
+							</a></li> -->
 						</ul>
 					</div> 
 					<!-- //main_menu -->
@@ -85,10 +85,12 @@
 	</div>
 	<!-- //Container -->
 	</th:block>
-	<!-- <div lang="en" th:replace="fragments/footer :: footer"> </div> -->
+	<!--  <div lang="en" th:replace="fragments/footer :: footer"> </div> -->
 	
 	
 </div>
- 	 
+ 	 <th:block layout:fragment="asset">
+		<script th:src="@{js/index.js}"></script>
+	</th:block>	
 </body>
 </html>
