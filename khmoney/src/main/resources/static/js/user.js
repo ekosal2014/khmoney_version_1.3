@@ -199,8 +199,20 @@ function serPermissionUser(obj){
         	 if (json.code == 'undefined' || json.code == '9999'){
  				Message.infor(null,json.message,null);
  				return;
- 			}
-        	 Message.infor(null,json.message,loadingUserList,1);
+ 			 }
+        	 var tbl = '';
+        	 var list= json.object.listPermission;
+        	 $('#user_permission table tbody').empty();
+        	 if (list.length > 0 ){
+        		 $.each(list,function(index,value){
+        			 console.log(value.title);
+        			 tbl += '<tr>'
+							  +'<td  colspan="3"><div class="t_left">'+value.title.replace(/\<br>/g, '')+'</div></td>'
+							  +'<td><div class="t_center permission_on" onClick="changePermission(this)" style="height:20px;position:absolute;right: 0px;top: 0px;width: 40px;cursor:pointer;"></div></td>'
+							+'</tr>';
+        		 });
+        		 $('#user_permission table tbody').append(tbl);
+        	 }
          },error:function(json){
         	 console.log(json); 
          }
@@ -210,6 +222,15 @@ function serPermissionUser(obj){
 	
 }
 
+function changePermission(obj){
+	if ($(obj).hasClass('permission_on')){
+		$(obj).removeClass('permission_on');
+		$(obj).addClass('permission');
+	}else{
+		$(obj).removeClass('permission');
+		$(obj).addClass('permission_on');
+	}
+}
 function clearTextBox(){
 	$('#emp_name').val('');
 	$('#emp_phone').val('') ;

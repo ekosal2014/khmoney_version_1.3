@@ -468,4 +468,15 @@ input{outline:0;}
     	 font-family: "Khmer OS Bokor", "Khmer OS Content", "Khmer OS Battambang", "Khmer OS Siemreap", "Khmer OS System" !important;
    }
    
+   #user_permission tbody .permission{
+   		background-image:url(../img/icon/icon_alim_off.png);
+   		background-repeat:no-repeat;
+   		background-position: 0px;
+   }
+   #user_permission tbody .permission_on{
+   		background-image:url(../img/icon/icon_alim_on.png);
+   		background-repeat:no-repeat;
+   		background-position: 0px;
+   }
+   
    
