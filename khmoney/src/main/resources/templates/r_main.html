@@ -1,10 +1,115 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/layout">
+<head >
+<meta charset="utf-8">
 </head>
-<body>
 
+
+<body class="lnb_bg">
+
+<div class="wrap">
+
+	<!-- header -->
+	<!-- <div lang="en" th:replace="/header :: header_main"></div> -->
+	<!-- //header -->
+	<th:block layout:fragment="content">
+	<!-- Container -->
+	<div class="container">
+
+		<!-- content wrap -->
+		<div class="content">
+			<div class="cnt_wrap">
+			  	
+				<!-- title_wrap -->
+				<div class="tit_wrap cboth">
+					<div class="f_left">
+						<div class="tit_h3">
+							<ul id="top_menu">
+								<!-- <li><a th:href="@{/}">ទំព័រដើម</a></li>
+								<li><a th:href="@{/loaner}">បញ្ចីអ្នកខ្ចី</a></li>
+								<li><a th:href="@{loan}">បញ្ចីកម្ចី</a></li>
+								<li><a th:href="@{/missing-payment}">បញ្ចីអ្នកខកខានបង់ប្រាក់</a></li>
+								<li><a th:href="@{/setting}">កំណត់គោលការណ៍</a></li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- //title_wrap -->
+
+				<div class="tasks_wrap">
+					<!-- title_wrap -->
+					<div class="tit_wrap cboth">
+						<div class="t_center">
+							<div class="tit_h3"><h3>ទំព័រដើម</h3></div>
+						</div>
+					</div>
+					<!-- //title_wrap -->
+					<!-- main_menu -->
+					<div class="report_menu">
+						<ul id="report_menu">
+						    <li><a th:href="@{/reportLoanFinish}">								
+								<div class="title">부서별 현황 보고서</div>
+								<div class="thumb_cont">
+									<dl>
+										<dt class="ic_ptype_sprite misdb2"></dt>
+										<dd>
+											<p class="thumb_txt">부서별 법인카드 사용 통계 내용을 확인 할 수 있습니다.</p>
+										</dd>
+									</dl>
+								</div>	
+							</a></li>
+							<li><a th:href="@{/employee}">
+								<div class="title">부서별 현황 보고서</div>
+								<div class="thumb_cont">
+									<dl>
+										<dt class="ic_ptype_sprite misdb3"></dt>
+										<dd>
+											<p class="thumb_txt">부서별 법인카드 사용 통계 내용을 확인 할 수 있습니다.</p>
+										</dd>
+									</dl>
+								</div>	
+							</a></li>
+							<li><a th:href="@{/mywallet}">								
+								<div class="title">부서별 현황 보고서</div>
+								<div class="thumb_cont">
+									<dl>
+										<dt class="ic_ptype_sprite misdb4"></dt>
+										<dd>
+											<p class="thumb_txt">부서별 법인카드 사용 통계 내용을 확인 할 수 있습니다.</p>
+										</dd>
+									</dl>
+								</div>	
+							</a></li>
+							<li><a th:href="@{/employee}">
+								<div class="title">부서별 현황 보고서</div>
+								<div class="thumb_cont">
+									<dl>
+										<dt class="ic_ptype_sprite misdb5"></dt>
+										<dd>
+											<p class="thumb_txt">부서별 법인카드 사용 통계 내용을 확인 할 수 있습니다.</p>
+										</dd>
+									</dl>
+								</div>	
+							</a></li>
+						</ul>
+					</div> 
+					<!-- //main_menu -->
+				</div>
+				
+			</div>
+		</div>
+		<!-- //content wrap -->
+	</div>
+	<!-- //Container -->
+	</th:block>
+	<!--  <div lang="en" th:replace="fragments/footer :: footer"> </div> -->
+	
+	
+</div>
+ 	 <th:block layout:fragment="asset">
+		<script th:src="@{js/r_main.js}"></script>
+	</th:block>	
 </body>
 </html>

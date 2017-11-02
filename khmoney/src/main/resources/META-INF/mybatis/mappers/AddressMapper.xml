@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kh.com.loan.mappers.AddressMapper">
+ 	<select id="loadingAllProvinces" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+ 		SELECT 
+ 				pro_id
+ 			  , pro_name
+ 			  , pro_status
+ 		FROM tblProvinces
+ 		WHERE 1=1 AND pro_status != '9'
+ 		<if test="proId != null and proId != ''">
+ 			AND pro_id == cast(#{proId} as int)
+ 		</if>
+ 		ORDER BY pro_name
+ 	</select>
+	<select id="loadingDistrictsByProvinceId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT 
+				dis_id
+			  , dis_pro_id 
+			  , dis_name
+			  , dis_status
+		FROM tblDistricts
+		WHERE 1=1 AND dis_status != '9'
+		<if test="disId != null and disId != ''">
+			AND dis_id == cast(#{disId} as int)
+		</if>
+		<if test="disProId != null and disProId != ''">
+			AND dis_id == cast(#{disProId} as int)
+		</if>
+		ORDER BY dis_name
+	</select>
+	<select id="loadingCommunesByDistrictsId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT 
+				com_id
+			  , com_dis_id
+			  , com_name
+			  , com_status
+		FROM tblCommunes
+		WHERE 1=1 AND com_status != '9'
+		<if test="comId != null and comId != ''">
+			AND com_id == cast(#{comId} as int)
+		</if>
+		<if test="disProId != null and disProId != ''">
+			AND com_dis_id == cast(#{comDisId} as int)
+		</if>
+		ORDER BY com_name
+	</select>
+	<select id="loadingVillagesByCommunesId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT 
+				vil_id
+			  , vil_com_id
+			  , vil_name
+			  , vil_status
+		FROM tblCommunes
+		WHERE 1=1 AND vil_status != '9'
+		<if test="vilId != null and vilId != ''">
+			AND vil_id == cast(#{vilId} as int)
+		</if>
+		<if test="vilComId != null and vilComId != ''">
+			AND vil_com_id == cast(#{vilComId} as int)
+		</if>
+		ORDER BY vil_name
+	</select>
+	<select id="loadingAddress"></select>
+</mapper>

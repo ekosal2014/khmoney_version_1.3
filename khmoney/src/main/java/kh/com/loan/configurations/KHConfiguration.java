@@ -43,6 +43,7 @@ public class KHConfiguration extends WebMvcConfigurerAdapter {
 		registry.addViewController("/loan/loanNew").setViewName("loan-new");
 		registry.addViewController("/missing-payment").setViewName("missing-payment");
 		registry.addViewController("/setting").setViewName("setting");
+		registry.addViewController("/listReport").setViewName("r_main");
 	}
 
 	

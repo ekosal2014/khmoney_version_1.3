@@ -479,4 +479,18 @@ input{outline:0;}
    		background-position: 0px;
    }
    
-   
+.tasks_wrap .report_menu{position:absolute;top:40%;display:block;width:100%;margin:-100px 0 0 -25px;padding:0;text-align:center;}
+.tasks_wrap .report_menu ul{display:table;margin:0 auto;}
+.tasks_wrap .report_menu ul li{float: left;display: inline-block;vertical-align: top;margin: 6px 6px 6px 6px;padding: 0;overflow: hidden;   position: relative;}
+.tasks_wrap .report_menu ul li a:hover{ border: 1px solid #007FFF;}
+/* .tasks_wrap .main_menu ul li:hover{border:2px solid #0C51F4;background-color:#0C51F4;} */
+.tasks_wrap .report_menu  ul li a{display: block;font-family:"Khmer OS Muol","Khmer OS Bokor", "Khmer OS Content", "Khmer OS Battambang", "Khmer OS Siemreap", "Khmer OS System"; width: 201px; height: 143px;margin: 0; padding: 15px 10px 0 10px; border: 1px solid #ccc; -webkit-border-radius: 6px;-moz-border-radius: 6px; -o-border-radius: 6px; -ms-border-radius: 6px;border-radius: 6px;}
+/* .tasks_wrap .main_menu ul li:hover a > span{color:#fff;} */
+ .tasks_wrap .report_menu ul li .title {height: 41px;margin: 0;padding: 5px 0 2px;font-size: 14px;font-weight: bold;color: #333;text-align: center;letter-spacing: -1px;} 
+ .tasks_wrap .report_menu ul li .thumb_cont {position: relative;padding: 0; vertical-align: top;color: #666; line-height: 18px;}
+ .tasks_wrap .report_menu ul li .ic_ptype_sprite {position: absolute; top: 0px;left: 5px; width: 75px;height: 75px;}
+ .tasks_wrap .report_menu ul li .misdb2 {background-image: url(../img/logo/Distributor-report-icon.png);background-repeat: no-repeat; overflow: hidden;}
+ .tasks_wrap .report_menu ul li .misdb3 {background-image: url(../img/logo/Reports-icon.png);background-repeat: no-repeat; overflow: hidden;}
+ .tasks_wrap .report_menu ul li .misdb4 {background-image: url(../img/logo/Product-sale-report-icon.png);background-repeat: no-repeat; overflow: hidden;}
+ .tasks_wrap .report_menu ul li .misdb5 {background-image: url(../img/logo/Sales-report-icon.png);background-repeat: no-repeat; overflow: hidden;}
+ .tasks_wrap .report_menu ul li .thumb_txt {padding: 4px 0 1px 79px;vertical-align: top;color: #555;line-height: 16px;/* letter-spacing: -1px; */ text-align: justify;}
