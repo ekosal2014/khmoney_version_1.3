@@ -148,8 +148,6 @@
 	  		  	INSERT INTO tbluser_permission(
 			            user_id, p_id, arrange, sts)
 			    VALUES (cast(#{userId} as int), cast(#{pId} as int), cast(#{order} as int), #{sts})
-			    ON CONFLICT (user_id,p_id) DO UPDATE SET
-													    sts = #{sts},
-													    arrange = cast(#{order} as int)
+			    ON CONFLICT (user_id,p_id) DO UPDATE SET sts = #{sts},arrange = cast(#{order} as int)
 	  </insert>
 </mapper>
