@@ -383,6 +383,7 @@ input{outline:0;}
 .tbl_input_dot tr th div, .tbl_input_dot tr td div{padding:3px 7px;font-size:12px;font-family:"Khmer OS Battambang","Khmer OS Bokor", "Khmer OS Content", "Khmer OS Siemreap", "Khmer OS System";color:#222;font-weight:normal;}
 .tbl_input_dot tr td div{padding-right:14px;}
 .tbl_input_dot tr td div input[type=text]{padding:0;height:23px;width:100%;font-family:"Khmer OS Battambang","Khmer OS Bokor", "Khmer OS Content", "Khmer OS Siemreap", "Khmer OS System";color:#222;border:0;background-image:url(../img/bg/bg_b_line.png);background-repeat:repeat-x;background-position:0 100%;background-size:17px auto;}
+.tbl_input_dot tr td div select{padding:0px;height:25px;width:100%;font-family:"Khmer OS Battambang","Khmer OS Bokor", "Khmer OS Content", "Khmer OS Siemreap", "Khmer OS System";color:#222;}
 
 .tbl_input_dot a.btn_edit1, .tbl_input_dot a.btn_delete_1, .tbl_input_dot a.btn_add_1{display:inline-block;width:20px;height:20px;margin:0 2px;background-color:transparent;}
 .tbl_input_dot a.btn_edit1{width:35px;background-image:url(../img/icon/ico_btn_edit1.png);background-repeat:no-repeat;background-position:-3px -9px;background-size:45px auto;}
