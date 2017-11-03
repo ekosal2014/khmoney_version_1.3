@@ -9,17 +9,12 @@ public class Loaner {
 	private String phone;
 	private String sts;
 	private String txt;
-	private String address;
+	private int address_id;
 	private String modify_date;
 	private int modify_by;
 	private String action;
 	
-	@Override
-	public String toString() {
-		return "Loaner [loaner_id=" + loaner_id + ", user_id=" + user_id + ", loaner_name=" + loaner_name + ", id_card="
-				+ id_card + ", gender=" + gender + ", phone=" + phone + ", sts=" + sts + ", txt=" + txt + ", address="
-				+ address + ", modify_date=" + modify_date + ", modify_by=" + modify_by + ", action=" + action + "]";
-	}
+	
 	public Loaner() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -89,11 +84,13 @@ public class Loaner {
 		this.txt = txt;
 	}
 	
-	public String getAddress() {
-		return address;
+	
+
+	public int getAddress_id() {
+		return address_id;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress_id(int address_id) {
+		this.address_id = address_id;
 	}
 	public String getModify_date() {
 		return modify_date;

@@ -25,6 +25,7 @@ import kh.com.loan.domains.Wallet;
 import kh.com.loan.enums.Gender;
 import kh.com.loan.enums.LoanSts;
 import kh.com.loan.enums.LoanTxt;
+import kh.com.loan.mappers.AddressMapper;
 import kh.com.loan.mappers.LoanMapper;
 import kh.com.loan.mappers.LoanerMapper;
 import kh.com.loan.mappers.SettingMapper;
@@ -50,9 +51,45 @@ public class LoanerService {
 	private WalletMapper walletMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private AddressMapper addressMapper;
+	
+	public Message districtsListByProId(int proId) throws KHException{
+		HashMap<String,String> params = new HashMap<>();
+		HashMap<String,Object> result = new HashMap<>();
+		try{
+			params.put("disProId", String.valueOf(proId));
+			result.put("listDistricts", addressMapper.loadingDistrictsByProvinceId(params));
+			return new Message("0000",result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	public Message communesListByDisId(int disId) throws KHException{
+		HashMap<String,String> params = new HashMap<>();
+		HashMap<String,Object> result = new HashMap<>();
+		try{
+			params.put("comDisId", String.valueOf(disId));
+			result.put("listCommunes", addressMapper.loadingCommunesByDistrictsId(params));
+			return new Message("0000",result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	public Message villageListByComId(int comId) throws KHException{
+		HashMap<String,String> params = new HashMap<>();
+		HashMap<String,Object> result = new HashMap<>();
+		try{
+			params.put("vilComId", String.valueOf(comId));
+			result.put("listVillages", addressMapper.loadingVillagesByCommunesId(params));
+			return new Message("0000",result);
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
 	
 	public Message loanerGetMaxId() throws KHException {
-		HashMap<String, String> result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>();
 		User user = new User();
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +103,7 @@ public class LoanerService {
 			String maxLoanPad =  StringUtils.leftPad(String.valueOf(maxLoanId), 9, "0");
 			result.put("maxLoanerId", maxLoanerPad);
 			result.put("maxLoanId", maxLoanPad);
-			result.put("userName", user.getFull_name());
+			result.put("listProvinces", addressMapper.loadingAllProvinces());
 			return new Message("0000", result);
 		}catch(Exception e) {
 			throw new KHException("9999", e.getMessage());
@@ -116,7 +153,7 @@ public class LoanerService {
 		Validation.isBlank((String)map.get("loaner_name"), "សូមធ្វើការបញ្ជូលលេខឈ្មោះរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)map.get("id_card"), "សូមធ្វើការបញ្ជូលលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)map.get("phone"), "សូមធ្វើការបញ្ជូលលេខទូរស័ព្ទរបស់អ្នកខ្ចី");
-		Validation.isBlank((String)map.get("address"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
+		Validation.isBlank((String)map.get("address_id"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
 		//Validation.isEnum(Gender.class, Gender.fromValue((String)map.get("gender")).name(), "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
 		if (!Gender.contains((String)map.get("gender"))){
 			throw new KHException("9999", "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
@@ -156,7 +193,7 @@ public class LoanerService {
 			loaner.setGender((String)map.get("gender"));
 			loaner.setPhone((String)map.get("phone"));
 			loaner.setId_card((String)map.get("id_card"));
-			loaner.setAddress((String)map.get("address"));
+			loaner.setAddress_id(Integer.valueOf((String)map.get("address_id")));
 			loaner.setSts(LoanSts.ACTIVE.getValue());
 			loaner.setTxt(LoanTxt.ACTIVE.getValue());
 			loaner.setModify_by(user.getUser_id());
@@ -536,7 +573,7 @@ public class LoanerService {
 			loaner.setGender((String)params.get("gender"));
 			loaner.setPhone((String)params.get("phone"));
 			loaner.setId_card((String)params.get("id_card"));
-			loaner.setAddress((String)params.get("address"));
+			//loaner.setAddress((String)params.get("address"));
 			loaner.setModify_by(user.getUser_id());
 			loaner.setModify_date(Common.getCurrentDate());
 			loaner.setAction("Update Loaner Information (txt)");

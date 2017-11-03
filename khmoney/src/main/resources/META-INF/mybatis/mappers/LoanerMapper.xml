@@ -61,7 +61,8 @@
             , modify_by
             , modify_date
             , action
-            , address)
+            , address_id
+            )
        VALUES (
        		   #{user_id}
        		 , #{loaner_name}
@@ -73,7 +74,7 @@
        		 , #{modify_by}
        		 , #{modify_date}
        		 , #{action}
-       		 , #{address}
+       		 , #{address_id}
        		 );
          <selectKey keyProperty="loaner_id" resultType="java.lang.Integer" order="AFTER">
        		 SELECT CAST(CURRVAL('tblloaner_loaner_id_seq') as INTEGER) 

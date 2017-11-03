@@ -7,10 +7,6 @@ if (!Message) Message = {};
 Message.infor = function (title,content,callBack,input){
 	var title   = (typeof title   == 'undefined' || title   == null) ? 'ពត័មាន' : title;
 	var content = (typeof content == 'undefined' || content == null) ? '' : content;
-	var params  = null;
-	if (typeof input != 'undefined' && input != null){
-		params  = input;
-	}
 	$.alert({
 	    title: title,
 	    content: content,
@@ -19,7 +15,11 @@ Message.infor = function (title,content,callBack,input){
 	    useBootstrap: false,
 	    closeIcon: function(){
 	    	if ($.isFunction(callBack)){
-	    		callBack(params);
+	    		if (typeof input != 'undefined' && input != null){
+	    			callBack(input);
+	    		}else{
+	    			callBack();
+	    		}
 	    	}
 	    },
 	    buttons: {   
@@ -29,7 +29,11 @@ Message.infor = function (title,content,callBack,input){
 	            keys: ['enter'],
 	            action: function(){
 	            	if ($.isFunction(callBack)){
-	    	    		callBack(params);
+	            		if (typeof input != 'undefined' && input != null){
+	    	    			callBack(input);
+	    	    		}else{
+	    	    			callBack();
+	    	    		}
 	    	    	}
 	            }
 	        }

@@ -3,14 +3,14 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorator="layouts/layout">
-<head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head>
+<!-- <head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"></head> -->
 
 <body class="lnb_bg">
 
 <div class="wrap">
 
 	<!-- header -->
-	<div lang="en" th:replace="/header :: header"></div> 
+	<!-- <div lang="en" th:replace="/header :: header"></div>  -->
 	<!-- //header -->
 	<th:block layout:fragment="content">
 	<!-- Container -->
@@ -103,29 +103,17 @@
 							<tr style="height:40px;">
 								<th><div>អាស័យដ្ឋាន</div></th>
 								<td colspan="5"><div>
-													<select style="width:23%;"> 
-														<option>បង់ជា ថ្ងៃ</option>
-														<option>បង់ជា ១​ អាទិត្យ</option>
-														<option>បង់ជា ២ អាទិត្យ</option>
-														<option>បង់ជា​ ខែ</option>
+													<select style="width:23%;" id="list_provinces"> 
+														<option value="">ជ្រើសរើសខេត្ដ</option>
 													</select>  &nbsp;~ &nbsp;
-													<select style="width:23%;"> 
-														<option>បង់ជា ថ្ងៃ</option>
-														<option>បង់ជា ១​ អាទិត្យ</option>
-														<option>បង់ជា ២ អាទិត្យ</option>
-														<option>បង់ជា​ ខែ</option>
+													<select style="width:23%;" id="list_districts"> 
+														<option value="">ជ្រើសរើសស្រុក</option>
 													</select>  &nbsp;~ &nbsp;
-													<select style="width:23%;"> 
-														<option>បង់ជា ថ្ងៃ</option>
-														<option>បង់ជា ១​ អាទិត្យ</option>
-														<option>បង់ជា ២ អាទិត្យ</option>
-														<option>បង់ជា​ ខែ</option>
+													<select style="width:23%;" id="list_communes"> 
+														<option value="">ជ្រើសរើសឃុំ</option>														
 													</select>  &nbsp;~&nbsp;
-													<select style="width:23%;"> 
-														<option>បង់ជា ថ្ងៃ</option>
-														<option>បង់ជា ១​ អាទិត្យ</option>
-														<option>បង់ជា ២ អាទិត្យ</option>
-														<option>បង់ជា​ ខែ</option>
+													<select style="width:23%;" id="list_village"> 
+														<option value="">ជ្រើសរើសភូមិ</option>
 													</select> 
 													
 								</div></td>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.com.loan.domains.Message;
+import kh.com.loan.mappers.LoanMapper;
 import kh.com.loan.services.LoanerService;
 import kh.com.loan.utils.KHException;
 
@@ -63,6 +64,19 @@ public class LoanController {
 		return loanerService.loanerGetMaxId();
 	}
 	
+	@RequestMapping(value = "/districtsListByProId", method = RequestMethod.GET)
+	public @ResponseBody Message districtsListByProId(@RequestParam int proId) throws KHException{
+		return loanerService.districtsListByProId(proId);
+	}
+	@RequestMapping(value = "/communesListByDisId", method = RequestMethod.GET)
+	public @ResponseBody Message communesListByDisId(@RequestParam int comDisId) throws KHException{
+		return loanerService.communesListByDisId(comDisId);
+	}
+	@RequestMapping(value = "/villageListByComId", method = RequestMethod.GET)
+	public @ResponseBody Message villageListByComId(@RequestParam int vilComId) throws KHException{
+		return loanerService.villageListByComId(vilComId);
+	}
+	
 	@RequestMapping(value = "/loadingSettingData", method = RequestMethod.GET)
 	public @ResponseBody Message loadingSettingData(@RequestParam("payTxt") String payTxt) throws KHException {
 		return loanerService.loadingSettingData(payTxt);
@@ -80,7 +94,7 @@ public class LoanController {
 	
 	@RequestMapping(value = "/loanSaveNewItem", method = RequestMethod.POST)
 	public @ResponseBody Message loanSaveNewItem(@RequestBody Map<String,String> params) throws KHException {
-		//System.out.println(" Map === "+ params);
+		System.out.println(" Map === "+ params);
 		return loanerService.loanSaveNewItem(params);
 	}
 	

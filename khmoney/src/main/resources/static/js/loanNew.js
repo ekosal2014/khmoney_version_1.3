@@ -12,7 +12,7 @@ $(document).ready(function(){
 	});
 	
 	$(document).on('click','.btn_cancel,.btn_close',function(){
-		$('.alert_wrap').bPopup().close();
+		$('#popup_loan').bPopup().close();
 	});
 	
 	$('#type_payment').change(function(){
@@ -47,6 +47,16 @@ $(document).ready(function(){
 		
 	});
 	
+	$('#list_provinces').change(function(){
+		districtsListByProId();
+	});
+	$('#list_districts').change(function(){
+		communesListByDisId();
+	});
+	$('#list_communes').change(function(){
+		villageListByComId();
+	});
+
 });
 
 function init(){
@@ -74,6 +84,13 @@ function loanerGetMaxId(){
 			$('#loaner_code').val(Common.numberWithComma(json.object.maxLoanerId,"-"));
 			$('#loan_code').val(Common.numberWithComma(json.object.maxLoanId,"-"));
 			//$('#agent_txt').val(json.object.userName);
+			var provinces = json.object.listProvinces;
+			var opt       = '<option value="0" selected>ជ្រើសរើសខេត្ដ</option>';
+			$('#list_provinces').empty();
+			$.each(provinces,function(index,value){
+				opt += '<option value="'+value.pro_id+'">'+value.pro_name+'</option>'
+			});
+			$('#list_provinces').append(opt);
 		},error:function(json){
 			console.log(json);
 		}
@@ -81,10 +98,34 @@ function loanerGetMaxId(){
 }
 /*ប្រភេទបង់ប្រាក់*/
 function loadingSettingData(id){
-	if ($('#loaner_name').val() == '' || $('#phone').val() == '' || $('#id_card').val() == '' || $('#address').val() == ''){
-    	Message.infor(null,'សូមបំពេញពត៍មានរបស់អ្នកខ្ចីមុន ទើបអាចបំពេញទឹកប្រាក់ដែលត្រូវខ្ចីបាន!!',null);
+	if ($('#loaner_name').val() == ''){
+		Message.infor(null,'សូមបញ្ចូលឈ្មោះអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }
+    if ($('#phone').val() == ''){
+    	Message.infor(null,'សូមបញ្ចូលលេខទូរស័ព្ទអ្នកដែលខ្ចីប្រាក់!',null);
+    	return;
+    }
+    if ($('#id_card').val() == ''){
+    	Message.infor(null,'សូមបញ្ចូលអត្ដសញ្ញាណប័ណ្ណអ្នកដែលខ្ចីប្រាក់!',null);
+    	return;
+    }
+    if ($('#list_provinces').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលខេត្ដអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_districts').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលស្រុកអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_communes').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលឃុំអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_village').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលភូមិអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
 	if (id == '0'){
 		$('#loadingSettingOtherValue').hide();
 		$('#loadingDecrementTypeValue').hide();
@@ -121,7 +162,7 @@ function loadingSettingData(id){
 			
 			$("#type_payment").append(opt);			
 			loadingSettingValue($('#type_payment').val(),id);
-			$('.alert_wrap').bPopup();
+			$('#popup_loan').bPopup();
 			
 		},error:function(json){
 			console.log(json);
@@ -253,8 +294,8 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
-	$('#agent_txt').val($('#popup_agent').text());
-	$('#agent').val($('#popup_agent').val());
+	$('#agent_txt').val($('#popup_agent option:selected').text());
+	$('#agent').val($('#popup_agent option:selected').val());
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
@@ -289,7 +330,7 @@ function confrimCheck(){
 	}
 	$('#tbl_lst1 tfoot').hide();
 	$('#tbl_lst1 tbody').append(tbl);
-	$('.alert_wrap').bPopup().close();
+	$('#popup_loan').bPopup().close();
 }
 
 function loanSaveNewItem(){
@@ -305,8 +346,20 @@ function loanSaveNewItem(){
     	Message.infor(null,'សូមបញ្ចូលអត្ដសញ្ញាណប័ណ្ណអ្នកដែលខ្ចីប្រាក់!',null);
     	return;
     }
-    if ($('#address').val() == ''){
-    	Message.infor(null,'សូមបញ្ចូលអាស័យដ្ឋានអ្នកដែលខ្ចីប្រាក់!',null);
+    if ($('#list_provinces').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលខេត្ដអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_districts').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលស្រុកអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_communes').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលឃុំអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
+    	return;
+    }	
+    if ($('#list_village').val() == '0'){
+    	Message.infor(null,'សូមបញ្ចូលភូមិអ្នកដែលខ្ចីប្រាក់រស់នៅ!',null);
     	return;
     }	
     $('#loading').bPopup();
@@ -315,7 +368,7 @@ function loanSaveNewItem(){
 			'gender'      :$('input[name=gender]:checked').val(),
 			'id_card'     :$('#id_card').val().replace(/\-/g,'').trim(),
 			'phone'       :$('#phone').val().replace(/\-/g,'').trim(),
-			'address'     :$('#address').val(),
+			'address_id'  :$('#list_village').val(),
 			'start_date'  :Common.formatDateToString($('#start_date_txt').val().trim()),
 			'total_money' :$('#total_money_txt').val().replace(/[​\u202f\៛\,]/g,'').trim(),
 			'rate'        :$('#rate_db').val(),
@@ -325,7 +378,7 @@ function loanSaveNewItem(){
 			'day'         :$('#day_db').val(),
 			'agent'       :$('#agent').val(),
 			'agentName'   :$('#agent_txt').val()
-			//'paymentList' :obj
+	
 	};
 	var token = $('#_csrf').attr('content');
 	var header = $('#_csrf_header').attr('content');
@@ -354,9 +407,83 @@ function loanSaveNewItem(){
 function loanNew(){
 	window.location.href = '/khmoney/loan/loanNew';
 }
+
+function districtsListByProId(){
+
+	$.ajax({
+		type:'GET',
+		url :'/khmoney/districtsListByProId',
+		data:'proId='+$('#list_provinces').val(),
+		success:function(json){
+			console.log(json);
+			if (json.code == 'undefined' || json.code == '9999'){
+				Message.infor(null,json.message,null);
+				return;
+			}
+			var districts = json.object.listDistricts;
+			var opt       = '<option value="0" selected>ជ្រើសរើសស្រុក</option>';
+			$('#list_districts').empty();
+			$.each(districts,function(index,value){
+				opt += '<option value="'+value.dis_id+'">'+value.dis_name+'</option>';
+			});
+			$('#list_districts').append(opt);
+		},error:function(json){
+			console.log(json);
+		}
+	});
+}
+function communesListByDisId(){
+
+	$.ajax({
+		type:'GET',
+		url :'/khmoney/communesListByDisId',
+		data:'comDisId='+$('#list_districts').val(),
+		success:function(json){
+			console.log(json);
+			if (json.code == 'undefined' || json.code == '9999'){
+				Message.infor(null,json.message,null);
+				return;
+			}
+			var communes = json.object.listCommunes;
+			var opt       = '<option value="0" selected>ជ្រើសរើសឃុំ</option>';
+			$('#list_communes').empty();
+			$.each(communes,function(index,value){
+				opt += '<option value="'+value.com_id+'">'+value.com_name+'</option>';
+			});
+			$('#list_communes').append(opt);
+		},error:function(json){
+			console.log(json);
+		}
+	});
+}
+function villageListByComId(){
+	
+	$.ajax({
+		type:'GET',
+		url :'/khmoney/villageListByComId',
+		data:'vilComId='+$('#list_communes').val(),
+		success:function(json){
+			console.log(json);
+			if (json.code == 'undefined' || json.code == '9999'){
+				Message.infor(null,json.message,null);
+				return;
+			}
+			var villages = json.object.listVillages;
+			var opt       = '<option value="0" selected>ជ្រើសរើសភូមិ</option>';
+			$('#list_village').empty();
+			$.each(villages,function(index,value){
+				opt += '<option value="'+value.vil_id+'">'+value.vil_name+'</option>';
+			});
+			$('#list_village').append(opt);
+		},error:function(json){
+			console.log(json);
+		}
+	});
+}
 function errorCheck(json){
 	if (json.code == 'undefined'){
 		Message.infor(null,json.message,null);
 		return;
 	}
 }
+
