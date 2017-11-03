@@ -131,12 +131,20 @@
 		     , B.count_day
 		     , B.loan_id
 		     , U.full_name
-		from tblloaner A,tblloan B,tbluser u
+		     , V.vil_name as village
+             , C.com_name as commune
+             , D.dis_name as district
+             , P.pro_name as provice
+		from tblloaner A,tblloan B,tbluser U,tblvillages V,tblcommunes C,tbldistricts D,tblprovinces P
 		where A.sts != '9'
 		      AND B.sts != '9'
 		      And B.loan_id = (select min(loan_id) from tblloan WHERE loaner_id = cast(#{loaner_id} as int))
 		      And A.loaner_id = cast(#{loaner_id} as int)
 		      AND u.user_id = B.user_id
+		      AND A.address_id = V.vil_id
+		      AND V.vil_com_id = C.com_id
+		      AND C.com_dis_id = D.dis_id
+		      AND D.dis_pro_id = P.pro_id 
 	</select>
 	<!-- loading decrement type ...... data  -->
 	<select id="loadingTypePayment" resultType="kh.com.loan.domains.Setting">

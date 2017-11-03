@@ -24,6 +24,7 @@ function init(){
 			url :'/khmoney/loadingLoanview',
 			data:'loaner_id='+$('#loaner_id').val()+'&id='+$('#id').val(),
 			success:function(json){
+				console.log(json);
 				loadingInformationLoaner(json);
 			},error:function(json){
 				console.log(json);
@@ -52,6 +53,7 @@ function init(){
 }
 /* * loading All information of loaner * */
 function loadingInformationLoaner(json){	
+		   console.log(json);
 			if (json.code == '9999'){
 				alert(json.message);
 				return;
@@ -61,7 +63,7 @@ function loadingInformationLoaner(json){
 		    $('#id_card').val(Common.phoneWithComma(json.object.loanObject.id_card));
 		    $('#phone').val(Common.phoneWithComma(json.object.loanObject.phone));
 		    $('input[name=gender][value='+json.object.loanObject.gender+']').prop('checked',true);
-		    $('#address').val(json.object.loanObject.address);
+		    $('#address').val('ខេត្ត '+json.object.loanObject.province + '  ស្រុក  '+json.object.loanObject.district + '  ឃុំ  '+json.object.loanObject.commune+'  ភូមិ  '+json.object.loanObject.village);
 		    $('#loan_code').val(Common.numberWithComma(Common.leftPage(json.object.loanObject.loan_id,9),"-"));
 		    $('#total_money_txt').val(Common.numberWithComma(json.object.loanObject.total_money) +' ៛');
 		    $('#total_money_kh').val(Common.khmerMoney(json.object.loanObject.total_money) + " ៛");
