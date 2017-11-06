@@ -16,5 +16,6 @@ public interface LoanerMapper {
 	public int loadingTotalCountRows(HashMap<String, String> params);
 	public Loaner loadingLoanerInformationById(HashMap<String, String> params);
 	public int loanerUpdateById(Loaner loaner);
+	public HashMap<String, String> loadingLoanerById(HashMap<String, String> params);
 	
 }

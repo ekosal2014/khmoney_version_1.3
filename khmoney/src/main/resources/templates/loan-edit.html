@@ -99,11 +99,25 @@
 								<th><div>អត្ដសញ្ញាណប័ត្រ</div></th>
 								<td><div><input type="text"  value="" name="id_card" id="id_card" placeholder="" maxlength="11" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div></td>
 								<th><div>លេខទូរសព្ទ័</div></th>
-								<td colspan="4"><div><input type="text" value="" name="phone" id="phone" placeholder="" maxlength="12"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div></td>
+								<td colspan="3"><div><input type="text" value="" name="phone" id="phone" placeholder="" maxlength="12"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div></td>
 							</tr>
-							<tr>
+							<tr style="height:40px;">
 								<th><div>អាស័យដ្ឋាន</div></th>
-								<td colspan="6"><div><input type="text" value="" name="address" id="address" placeholder="" maxlength="500"></div></td>
+								<td colspan="5"><div>
+													<select style="width:23%;" id="list_provinces"> 
+														<option value="">ជ្រើសរើសខេត្ដ</option>
+													</select>  &nbsp;~ &nbsp;
+													<select style="width:23%;" id="list_districts"> 
+														<option value="">ជ្រើសរើសស្រុក</option>
+													</select>  &nbsp;~ &nbsp;
+													<select style="width:23%;" id="list_communes"> 
+														<option value="">ជ្រើសរើសឃុំ</option>														
+													</select>  &nbsp;~&nbsp;
+													<select style="width:23%;" id="list_village"> 
+														<option value="">ជ្រើសរើសភូមិ</option>
+													</select> 
+													
+								</div></td>
 							</tr>
 						</tbody>
 					</table>

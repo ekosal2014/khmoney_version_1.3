@@ -320,7 +320,7 @@ public class LoanerService {
 			result.put("maxLoanId", maxLoanPad);
 			params.put("loaner_id", String.valueOf(loaner_id));
 			params.put("txt", "9");
-			result.put("loanerObject", loanerMapper.loadingLoanerInformationById(params));
+			result.put("loanerObject", loanerMapper.loadingLoanerById(params));
 			result.put("userName", user.getFull_name());
 			return new Message("0000", result);
 		}catch(Exception e) {
@@ -515,10 +515,19 @@ public class LoanerService {
 	
 	public Message loadingLoanEdit(HashMap<String, String> params) throws KHException {
 		HashMap<String, Object> result = new HashMap<>();
+		HashMap<String, String> param = new HashMap<>();
 		try {
 			//param.put("loaner_id", String.valueOf(params.get("loaner_id")));
 			//result.put("loanerObject", loanerMapper.loadingLoanerInformationById(params));
-			result.put("loanObject", loanMapper.loadingLoanViewEdit(params));
+			HashMap<String, String> obj = loanMapper.loadingLoanViewEdit(params);			
+			param.put("disProId", String.valueOf(obj.get("pro_id")));
+			param.put("comDisId", String.valueOf(obj.get("dis_id")));
+			param.put("vilComId", String.valueOf(obj.get("com_id")));
+			result.put("listProvinces", addressMapper.loadingAllProvinces());
+			result.put("listDistricts", addressMapper.loadingDistrictsByProvinceId(param));
+			result.put("listCommunes",  addressMapper.loadingCommunesByDistrictsId(param));
+			result.put("listVillages",  addressMapper.loadingVillagesByCommunesId(param));
+			result.put("loanObject",    obj);
 			result.put("loanPaymentList", loanMapper.loadingLoanPayment(params));
 			return new Message("0000", result);
 		}catch(Exception e) {
@@ -533,7 +542,7 @@ public class LoanerService {
 		Validation.isBlank((String)params.get("loaner_name"), "សូមធ្វើការបញ្ជូលលេខឈ្មោះរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)params.get("id_card"), "សូមធ្វើការបញ្ជូលលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នកខ្ចី");
 		Validation.isNumber((String)params.get("phone"), "សូមធ្វើការបញ្ជូលលេខទូរស័ព្ទរបស់អ្នកខ្ចី");
-		Validation.isBlank((String)params.get("address"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
+		Validation.isBlank((String)params.get("address_id"), "សូមធ្វើការបញ្ជូលលេខអាស័យដ្ឋានរបស់អ្នកខ្ចី");
 		if (!Gender.contains((String)params.get("gender"))){
 			throw new KHException("9999", "សូមធ្វើការជ្រើសរើសភេទរបស់អ្នកខ្ចីប្រាក់!");
 		}
@@ -573,7 +582,7 @@ public class LoanerService {
 			loaner.setGender((String)params.get("gender"));
 			loaner.setPhone((String)params.get("phone"));
 			loaner.setId_card((String)params.get("id_card"));
-			//loaner.setAddress((String)params.get("address"));
+			loaner.setAddress_id(Integer.valueOf((String)params.get("address_id")));
 			loaner.setModify_by(user.getUser_id());
 			loaner.setModify_date(Common.getCurrentDate());
 			loaner.setAction("Update Loaner Information (txt)");

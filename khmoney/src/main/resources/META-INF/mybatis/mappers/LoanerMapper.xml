@@ -95,9 +95,39 @@
 			, modify_date
 			, modify_by
 			, action
-			, address
+			, address_id
 		  FROM tblloaner
 		  WHERE 1=1 AND sts != '9' AND loaner_id=cast(#{loaner_id} as int)
+		  <if test="txt != null">
+		  		AND txt = #{txt}
+		  </if>
+		   
+	</select>
+	<!-- loading loaner list information -->
+	<select id="loadingLoanerById" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT 
+			  loaner_id
+			, user_id
+			, loaner_name
+			, id_card
+			, gender
+			, phone
+			, sts
+			, txt
+			, modify_date
+			, modify_by
+			, action
+			, address_id
+			, V.vil_name as village
+            , C.com_name as commune
+            , D.dis_name as district
+            , P.pro_name as province
+		  FROM tblloaner A,tblvillages V,tblcommunes C,tbldistricts D,tblprovinces P
+		  WHERE 1=1 AND sts != '9' AND loaner_id=cast(#{loaner_id} as int)
+			        AND A.address_id = V.vil_id
+			        AND V.vil_com_id = C.com_id
+			        AND C.com_dis_id = D.dis_id
+			        AND D.dis_pro_id = P.pro_id 
 		  <if test="txt != null">
 		  		AND txt = #{txt}
 		  </if>
@@ -116,7 +146,7 @@
   		       , modify_date=#{modify_date}
   		       , modify_by=#{modify_by}
   		       , action=#{action}
-  		       , address=#{address}
+  		       , address_id=#{address_id}
         WHERE loaner_id = #{loaner_id}
 	</update>
 	

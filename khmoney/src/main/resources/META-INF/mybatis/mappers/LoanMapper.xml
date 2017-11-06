@@ -134,13 +134,13 @@
 		     , V.vil_name as village
              , C.com_name as commune
              , D.dis_name as district
-             , P.pro_name as provice
+             , P.pro_name as province
 		from tblloaner A,tblloan B,tbluser U,tblvillages V,tblcommunes C,tbldistricts D,tblprovinces P
 		where A.sts != '9'
 		      AND B.sts != '9'
 		      And B.loan_id = (select min(loan_id) from tblloan WHERE loaner_id = cast(#{loaner_id} as int))
 		      And A.loaner_id = cast(#{loaner_id} as int)
-		      AND u.user_id = B.user_id
+		      AND U.user_id = B.user_id
 		      AND A.address_id = V.vil_id
 		      AND V.vil_com_id = C.com_id
 		      AND C.com_dis_id = D.dis_id
@@ -257,12 +257,24 @@
 		     , U.full_name
 		     , U.user_id
 		     , (select C.columns from tblrate_type C where C.type = cast(B.type_payment as int) group by C.columns)  as type_payment_num
-		from tblloaner A,tblloan B,tbluser u
+		     , V.vil_name as village
+		     , C.com_name as commune
+		     , D.dis_name as district
+		     , P.pro_name as province
+		     , V.vil_id 
+		     , C.com_id 
+		     , D.dis_id 
+		     , P.pro_id 
+		from tblloaner A,tblloan B,tbluser U,tblvillages V,tblcommunes C,tbldistricts D,tblprovinces P
 		where A.sts != '9'
 		      AND B.sts != '9'
 		      And B.loan_id   = cast(#{loan_id} as int)
 		      And A.loaner_id = cast(#{loaner_id} as int)
-		      AND u.user_id = B.user_id
+		      AND U.user_id = B.user_id
+		      AND A.address_id = V.vil_id
+		      AND V.vil_com_id = C.com_id
+		      AND C.com_dis_id = D.dis_id
+		      AND D.dis_pro_id = P.pro_id 
 	</select>
 	<update id="updateLoanById" parameterType="kh.com.loan.domains.Loan">
 			UPDATE tblloan

@@ -74,7 +74,7 @@ function loanerGetMaxId(){
 		    $('#id_card').val(Common.phoneWithComma(json.object.loanerObject.id_card));
 		    $('#phone').val(Common.phoneWithComma(json.object.loanerObject.phone));
 		    $('input[name=gender][value='+json.object.loanerObject.gender+']').prop('checked',true);
-		    $('#address').val(json.object.loanerObject.address);
+		    $('#address').val('ខេត្ត '+json.object.loanObject.province + '  ស្រុក  '+json.object.loanObject.district + '  ឃុំ  '+json.object.loanObject.commune+'  ភូមិ  '+json.object.loanObject.village);
 			$('#loan_code').val(Common.numberWithComma(json.object.maxLoanId,"-"));
 			$('#agent_txt').val(json.object.userName);
 			$('#agent').val(json.object.loanerObject.user_id);
