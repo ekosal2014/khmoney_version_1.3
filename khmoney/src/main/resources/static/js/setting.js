@@ -1,8 +1,6 @@
 $(document).ready(function(){
 	loadingData('0');
-	$('#btn_save').click(function(){
-		alert(12345);
-	})
+
 });
 function openTabLinke(evt, obj){
 

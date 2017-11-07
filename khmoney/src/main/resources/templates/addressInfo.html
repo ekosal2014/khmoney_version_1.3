@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/layout">
+<head><meta charset="utf-8"></head>
+<style type="text/css"  rel="stylesheet">
 
+		
+	
+</style>
+<body class="lnb_bg">
+
+<div class="wrap">
+
+	<!-- header -->
+	<!-- <div lang="en" th:replace="/header :: header_main"></div> -->
+	<!-- //header -->
+	<th:block layout:fragment="content">
+	<!-- Container -->
+	<div class="container">
+
+		<!-- content wrap -->
+		<div class="content">
+			<div class="cnt_wrap">
+
+				<!-- title_wrap -->
+				<div class="tit_wrap cboth">
+					<div class="f_left">
+						<div class="tit_h3">
+							<ul>
+								<li><a th:href="@{/}">ទំព័រដើម</a></li>
+								<!--<li><a href="javascript:">បញ្ចីអ្នកខ្ចី</a></li>
+								<li><a href="javascript:">បញ្ចីកម្ចី</a></li>
+								<li><a href="javascript:">បញ្ចីអ្នកខកខានបង់ប្រាក់</a></li>
+								<li><a href="javascript:">កំណត់គោលការណ៍</a></li>-->
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- //title_wrap -->
+				<!-- <a th:href="@{/loan/loanNew}">AddNew</a> -->
+				<!-- title_wrap -->
+				<div class="tit_wrap cboth">
+					<div class="t_center">
+						<div class="tit_h3"><h3>បញ្ចីសរុបទឹកប្រាក់</h3></div>
+					</div>
+					<!-- <div class="f_right">
+						<div class="srch_wrap" style="background-image:none !important;">							
+							<div class="srch_box" style="background-image:none !important;padding-right:0px !important;">
+								<input type="text" value="" placeholder="បញ្ចូល លេខកូដ ឬ ឈ្មោះអ្នកខ្ចី" id="search" style="width:193px;">
+								<a href="javascript:" class="btn_addnew" id="btn_addMore"><span class="blind">add new</span></a>
+							</div>
+						</div>
+					</div> -->
+				</div>
+				<!-- //title_wrap -->
+				<!-- title_wrap -->
+				<div class="tit_wrap cboth mgt10">
+				<!-- 	<div class="t_left" id="totalAmount">
+						<div class="tit_h4" style="padding-bottom:10px !important;"><h4>សរុបទឹកប្រាក់</h4> 
+						<h1 style="margin-left:80px;"><b>1,000,000 រៀល</b></h1></div>
+					</div>
+					<div class="right_box" style="bottom: 10px !important;top:auto !important;">
+						<a href="javascript:" class="btn_addnew" id="btn_addMore"><span class="blind">add new</span></a>
+					</div> -->
+				</div>
+				<!-- //title_wrap -->
+
+				<!-- table_list -->
+				<div class="tbl_lst1 mgt5" id="tbl_loan">
+					<div id='cssmenu'>
+							<ul>
+							   <li class='active'><a href='#'><span>Home</span></a></li>
+							   <li class='has-sub'><a href='#'><span>Products</span></a>
+							      <ul>
+							         <li><a href='#'><span>Product 1</span></a></li>
+							         <li><a href='#'><span>Product 2</span></a></li>
+							         <li class='last'><a href='#'><span>Product 3</span></a></li>
+							      </ul>
+							   </li>
+							   <li class='has-sub'><a href='#'><span>About</span></a>
+							      <ul>
+							         <li><a href='#'><span>Company</span></a></li>
+							         <li class='last'><a href='#'><span>Contact</span></a></li>
+							      </ul>
+							   </li>
+							   <li class='last'><a href='#'><span>Contact</span></a></li>
+							</ul>
+							</div>
+				</div>
+				<!-- //table_list -->
+
+				
+			</div>
+		</div>
+		<!-- //content wrap -->
+	</div>
+	<!-- //Container -->
+	</th:block>
+	<!-- <div lang="en" th:replace="fragments/footer :: footer"> </div> -->
+
+	
+</div>
+	 <th:block layout:fragment="asset">
+		 <script th:src="@{js/address.js}"></script>
+	 </th:block>
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 public class Common {
+
 	private static String dtst = "yyyyMMdd";
 	public static String padLeft(String str, String symbol,int number) {
 		if (symbol == null) {
