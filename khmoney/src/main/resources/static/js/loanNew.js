@@ -393,7 +393,7 @@ function loanSaveNewItem(){
             xhr.setRequestHeader(header, token)
          },
 		success:function(json){
-			if (json.code == 'undefined' || json.code == '9999'){
+			if (typeof json.code == 'undefined' || json.code == '9999'){
 				Message.infor(null,json.message,null);
 				return;
 			}

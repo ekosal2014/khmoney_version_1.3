@@ -9,6 +9,10 @@ $(document).ready(function(){
 	$('#btn_wallet').click(function(){
 		walletTransaction();
 	});
+	
+	$(document).on('click','.btn_cancel,.btn_close',function(){
+		$('#popup_wallet').bPopup().close();
+	});
 });
 
 function goPageList(page){

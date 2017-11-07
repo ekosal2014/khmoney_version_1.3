@@ -12,7 +12,9 @@ $(document).ready(function(){
         }
     });
 	$(document).on('click','.btn_cancel,.btn_close',function(){
-		$('.alert_wrap').bPopup().close();
+		$('#popup_employee_edit').bPopup().close();
+		$('#popup_employee_change_password').bPopup().close();
+		$('#popup_employee_permission').bPopup().close();
 	});
 	$('#change_passowrd').click(function(){
 		$('#popup_employee_change_password').bPopup();

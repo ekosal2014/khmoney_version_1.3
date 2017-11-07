@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	loadingData('0');
+	$('#btn_save').click(function(){
+		alert(12345);
+	})
 });
 function openTabLinke(evt, obj){
 
@@ -12,6 +15,7 @@ function openTabLinke(evt, obj){
 	}else{
 		loadingData('1');
 	}
+	$('.tbl_input_dot').after()
 }
 function loadingData(id) {
 	$('#loading').bPopup();
@@ -20,7 +24,6 @@ function loadingData(id) {
          url : '/khmoney/loadingListSetting',
          data: 'payTxt='+id,
          success : function(json){
-         	console.log(json) ;  
          	$('#pay_constand').empty();
          	$('#pay_down').empty();
          	if (json.object == null || json.object == 'undefined'){
@@ -28,7 +31,6 @@ function loadingData(id) {
          		return;
          	}
          	$.each(json.object , function( index, value ) {
-         		console.log(" == "  + index + '  '+value);
          		var tbl = '';         		
          		tbl += '<!-- title_wrap -->'
 		    		   +'<div class="tit_wrap cboth">'

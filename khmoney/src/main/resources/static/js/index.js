@@ -5,6 +5,7 @@ $(document).ready(function(){
 	loadingMenuUser();
 });
 function loadingMenuUser(){
+	$('#loading').bPopup();
 	$.ajax({
 		url:'loadingMenuUser',
 		type:'GET',
@@ -47,4 +48,5 @@ function loadingMenuUser(){
 			console.log(json);
 		}
 	});
+	$('#loading').bPopup().close();
 }

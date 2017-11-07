@@ -12,7 +12,7 @@ $(document).ready(function(){
 	});
 	
 	$(document).on('click','.btn_cancel,.btn_close',function(){
-		$('.alert_wrap').bPopup().close();
+		$('#popup_loan').bPopup().close();
 	});
 	
 	$('#type_payment').change(function(){
@@ -267,7 +267,7 @@ function loadingSettingData(id){
 			
 			$("#type_payment").append(opt);			
 			loadingSettingValue($('#type_payment').val(),id);
-			$('.alert_wrap').bPopup();
+			$('#popup_loan').bPopup();
 		},error:function(json){
 			console.log(json);
 		}
@@ -433,7 +433,7 @@ function confrimCheck(){
 	}
 	$('#tbl_lst1 tfoot').hide();
 	$('#tbl_lst1 tbody').append(tbl);
-	$('.alert_wrap').bPopup().close();
+	$('#popup_loan').bPopup().close();
 }
 
 

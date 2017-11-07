@@ -12,7 +12,7 @@ $(document).ready(function(){
 	});
 	
 	$(document).on('click','.btn_cancel,.btn_close',function(){
-		$('.alert_wrap').bPopup().close();
+		$('#popup_loan').bPopup().close();
 	});
 	
 	$('#type_payment').change(function(){
@@ -48,7 +48,7 @@ $(document).ready(function(){
 function init(){
 	$('#loading').bPopup();
 	loanerGetMaxId();
-	Common.datePickerRang('popup_start_date');
+	Common.datePicker('popup_start_date');
 	$('#popup_total_money').autoNumeric('init',{ aSign: '​​ ៛',aSep:',',sGropu:'3',pSign: 's',aPad: false,vMax: '999999999',vMin: '0'});
 	$('#popup_time').autoNumeric('init',{ aSign: '​​ ដង',pSign: 's',aPad: false,vMax: '999',vMin: '0'});
 	$('#popup_rate').autoNumeric('init', { aSign: ' %',pSign: 's',aPad: false,vMax: '99',vMin: '00.00',mDec: 2,});
@@ -74,10 +74,9 @@ function loanerGetMaxId(){
 		    $('#id_card').val(Common.phoneWithComma(json.object.loanerObject.id_card));
 		    $('#phone').val(Common.phoneWithComma(json.object.loanerObject.phone));
 		    $('input[name=gender][value='+json.object.loanerObject.gender+']').prop('checked',true);
-		    $('#address').val('ខេត្ត '+json.object.loanObject.province + '  ស្រុក  '+json.object.loanObject.district + '  ឃុំ  '+json.object.loanObject.commune+'  ភូមិ  '+json.object.loanObject.village);
+		    $('#address').val('ខេត្ត '+json.object.loanerObject.province + '  ស្រុក  '+json.object.loanerObject.district + '  ឃុំ  '+json.object.loanerObject.commune+'  ភូមិ  '+json.object.loanerObject.village);
 			$('#loan_code').val(Common.numberWithComma(json.object.maxLoanId,"-"));
-			$('#agent_txt').val(json.object.userName);
-			$('#agent').val(json.object.loanerObject.user_id);
+			
 		},error:function(json){
 			console.log(json);
 		}
@@ -123,7 +122,7 @@ function loadingSettingData(id){
 			});
 			$("#type_payment").append(opt);			
 			loadingSettingValue($('#type_payment').val(),id);
-			$('.alert_wrap').bPopup();
+			$('#popup_loan').bPopup();
 		},error:function(json){
 			console.log(json);
 		}
@@ -253,8 +252,8 @@ function confrimCheck(){
 	$('#rate_db').val(rate);
 	$('#type_payment_db').val($('#type_payment option:selected').val());
 	$("#day_db").val(day);
-	$('#agent_txt').val($('#popup_agent').text());
-	$('#agent').val($('#popup_agent').val());
+	$('#agent_txt').val($('#popup_agent option:selected').text());
+	$('#agent').val($('#popup_agent option:selected').val());
 	
 	var tbl = '', d = 0;
 	$('#tbl_lst1 tbody').empty();
@@ -289,7 +288,7 @@ function confrimCheck(){
 	}
 	$('#tbl_lst1 tfoot').hide();
 	$('#tbl_lst1 tbody').append(tbl);
-	$('.alert_wrap').bPopup().close();
+	$('#popup_loan').bPopup().close();
 }
 
 
@@ -331,19 +330,20 @@ function loanSaveLoanAgain(){
 		url :'/khmoney/loanSaveLoanAgain',
 		data:data,
 		success:function(json){
-			if (json.code == 'undefined'){
-				alert(json.message);
+			if (typeof  json.code == 'undefined' || json.code == '9999'){
+				Message.infor(null,json.message,null);
 				return;
 			}
-			 alert(json.message);
-			 window.location.href = '/khmoney/loan';
+			Message.infor(null,json.message,loanNew);
 		},error:function(json){
 			console.log(json)
 		}
 	});
 	$('#loading').bPopup().close();
 }
-
+function loanNew(){
+	window.location.href = '/khmoney/loan';
+}
 function errorCheck(json){
 	if (json.code == 'undefined'){
 		alert(json.message);

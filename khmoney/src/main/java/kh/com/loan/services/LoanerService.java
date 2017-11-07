@@ -321,7 +321,6 @@ public class LoanerService {
 			params.put("loaner_id", String.valueOf(loaner_id));
 			params.put("txt", "9");
 			result.put("loanerObject", loanerMapper.loadingLoanerById(params));
-			result.put("userName", user.getFull_name());
 			return new Message("0000", result);
 		}catch(Exception e) {
 			throw new KHException("9999", e.getMessage());
