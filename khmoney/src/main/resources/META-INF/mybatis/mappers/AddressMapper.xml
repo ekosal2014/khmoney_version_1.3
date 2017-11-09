@@ -62,4 +62,9 @@
 		ORDER BY vil_name
 	</select>
 	<select id="loadingAddress"></select>
+	<insert id="provinceSaveNew" parameterType="java.util.HashMap">
+		INSERT INTO tblprovinces(
+             pro_name, pro_status)
+   		 VALUES (#{proName}, #{proStatus});
+	</insert>
 </mapper>

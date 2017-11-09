@@ -22,4 +22,11 @@ public class AddressController {
 		return addressService.provinceListAll();
 	}
 	
+	@RequestMapping(value = "/provinceSaveNew", method = RequestMethod.GET)
+	public @ResponseBody Message provinceSaveNew() throws KHException{
+		return addressService.provinceListAll();
+	}
+	
+	
+	
 }

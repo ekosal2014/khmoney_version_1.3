@@ -24,9 +24,9 @@
 
 <!-- popup form -->
 <div class="alert_wrap frm" style="display:none;" th:fragment="popup_province" id="popup_province">
-	<div class="alert_inner">
+	<div class="alert_inner" style="width: 520px;">
 		<div class="alert_tit">
-			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<h1>បញ្ចូលពត័មាន</h1>
 			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
 		</div>
 		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
@@ -40,8 +40,8 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th><div>ទឹកប្រាក់សរុប</div></th>
-							<td ><div><input type="text" value="" name="" id="popup_total_money" placeholder=""></div></td>
+							<th><div>សូមបញ្ចូលឈ្មោះខេត្ដថ្មី</div></th>
+							<td ><div><input type="text" value="" name="" id="proName" placeholder=""></div></td>
 						</tr>							
 											
 					
@@ -52,7 +52,7 @@
 
 		</div>
 		<div class="t_line">
-			<a href="javascript:" class="btn_confirm">បន្ថែម</a>
+			<a href="javascript:" class="btn_confirm" id="btn_add_province">បន្ថែម</a>
 			<a href="javascript:" class="btn_cancel">បោះបង់</a>
 		</div>
 	</div>	

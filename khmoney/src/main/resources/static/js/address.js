@@ -6,6 +6,13 @@ $(document).ready(function(){
 	
 	provinceListAll();
 	
+	$(document).on('click','.btn_cancel,.btn_close',function(){
+		$('#popup_province').bPopup().close();
+	});
+	
+	$('#btn_add_province').click(function(){
+		alert(1234);
+	});
 });
 
 function provinceListAll(){
@@ -144,4 +151,27 @@ function villageListByComId(obj){
 
 function provinceAddNew(){
 	$('#popup_province').bPopup();
+}
+function provinceSaveNew(){
+	$('#loading').bPopup();
+	var data = {
+			'proName'  : $('#proName').val(),
+			'proStatus': '1'
+	}
+	$.ajax({
+		type:'GET',
+		url :'/khmoney/provinceSaveNew',
+		data:data,
+		success:function(json){
+			console.log(json);
+			if (json.code == 'undefined' || json.code == '9999'){
+				Message.infor(null,json.message,null);
+				return;
+			}
+			Message.infor(null,json.message,null);
+		},error:function(json){
+			console.log(json);
+		}
+	});
+	$('#loading').bPopup().close();
 }

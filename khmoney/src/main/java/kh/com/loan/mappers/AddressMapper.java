@@ -8,4 +8,6 @@ public interface AddressMapper {
 	public List<HashMap<String,String>> loadingDistrictsByProvinceId(HashMap<String,String> params);
 	public List<HashMap<String,String>> loadingCommunesByDistrictsId(HashMap<String,String> params);
 	public List<HashMap<String,String>> loadingVillagesByCommunesId(HashMap<String,String> params);
+	public int provinceSaveNew(HashMap<String,String> params);
+
 }

@@ -1,5 +1,7 @@
 package kh.com.loan.services;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,15 @@ public class AddressService {
 	public Message provinceListAll() throws KHException{
 		try{
 			return new Message("0000",addressMapper.loadingAllProvinces());
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	public Message provinceSaveNew(HashMap<String,String> params) throws KHException{
+		try{
+			addressMapper.provinceSaveNew(params);
+			return new Message("0000","success hz");
 		}catch(Exception e){
 			throw new KHException("9999", e.getMessage());
 		}
