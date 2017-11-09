@@ -511,6 +511,7 @@ input{outline:0;}
 	  line-height: 1;
 	  font-family: 'Open Sans', sans-serif;
 	  font-size: 14px;
+	  font-family:"Khmer OS Bokor", "Khmer OS Content", "Khmer OS Battambang", "Khmer OS Siemreap", "Khmer OS System";
 	  position: relative;
 	  width: 250px;
 	}
@@ -528,12 +529,11 @@ input{outline:0;}
 	}
 
 
-	#cssmenu  ul  li.has-sub  a span {
+	#cssmenu  ul  li.has-sub>a>span {
 	  background: url(../img/icon/plus-symbol.png) 1% center no-repeat;
-	  background-color: white;
 	  
 	}
-	#cssmenu  ul  li.has-sub.active  a span {
+	#cssmenu  ul  li.active>a>span {
 	  background: url(../img/icon/minus-symbol.png) 1% center no-repeat;
 	}
 	/* Sub menu */

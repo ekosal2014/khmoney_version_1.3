@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+
+<!-- alert comfirm -->
+<div class="alert_wrap msg_alert_wrap" style="display:none;" th:fragment="alert">
+	<div class="alert_inner">
+		<div class="alert_tit">
+			<h1>ពត័មាន</h1>
+			<a href="javascript:" class="btn_close msg_btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt">
+			<p>ប្រតិបត្តិការរក្សាទុកទទួលបានជោគជ័យ</p>
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm">យល់ព្រម</a>
+		</div>
+	</div>	
+</div>
+
+
+<!-- popup form -->
+<div class="alert_wrap frm" style="display:none;" th:fragment="popup_province" id="popup_province">
+	<div class="alert_inner">
+		<div class="alert_tit">
+			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>				
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>ទឹកប្រាក់សរុប</div></th>
+							<td ><div><input type="text" value="" name="" id="popup_total_money" placeholder=""></div></td>
+						</tr>							
+											
+					
+					</tbody>
+				</table>
+			</div>
+			
+
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
+		</div>
+	</div>	
+</div>
+<!-- //popup form -->
+<!-- alert comfirm -->
+<!-- popup form -->
+<div class="alert_wrap frm" id="popup_wallet" style="display:none;" th:fragment="popup_wallet">
+	<div class="alert_inner">
+		<div class="alert_tit">
+			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>ទឹកប្រាក់សរុប</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="wallet_total_money" placeholder=""></div></td>
+						</tr>					
+						<tr>
+							<th><div>ប្រភេទប្រាក់</div></th>
+							<td colspan="3">
+								<div>
+									<select style="width:;" name="type_payment" id="wallet_type_money">
+										<option value="1">ឥណពន្ធ</option>
+										<option value="9">ឥណទាន</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr style="display:;" id="">
+							<th><div>ពិពណ៍៏នា</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="wallet_decription"></div></td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm" id="btn_wallet">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
+		</div>
+	</div>	
+</div>
+<!-- //popup form -->
+</body>
+</html>

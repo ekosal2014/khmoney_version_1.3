@@ -71,7 +71,7 @@
 				<div class="tbl_lst1 mgt5" id="tbl_loan">
 					<div id='cssmenu'>
 							<ul>
-							   <li class='has-sub'><a href='#'><span>Home</span></a></li>
+							   <li class='privinces has-sub'><a href='#'><span>Home</span></a></li>
 							   <li class='has-sub'><a href='#'><span>Products</span></a>
 							      <ul>
 							         <li class='has-sub'><a href='#'><span>Product 1</span></a></li>
@@ -99,7 +99,7 @@
 							   </li>
 							   <li class='has-sub'><a href='#'><span>Contact</span></a></li>
 							</ul>
-							</div>
+						</div>
 				</div>
 				<!-- //table_list -->
 
@@ -116,6 +116,7 @@
 </div>
 	 <th:block layout:fragment="asset">
 		 <script th:src="@{js/address.js}"></script>
+		  <div lang="en" th:replace="fragments/popup_address :: popup_province"></div>
 	 </th:block>
 </body>
 </html>
