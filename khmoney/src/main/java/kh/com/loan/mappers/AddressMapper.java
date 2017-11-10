@@ -9,5 +9,7 @@ public interface AddressMapper {
 	public List<HashMap<String,String>> loadingCommunesByDistrictsId(HashMap<String,String> params);
 	public List<HashMap<String,String>> loadingVillagesByCommunesId(HashMap<String,String> params);
 	public int provinceSaveNew(HashMap<String,String> params);
-
+	public int districtSaveNew(HashMap<String,String> params);
+	public int communeSaveNew(HashMap<String,String> params);
+	public int villageSaveNew(HashMap<String,String> params);
 }

@@ -60,8 +60,8 @@
 <!-- //popup form -->
 <!-- alert comfirm -->
 <!-- popup form -->
-<div class="alert_wrap frm" id="popup_wallet" style="display:none;" th:fragment="popup_wallet">
-	<div class="alert_inner">
+<div class="alert_wrap frm" id="popup_district" style="display:none;" th:fragment="popup_district">
+	<div class="alert_inner" style="width: 520px;">
 		<div class="alert_tit">
 			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
 			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
@@ -79,32 +79,98 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th><div>ទឹកប្រាក់សរុប</div></th>
-							<td colspan="3"><div><input type="text" value="" name="" id="wallet_total_money" placeholder=""></div></td>
+							<th><div>អាស័យដ្ឋាន</div></th>
+							<td colspan="3" id="address"><div></div><input type="hidden" id="disProId"></td>
 						</tr>					
 						<tr>
-							<th><div>ប្រភេទប្រាក់</div></th>
-							<td colspan="3">
-								<div>
-									<select style="width:;" name="type_payment" id="wallet_type_money">
-										<option value="1">ឥណពន្ធ</option>
-										<option value="9">ឥណទាន</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr style="display:;" id="">
-							<th><div>ពិពណ៍៏នា</div></th>
-							<td colspan="3"><div><input type="text" value="" name="" placeholder=""​​ id="wallet_decription"></div></td>
-						</tr>
-						
+							<th><div>បន្ថែមស្រុកថ្មី</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="disName" placeholder=""></div></td>
+						</tr>	
 					</tbody>
 				</table>
 			</div>
 			
 		</div>
 		<div class="t_line">
-			<a href="javascript:" class="btn_confirm" id="btn_wallet">បន្ថែម</a>
+			<a href="javascript:" class="btn_confirm" id="btn_add_district">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
+		</div>
+	</div>	
+</div>
+<!-- //popup form -->
+<!-- popup form -->
+<div class="alert_wrap frm" id="popup_commune" style="display:none;" th:fragment="popup_commune">
+	<div class="alert_inner" style="width: 520px;">
+		<div class="alert_tit">
+			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>អាស័យដ្ឋាន</div></th>
+							<td colspan="3" id="address_commune"><div></div><input type="hidden" id="comDisId"></td>
+						</tr>					
+						<tr>
+							<th><div>បន្ថែមស្រុកថ្មី</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="comName" placeholder=""></div></td>
+						</tr>	
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm" id="btn_add_commune">បន្ថែម</a>
+			<a href="javascript:" class="btn_cancel">បោះបង់</a>
+		</div>
+	</div>	
+</div>
+<!-- //popup form -->
+<!-- popup form -->
+<div class="alert_wrap frm" id="popup_village" style="display:none;" th:fragment="popup_village">
+	<div class="alert_inner" style="width: 520px;">
+		<div class="alert_tit">
+			<h1>បញ្ចូលពត័មានទឹកប្រាក់</h1>
+			<a href="javascript:" class="btn_close"><span class="blind">close</span></a>
+		</div>
+		<div class="aler_cnt" style="height: auto !important;padding-bottom: 0px !important;">
+			<!-- table input popup -->
+			<div class="tbl_input_pop">
+				<table summary="">
+					<caption></caption>
+					<colgroup>
+					<col style="width:100px;">
+					<col>
+					<col style="width:100px;">
+					<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><div>អាស័យដ្ឋាន</div></th>
+							<td colspan="3" id="address_villages"><div></div><input type="hidden" id="vilComId"></td>
+						</tr>					
+						<tr>
+							<th><div>បន្ថែមស្រុកថ្មី</div></th>
+							<td colspan="3"><div><input type="text" value="" name="" id="vilName" placeholder=""></div></td>
+						</tr>	
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		<div class="t_line">
+			<a href="javascript:" class="btn_confirm" id="btn_add_commune">បន្ថែម</a>
 			<a href="javascript:" class="btn_cancel">បោះបង់</a>
 		</div>
 	</div>	

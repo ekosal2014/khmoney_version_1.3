@@ -32,4 +32,31 @@ public class AddressService {
 			throw new KHException("9999", e.getMessage());
 		}
 	}
+	
+	public Message districtSaveNew(HashMap<String,String> params) throws KHException{
+		try{
+			addressMapper.districtSaveNew(params);
+			return new Message("0000","success hz");
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	public Message communeSaveNew(HashMap<String,String> params) throws KHException{
+		try{
+			addressMapper.communeSaveNew(params);
+			return new Message("0000","success hz");
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
+	
+	public Message villageSaveNew(HashMap<String,String> params) throws KHException{
+		try{
+			addressMapper.villageSaveNew(params);
+			return new Message("0000","success hz");
+		}catch(Exception e){
+			throw new KHException("9999", e.getMessage());
+		}
+	}
 }

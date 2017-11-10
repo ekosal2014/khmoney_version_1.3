@@ -67,4 +67,16 @@
              pro_name, pro_status)
    		 VALUES (#{proName}, #{proStatus});
 	</insert>
+	<insert id="districtSaveNew" parameterType="java.util.HashMap">
+		INSERT INTO tbldistricts(dis_name,dis_pro_id,dis_status)
+    		 VALUES (#{disName},cast(#{disProId} as int),#{disStatus})
+	</insert>
+	<insert id="communeSaveNew" parameterType="java.util.HashMap">
+		INSERT INTO tblcommunes(com_dis_id, com_name, com_status)
+   			 VALUES ( cast(#{comDisId} as int), #{comName}, #{comStatus});
+	</insert>
+	<insert id="villageSaveNew" parameterType="java.util.HashMap">
+		INSERT INTO tblvillages(vil_com_id, vil_name, vil_status)
+    	VALUES (cast(#{vilComId} as int), #{vilName}, #{vilStatus});
+	</insert>
 </mapper>
