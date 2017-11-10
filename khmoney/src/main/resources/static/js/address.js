@@ -22,6 +22,10 @@ $(document).ready(function(){
 	$('#btn_add_commune').click(function(){
 		communeSaveNew();
 	});
+	
+	$('#btn_add_village').click(function(){
+		villageSaveNew();
+	});
 });
 
 function provinceListAll(){
