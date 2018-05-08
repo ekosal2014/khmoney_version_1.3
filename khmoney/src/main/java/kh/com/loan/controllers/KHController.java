@@ -3,7 +3,6 @@ package kh.com.loan.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.com.loan.domains.Message;
 import kh.com.loan.domains.User;
-import kh.com.loan.services.UserService;
 import kh.com.loan.utils.KHException;
-import kh.com.loan.utils.SessionException;
-import kh.com.loan.utils.SessionUtils;
+
 
 @Controller
 public class KHController {
