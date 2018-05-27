@@ -53,7 +53,7 @@ public class KHController {
 	    if (auth != null){    
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
-	    return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+	    return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
 

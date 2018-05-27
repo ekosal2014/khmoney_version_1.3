@@ -61,6 +61,11 @@ public class UserService {
 		   if (!String.valueOf(params.get("password")).equals(String.valueOf(params.get("confirmPassword")))){
 			   throw new KHException("9999", "ពាក្យសំងាត់ និងបញ្ជាក់ពាក្យមិនត្រូវគ្នាទ!");
 		   }
+		   
+		   if (userMapper.loadUserByUsername(params.get("username").toString()) != null) {
+			   throw new KHException("9999", "ឈ្មោះអ្នកប្រើប្រាស់មានរួចហើយ សូមដាក់ឈ្មោះផ្សេងទៀត!");
+		   }
+		   
 		   params.put("password"   , passwordEncoder.encode(String.valueOf(params.get("password"))));
 		   params.put("sts"        , "1");
 		   params.put("txt"        , "1");

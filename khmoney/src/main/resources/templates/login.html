@@ -3,7 +3,7 @@
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!-- <head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"/></head> -->
+ <head lang="en" th:replace="fragments/head :: head"><meta charset="utf-8"/></head>
 
 
 <body class="lnb_bg">
@@ -98,7 +98,7 @@
 		            	}else if (json == ''){
 		            		alter("User Desible")
 		            	}else{
-		            		
+		            		window.location.href = json;
 		            	}
 		            	           	
 		            },
