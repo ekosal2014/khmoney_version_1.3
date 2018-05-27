@@ -167,7 +167,7 @@ public class LoanerService {
 		User user     = new User();
 		Loaner loaner = new Loaner();
 		Loan loan     = new Loan();
-		Wallet wallet = new Wallet();
+		/*Wallet wallet = new Wallet();*/
 		
 		try {
 			/*set loan information */
@@ -225,12 +225,12 @@ public class LoanerService {
 			}		
 			
 			/*insert wallet information */			
-			wallet = walletMapper.loadingMywalletByIMaxId();
+			/*wallet = walletMapper.loadingMywalletByIMaxId();
 			 if (wallet.getTotal_amount() < loan.getTotal_money()){
 		    	throw new KHException("9999", "មិនអាចធ្វើការខ្ចីបានទេ ព្រោះចំនួនទឹកប្រាក់ច្រើនហួសកំនត់ សូមទំនាក់ទំនងទៅកាន់ថ្នាក់លើរបស់អ្នក!");
-		    }	
+		    }*/	
 			 
-			wallet.setOld_amount(wallet.getTotal_amount());
+			/*wallet.setOld_amount(wallet.getTotal_amount());
 			wallet.setAmount(loan.getTotal_money());
 			wallet.setTotal_amount(wallet.getTotal_amount() - loan.getTotal_money());
 			wallet.setType_amount("9");
@@ -245,7 +245,7 @@ public class LoanerService {
 		    
 		    if (walletMapper.insertMywallet(wallet) <= 0){
 		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
-		    }
+		    }*/
 		  
 		    /*insert loan payment information */
 			Date dt = formatter.parse((String)map.get("start_date"));			
@@ -339,7 +339,7 @@ public class LoanerService {
 		User user     = new User();
 		Loaner loaner = new Loaner();
 		Loan loan     = new Loan();
-		Wallet wallet = new Wallet();
+		/*Wallet wallet = new Wallet();*/
 		try {
 			
 			Long total_money= Long.valueOf((String)params.get("total_money"));
@@ -391,12 +391,12 @@ public class LoanerService {
 			}
 			
 			/*insert wallet information */			
-			wallet = walletMapper.loadingMywalletByIMaxId();
+			/*wallet = walletMapper.loadingMywalletByIMaxId();
 			 if (wallet.getTotal_amount() < loan.getTotal_money()){
 		    	throw new KHException("9999", "មិនអាចធ្វើការខ្ចីបានទេ ព្រោះចំនួនទឹកប្រាក់ច្រើនហួសកំនត់ សូមទំនាក់ទំនងទៅកាន់ថ្នាក់លើរបស់អ្នក!");
-		    }	
+		    }	*/
 			 
-			wallet.setOld_amount(wallet.getTotal_amount());
+			/*wallet.setOld_amount(wallet.getTotal_amount());
 			wallet.setAmount(loan.getTotal_money());
 			wallet.setTotal_amount(wallet.getTotal_amount() - loan.getTotal_money());
 			wallet.setType_amount("9");
@@ -411,7 +411,7 @@ public class LoanerService {
 		    
 		    if (walletMapper.insertMywallet(wallet) <= 0){
 		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
-		    }
+		    }*/
 			
 			Date dt = formatter.parse((String)params.get("start_date"));
 			
@@ -553,7 +553,7 @@ public class LoanerService {
 		User user     = new User();
 		Loaner loaner = new Loaner();
 		Loan loan     = new Loan();
-		Wallet wallet = new Wallet();
+		/*Wallet wallet = new Wallet();*/
 		try {
 			Long total_money= Long.valueOf((String)params.get("total_money"));
 			int  decrement  = Integer.valueOf((String)params.get("decrement"));
@@ -610,7 +610,7 @@ public class LoanerService {
 			}
 		
 			/*insert wallet information */			
-			wallet = walletMapper.loadingMywalletByIMaxId();
+			/*wallet = walletMapper.loadingMywalletByIMaxId();
 		    String typeAmount = "";
 		    Long    addAmount = 0L;
 			if (b_tt < total_money){
@@ -641,7 +641,7 @@ public class LoanerService {
 		    
 		    if (walletMapper.insertMywallet(wallet) <= 0){
 		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
-		    }
+		    }*/
 			
             Date dt = formatter.parse((String)params.get("start_date"));			
             
@@ -698,7 +698,7 @@ public class LoanerService {
 			User    user  = new User();
 			Loaner loaner = new Loaner();
 			Loan   loan   = new Loan();
-			Wallet wallet = new Wallet();
+			/*Wallet wallet = new Wallet();*/
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (!auth.getPrincipal().equals("anonymousUser")) {
 				user = (User) auth.getPrincipal();
@@ -759,8 +759,8 @@ public class LoanerService {
 				loanMapper.updateLoanById(loan);
 			}
 			
-			Long totalAmount = Long.valueOf((String)params.get("totalAmount"));
-			wallet = walletMapper.loadingMywalletByIMaxId();			 
+			//Long totalAmount = Long.valueOf((String)params.get("totalAmount"));
+			/*wallet = walletMapper.loadingMywalletByIMaxId();			 
 			wallet.setOld_amount(wallet.getTotal_amount());
 			wallet.setAmount(totalAmount);
 			wallet.setTotal_amount(wallet.getTotal_amount() + totalAmount);
@@ -776,7 +776,7 @@ public class LoanerService {
 			
 		    if (walletMapper.insertMywallet(wallet) <= 0){
 		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
-		    }
+		    }*/
 			
 			return new Message("0000","ការកែប្រែរបស់លោកអ្នកទទួលបានជោគជ័យ");
 		}catch(Exception e) {
@@ -801,7 +801,7 @@ public class LoanerService {
 			User   user   = new User();
 			Loaner loaner = new Loaner();
 			Loan   loan   = new Loan();
-			Wallet wallet = new Wallet();
+			/*Wallet wallet = new Wallet();*/
 			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (!auth.getPrincipal().equals("anonymousUser")) {
@@ -827,7 +827,7 @@ public class LoanerService {
 			loanMapper.deleteLoanPaymentByLoanId(loan_id);
 			
 			/*insert wallet information */			
-			wallet = walletMapper.loadingMywalletByIMaxId();			 
+			/*wallet = walletMapper.loadingMywalletByIMaxId();			 
 			wallet.setOld_amount(wallet.getTotal_amount());
 			wallet.setAmount(loan.getTotal_money());
 			wallet.setTotal_amount(wallet.getTotal_amount() + loan.getTotal_money());
@@ -843,7 +843,7 @@ public class LoanerService {
 			
 		    if (walletMapper.insertMywallet(wallet) <= 0){
 		    	throw new KHException("9999", "ការបញ្ជូលទិន្នន័យរបស់លោកអ្នកទទួលបរាជ័យ");
-		    }
+		    }*/
 		    
 			return new Message("0000","ការលុបរបស់លោកអ្នកទទួលបានជោគជ័យ!");
 		}catch(Exception e) {

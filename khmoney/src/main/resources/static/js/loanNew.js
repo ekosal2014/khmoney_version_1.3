@@ -382,7 +382,7 @@ function loanSaveNewItem(){
 	};
 	var token = $('#_csrf').attr('content');
 	var header = $('#_csrf_header').attr('content');
-	console.log(data);
+	//console.log(data);
 	$.ajax({
 		type:'POST',
  		contentType : 'application/json; charset=utf-8',
@@ -393,6 +393,7 @@ function loanSaveNewItem(){
             xhr.setRequestHeader(header, token)
          },
 		success:function(json){
+			console.log(json);
 			if (typeof json.code == 'undefined' || json.code == '9999'){
 				Message.infor(null,json.message,null);
 				return;
